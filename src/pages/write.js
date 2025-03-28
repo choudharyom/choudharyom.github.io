@@ -1,14 +1,11 @@
 import React, { useEffect, useRef, useState } from "react"
-import EasyMDE from "easymde"
-import "easymde/dist/easymde.min.css"
 
 const WritePage = () => {
   const [title, setTitle] = useState("")
   const editorRef = useRef(null)
   const mdeRef = useRef(null)
-
-  // Add preview state
   const [showFrontmatter, setShowFrontmatter] = useState(true)
+  const [isClient, setIsClient] = useState(false)
 
   const generateSlug = (text) => {
     return text
@@ -28,51 +25,63 @@ slug: "/${slug}/"
   }
 
   useEffect(() => {
-    mdeRef.current = new EasyMDE({
-      element: editorRef.current,
-      spellChecker: false,
-      initialValue: generateFrontmatter(), // Show frontmatter initially
-      toolbar: [
-        "bold", "italic", "heading", "|",
-        "quote", "code", "unordered-list", "ordered-list", "|",
-        "link", "image", "|",
-        "preview", "side-by-side", "fullscreen", "|",
-        {
-          name: "download",
-          action: function downloadMD() {
-            const frontmatter = generateFrontmatter()
-            const content = mdeRef.current.value()
-            const fullContent = frontmatter + content
-            const blob = new Blob([fullContent], { type: "text/markdown" })
-            const url = window.URL.createObjectURL(blob)
-            const a = document.createElement("a")
-            const slug = generateSlug(title)
-            a.href = url
-            a.download = `${new Date().toISOString().split('T')[0]}-${slug}.md`
-            a.click()
-            window.URL.revokeObjectURL(url)
-          },
-          className: "fa fa-download",
-          title: "Download Markdown",
-        },
-      ],
-      placeholder: "Write your post content here...",
-      autofocus: false, // Changed to false so users see the title field first
-    })
+    setIsClient(true)
+  }, [])
 
-    // Update content when title changes
-    if (mdeRef.current) {
-      const currentContent = mdeRef.current.value()
-      const newContent = generateFrontmatter() + currentContent.split('---\n\n')[1] || ''
-      mdeRef.current.value(newContent)
-    }
+  useEffect(() => {
+    if (!isClient) return
+
+    // Dynamically import EasyMDE only on client side
+    import('easymde').then((EasyMDE) => {
+      mdeRef.current = new EasyMDE.default({
+        element: editorRef.current,
+        spellChecker: false,
+        initialValue: generateFrontmatter(),
+        toolbar: [
+          "bold", "italic", "heading", "|",
+          "quote", "code", "unordered-list", "ordered-list", "|",
+          "link", "image", "|",
+          "preview", "side-by-side", "fullscreen", "|",
+          {
+            name: "download",
+            action: function downloadMD() {
+              const frontmatter = generateFrontmatter()
+              const content = mdeRef.current.value()
+              const fullContent = frontmatter + content
+              const blob = new Blob([fullContent], { type: "text/markdown" })
+              const url = window.URL.createObjectURL(blob)
+              const a = document.createElement("a")
+              const slug = generateSlug(title)
+              a.href = url
+              a.download = `${new Date().toISOString().split('T')[0]}-${slug}.md`
+              a.click()
+              window.URL.revokeObjectURL(url)
+            },
+            className: "fa fa-download",
+            title: "Download Markdown",
+          },
+        ],
+        placeholder: "Write your post content here...",
+        autofocus: false,
+      })
+
+      if (mdeRef.current) {
+        const currentContent = mdeRef.current.value()
+        const newContent = generateFrontmatter() + currentContent.split('---\n\n')[1] || ''
+        mdeRef.current.value(newContent)
+      }
+    })
 
     return () => {
       if (mdeRef.current) {
         mdeRef.current.toTextArea()
       }
     }
-  }, [title])
+  }, [title, isClient])
+
+  if (!isClient) {
+    return <div>Loading editor...</div>
+  }
 
   return (
     <div className="container mx-auto p-4 max-w-4xl">

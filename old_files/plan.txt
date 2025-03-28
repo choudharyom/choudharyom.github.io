@@ -1,0 +1,269 @@
+Project: Build a Medium-like static MVP on GitHub Pages
+Domain: choudharyom.com
+Tech: Gatsby (React), EasyMDE, Tailwind/Bootstrap, Markdown files, Disqus, MathJax, Prism.js
+
+-----------------------------
+Phase 1: Setup and Environment
+-----------------------------
+
+[X] Step 1: Create a GitHub Repository
+    - Repo: choudharyom.github.io (or your chosen name)
+    - Initialized with README.md
+
+[X] Step 2: Set Up Local Development
+    - Installed Node.js (v16+) and npm
+    - Installed Git
+
+[X] Step 3: Install Gatsby
+    - Run: npm init -y
+    - Run: npm install gatsby react react-dom
+    - Run: npx gatsby new . https://github.com/gatsbyjs/gatsby-starter-minimal
+    - Test locally: npm run develop
+
+[X] Step 4: Configure `gatsby-config.js` for GitHub Pages
+    - Edit `gatsby-config.js`.
+    - Set `pathPrefix`: Use `/your-repo-name` if your repo is NOT `<username>.github.io`. Use `/` if it IS `<username>.github.io` or you'll use a custom domain pointing to it. For `choudharyom.github.io`, use `/`.
+    - Add `siteMetadata` (optional but good practice):
+      ```javascript
+      module.exports = {
+        pathPrefix: "/", // Adjust if needed based on repo name
+        siteMetadata: {
+          title: "My Minimal Blog",
+          siteUrl: "https://choudharyom.com", // Your target domain
+        },
+        plugins: [
+          // Other plugins will be added below
+        ],
+      }
+      ```
+
+---------------------------
+Phase 2: Build the Static MVP
+---------------------------
+
+[X] Step 5: Install Core Dependencies
+    - Markdown: npm install gatsby-source-filesystem gatsby-transformer-remark
+    - CSS Framework (choose one):
+        - Tailwind: npm install gatsby-plugin-postcss tailwindcss postcss autoprefixer
+        - Bootstrap: npm install bootstrap
+    - EasyMDE: npm install easymde
+    - Prism.js: npm install gatsby-remark-prismjs prismjs
+
+[X] Step 6: Structure the Project
+    - Create folders:
+        - /content/posts (for Markdown files)
+        - /src/pages (React components)
+        - /src/templates (article template)
+        - /static (CSS, fonts)
+
+[X] Step 6.1: Configure Plugins in `gatsby-config.js`
+    - Add the filesystem source and remark transformer with its sub-plugins:
+      ```javascript
+      // Inside module.exports = { ... plugins: [ ... ] }
+      {
+        resolve: `gatsby-source-filesystem`,
+        options: {
+          name: `posts`,
+          path: `${__dirname}/content/posts`, // Folder for markdown posts
+        },
+      },
+      {
+        resolve: `gatsby-transformer-remark`,
+        options: {
+          plugins: [
+            `gatsby-remark-mathjax`, // Process MathJax
+            `gatsby-remark-prismjs`, // Process code blocks
+            // Add other remark plugins here if needed later
+          ],
+        },
+      },
+      // Add other top-level plugins here if needed later
+      ```
+
+[X] Step 7: Create Content Structure and Sample Post
+    - Create folder: `content/posts`
+    - Create a sample Markdown file inside `content/posts`, e.g., `2025-03-28-hello-world.md`:
+      ```markdown
+      ---
+      title: "Hello World with Math and Code"
+      date: "2025-03-28"
+      slug: "/hello-world/"
+      ---
+
+      This is a sample post.
+
+      Here is some inline math: $E=mc^2$.
+
+      Here is a block of math:
+      $$
+      \int_0^\infty e^{-x^2} dx = \frac{\sqrt{\pi}}{2}
+      $$
+
+      Here is a Python code block:
+      ```python
+      def greet(name):
+          print(f"Hello, {name}!")
+
+      greet("World")
+      ```
+      ```
+
+[X] Step 7.1: Create Article Pages
+    - Configure gatsby-config.js for Markdown and Prism.js:
+        plugins: [
+          { resolve: `gatsby-source-filesystem`, options: { path: `${__dirname}/content/posts`, name: `posts` } },
+          { resolve: `gatsby-transformer-remark`, options: { plugins: [`gatsby-remark-prismjs`] } },
+          `gatsby-plugin-postcss` // (if Tailwind)
+        ]
+    - Create /src/templates/post.js:
+        - Render Markdown to HTML
+        - Add Disqus (see below)
+    - Add sample post: /content/posts/2025-03-28-sample.md
+
+[X] Step 8: Design with CSS Framework
+    - Tailwind setup (if chosen):
+        - npx tailwindcss init -p
+        - tailwind.config.js: content: ["./src/**/*.{js,jsx}"]
+        - /src/styles/global.css: @tailwind directives
+    - Bootstrap (if chosen): Import in /src/pages/index.js
+    - Apply Medium-like styles (clean, minimal)
+
+[X] Step 8.1: Create Article Template
+    - Create folder: `src/templates`
+    - Create file: `src/templates/post-template.js`
+    - Add basic React component structure with GraphQL query:
+      ```javascript
+      import React from "react"
+      import { graphql } from "gatsby"
+
+      // Import Prism CSS (choose a theme)
+      // You might need to install it if not included with prismjs, or find the path
+      // e.g., require("prismjs/themes/prism-okaidia.css")
+      // Alternatively, include CSS via gatsby-browser.js or layout component later.
+      // For now, let's rely on gatsby-remark-prismjs default behavior or add CSS manually later.
+
+      export default function PostTemplate({ data }) {
+        const post = data.markdownRemark
+        return (
+          <div> {/* Basic wrapper, style later */}
+            <h1>{post.frontmatter.title}</h1>
+            <div dangerouslySetInnerHTML={{ __html: post.html }} />
+          </div>
+        )
+      }
+
+      export const query = graphql`
+        query($slug: String!) {
+          markdownRemark(frontmatter: { slug: { eq: $slug } }) {
+            html
+            frontmatter {
+              title
+              date(formatString: "MMMM DD, YYYY")
+            }
+          }
+        }
+      `
+      ```
+      *Note: MathJax rendering might require its scripts to run after the content is loaded. `gatsby-remark-mathjax` handles this integration during build time.*
+      *Note: PrismJS CSS needs to be included for highlighting to appear. You can add `require("prismjs/themes/prism-tomorrow.css");` (or another theme) at the top of `gatsby-browser.js`.*
+
+------------------------------------------
+Phase 3: Add Writing and Publishing Workflow
+------------------------------------------
+
+[X] Step 9: Integrate EasyMDE (Markdown Editor)
+    - Created /src/pages/write.js with:
+        - EasyMDE integration (replaced SimpleMDE)
+        - Title input with automatic slug generation
+        - Proper frontmatter generation (title, date, slug)
+        - Markdown preview and editing features
+        - File download with correct naming format
+        - Markdown tips/cheatsheet
+    - Dependencies:
+        - Added easymde package
+        - Configured Tailwind styling
+    - Features:
+        - Auto-formatted frontmatter
+        - YYYY-MM-DD-slug.md filename format
+        - Live preview
+        - Code syntax highlighting
+        - Full toolbar (bold, italic, lists, etc.)
+
+[ ] Step 10: Publishing Workflow
+    - Manual: Users submit Markdown via pull requests to repo
+    - Form-based (optional with Netlify):
+        - Add form in /src/pages/submit.js
+        - Manually update repo with submissions
+
+-----------------------
+Phase 4: Enhance Features
+-----------------------
+
+[ ] Step 11: Tags/Categories
+    - Add tags in Markdown frontmatter (e.g., tags: ["tech"])
+    - Query tags in /src/pages/index.js
+
+[ ] Step 12: Search with Lunr.js
+    - Install: npm install lunr
+    - Add search logic in gatsby-node.js and a search component
+
+[ ] Step 13: Comments with Disqus
+    - Sign up at disqus.com, get shortname
+    - Add to /src/templates/post.js:
+        <div id="disqus_thread" />
+        <script>
+          var disqus_config = function () {
+            this.page.url = "https://choudharyom.com${post.frontmatter.slug}"; // Adjust URL structure as needed
+            this.page.identifier = "${post.id}"; // Ensure unique identifier
+          };
+          (function() {
+            var d = document, s = d.createElement('script');
+            s.src = 'https://YOUR-DISQUS-SHORTNAME.disqus.com/embed.js'; // Replace YOUR-DISQUS-SHORTNAME
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s); // Append to head or body
+          })();
+        </script>
+        // Note: This script needs to be integrated properly within the React component lifecycle or via a plugin like gatsby-plugin-disqus
+
+[ ] Step 14: Basic Profiles
+    - Create /content/profiles/om.md
+    - Link articles to profiles manually (e.g., in frontmatter)
+
+[ ] Step 15: Add MathJax
+    - Add to gatsby-browser.js:
+        export const onClientEntry = () => {
+          window.MathJax = {
+            tex: {
+              inlineMath: [['$', '$'], ['\\(', '\\)']],
+              displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: {
+              fontCache: 'global'
+            }
+          };
+
+          const script = document.createElement("script");
+          script.src = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js";
+          script.async = true;
+          document.body.appendChild(script);
+        };
+    // Alternatively, use a plugin like gatsby-remark-mathjax
+
+--------------------------
+Phase 5: Deploy and Launch
+--------------------------
+
+[ ] Step 16: Deploy to GitHub Pages
+    - Install: npm install --save-dev gh-pages
+    - Add to package.json scripts:
+      "deploy": "gatsby build --prefix-paths && gh-pages -d public"
+    - Run: npm run deploy
+
+[ ] Step 17: Test Live
+    - Visit choudharyom.com (after DNS setup) or your *.github.io URL to verify.
+    - Check articles, styling, comments, MathJax rendering.
+
+[ ] Step 18: Soft Launch
+    - Share link with a small group for feedback.
+    - Iterate based on feedback.
+

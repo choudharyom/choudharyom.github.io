@@ -1,0 +1,32 @@
+{
+  "name": "choudharyom.github.io",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "@mdx-js/react": "^2.3.0",
+    "easymde": "^2.20.0",
+    "gatsby": "^5.12.12",
+    "gatsby-plugin-mdx": "^5.12.3",
+    "gatsby-plugin-postcss": "^6.12.0",
+    "gatsby-remark-mathjax": "^1.0.0",
+    "gatsby-remark-prismjs": "^7.14.0",
+    "gatsby-source-filesystem": "^5.14.0",
+    "gatsby-transformer-remark": "^6.14.0",
+    "prismjs": "^1.30.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.16",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.5"
+  }
+}

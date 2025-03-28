@@ -2,4 +2,73 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom styles can be added below */
+:root {
+    --primary-color: #4a76c5;
+    --secondary-color: #e83e8c;
+    --background-light: #fcfcfc;
+    --text-dark: #333;
+    --code-background: #f8f9fa;
+}
+
+@layer base {
+    body {
+        @apply font-sans leading-relaxed text-gray-800;
+        background-color: var(--background-light);
+    }
+
+    h1, h2, h3 {
+        @apply text-primary mb-5 leading-snug;
+    }
+
+    h1 {
+        @apply text-4xl border-b-3 border-primary pb-3;
+    }
+
+    h2 {
+        @apply text-3xl mt-10 border-b-2 border-opacity-30 border-primary;
+    }
+
+    h3 {
+        @apply text-2xl mt-8;
+    }
+
+    .highlight {
+        @apply bg-primary bg-opacity-5 border-l-4 border-primary p-5 my-8 rounded shadow-sm;
+    }
+
+    .math-definition {
+        @apply bg-secondary bg-opacity-5 border border-secondary border-opacity-20 p-5 my-8 rounded shadow-sm;
+    }
+
+    pre {
+        @apply bg-gray-800 text-gray-100 p-5 rounded-lg overflow-x-auto;
+    }
+
+    code {
+        @apply font-mono text-sm;
+    }
+
+    .prose {
+        @apply max-w-none;
+    }
+
+    .prose pre {
+        @apply bg-gray-800;
+    }
+
+    .callout {
+        @apply bg-green-50 border-l-4 border-green-500 p-4 my-5 rounded;
+    }
+
+    table {
+        @apply w-full border-collapse my-8 shadow-sm;
+    }
+
+    th, td {
+        @apply border border-gray-200 p-3 text-left;
+    }
+
+    th {
+        @apply bg-primary bg-opacity-10 text-primary;
+    }
+}

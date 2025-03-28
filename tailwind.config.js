@@ -3,10 +3,39 @@ module.exports = {
   content: [
     "./src/pages/**/*.{js,jsx,ts,tsx}",
     "./src/components/**/*.{js,jsx,ts,tsx}",
-    "./src/templates/**/*.{js,jsx,ts,tsx}"
+    "./src/templates/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: '#4a76c5',
+        secondary: '#e83e8c',
+      },
+      borderWidth: {
+        '3': '3px',
+      },
+      typography: {
+        DEFAULT: {
+          css: {
+            pre: {
+              backgroundColor: '#2d2d2d',
+              color: '#f8f8f2',
+            },
+            code: {
+              backgroundColor: 'var(--code-background)',
+              padding: '0.2em 0.4em',
+              borderRadius: '0.25em',
+            },
+            'code::before': {
+              content: '""',
+            },
+            'code::after': {
+              content: '""',
+            },
+          },
+        },
+      },
+    },
   },
   plugins: [
     require('@tailwindcss/typography'),

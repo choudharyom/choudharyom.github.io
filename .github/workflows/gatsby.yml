@@ -3,7 +3,6 @@ name: Deploy Gatsby Site
 on:
   push:
     branches:
-      - main
       - om_70x
 
 jobs:
@@ -24,9 +23,10 @@ jobs:
       - name: Build Gatsby site
         run: npm run build
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy to Branch
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
-          publish_branch: gh-pages
+          publish_branch: om_70x
+          force_orphan: false

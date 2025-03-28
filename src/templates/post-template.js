@@ -1,34 +1,34 @@
 import React from "react"
 import { graphql } from "gatsby"
+import Layout from "../components/layout"
 
 export default function PostTemplate({ data }) {
-  const { markdownRemark } = data
-  const { frontmatter, html } = markdownRemark
+  const post = data?.markdownRemark
+  if (!post) {
+    return <div>Post not found</div>
+  }
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
-      <article className="prose lg:prose-xl">
-        <h1 className="text-4xl font-bold mb-4">{frontmatter.title}</h1>
-        <div className="text-gray-600 mb-8">
-          {frontmatter.date}
-        </div>
-        <div
-          className="markdown-content"
-          dangerouslySetInnerHTML={{ __html: html }}
-        />
+    <Layout>
+      <article className="prose max-w-4xl mx-auto">
+        <header className="mb-8">
+          <h1 className="text-4xl font-bold mb-2">{post.frontmatter.title}</h1>
+          <time className="text-gray-600">{post.frontmatter.date}</time>
+        </header>
+        <div dangerouslySetInnerHTML={{ __html: post.html }} />
       </article>
-    </div>
+    </Layout>
   )
 }
 
-export const pageQuery = graphql`
+export const query = graphql`
   query($slug: String!) {
     markdownRemark(frontmatter: { slug: { eq: $slug } }) {
       html
       frontmatter {
+        title
         date(formatString: "MMMM DD, YYYY")
         slug
-        title
       }
     }
   }

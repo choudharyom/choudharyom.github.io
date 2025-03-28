@@ -8,10 +8,11 @@
     "gatsby": "^5.12.12",
     "gatsby-plugin-mdx": "^5.12.3",
     "gatsby-plugin-postcss": "^6.12.0",
-    "gatsby-remark-mathjax": "^1.0.0",
+    "gatsby-remark-katex": "^7.14.0",
     "gatsby-remark-prismjs": "^7.14.0",
     "gatsby-source-filesystem": "^5.14.0",
     "gatsby-transformer-remark": "^6.14.0",
+    "katex": "^0.13.24",
     "prismjs": "^1.30.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
@@ -22,7 +23,7 @@
     "build": "gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "deploy": "gatsby build && gh-pages -d public"
+    "deploy": "gatsby build && gh-pages -d public -b om_70x"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.16",

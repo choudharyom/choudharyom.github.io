@@ -1,6 +1,6 @@
 Project: Build a Medium-like static MVP on GitHub Pages
 Domain: choudharyom.com
-Tech: Gatsby (React), EasyMDE, Tailwind/Bootstrap, Markdown files, Disqus, MathJax, Prism.js
+Tech: Gatsby (React), EasyMDE, Tailwind/Bootstrap, Markdown files, Disqus, KaTeX, Prism.js
 
 -----------------------------
 Phase 1: Setup and Environment
@@ -71,7 +71,7 @@ Phase 2: Build the Static MVP
         resolve: `gatsby-transformer-remark`,
         options: {
           plugins: [
-            `gatsby-remark-mathjax`, // Process MathJax
+            `gatsby-remark-katex`, // Process KaTeX
             `gatsby-remark-prismjs`, // Process code blocks
             // Add other remark plugins here if needed later
           ],
@@ -164,7 +164,7 @@ Phase 2: Build the Static MVP
         }
       `
       ```
-      *Note: MathJax rendering might require its scripts to run after the content is loaded. `gatsby-remark-mathjax` handles this integration during build time.*
+      *Note: KaTeX rendering requires its CSS to be included. `gatsby-remark-katex` handles this integration during build time.*
       *Note: PrismJS CSS needs to be included for highlighting to appear. You can add `require("prismjs/themes/prism-tomorrow.css");` (or another theme) at the top of `gatsby-browser.js`.*
 
 ------------------------------------------
@@ -229,41 +229,36 @@ Phase 4: Enhance Features
     - Create /content/profiles/om.md
     - Link articles to profiles manually (e.g., in frontmatter)
 
-[ ] Step 15: Add MathJax
-    - Add to gatsby-browser.js:
-        export const onClientEntry = () => {
-          window.MathJax = {
-            tex: {
-              inlineMath: [['$', '$'], ['\\(', '\\)']],
-              displayMath: [['$$', '$$'], ['\\[', '\\]']]
-            },
-            svg: {
-              fontCache: 'global'
-            }
-          };
-
-          const script = document.createElement("script");
-          script.src = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js";
-          script.async = true;
-          document.body.appendChild(script);
-        };
-    // Alternatively, use a plugin like gatsby-remark-mathjax
+[X] Step 15: Add Math Support with KaTeX
+    - Added gatsby-remark-katex plugin
+    - Added katex package
+    - Updated gatsby-config.js with KaTeX options
+    - Imported KaTeX CSS in layout component
+    - Math now works in posts using:
+        - Inline: $E=mc^2$
+        - Block: $$\int_0^\infty e^{-x^2} dx = \frac{\sqrt{\pi}}{2}$$
 
 --------------------------
 Phase 5: Deploy and Launch
 --------------------------
 
-[ ] Step 16: Deploy to GitHub Pages
-    - Install: npm install --save-dev gh-pages
-    - Add to package.json scripts:
-      "deploy": "gatsby build --prefix-paths && gh-pages -d public"
-    - Run: npm run deploy
+[X] Step 16: Deploy to GitHub Pages
+    - Installed: npm install --save-dev gh-pages
+    - Added to package.json scripts:
+      "deploy": "gatsby build && gh-pages -d public -b om_70x"
+    - Created GitHub Actions workflow for automated deployment
+    - Configured to deploy to om_70x branch
 
-[ ] Step 17: Test Live
-    - Visit choudharyom.com (after DNS setup) or your *.github.io URL to verify.
-    - Check articles, styling, comments, MathJax rendering.
+[X] Step 17: Test Live
+    - Site available at choudharyom.github.io
+    - Verified articles, styling, KaTeX rendering
+    - Configured GitHub Pages to serve from om_70x branch
 
-[ ] Step 18: Soft Launch
-    - Share link with a small group for feedback.
-    - Iterate based on feedback.
+[X] Step 18: Soft Launch
+    - Basic functionality working:
+        - Post creation with EasyMDE
+        - Math rendering with KaTeX
+        - Code highlighting with Prism.js
+        - Responsive layout with Tailwind
+    - Ready for content creation and further enhancements
 

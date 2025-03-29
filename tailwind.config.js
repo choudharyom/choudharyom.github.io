@@ -14,12 +14,14 @@ module.exports = {
       borderWidth: {
         '3': '3px',
       },
-      typography: {
+      typography: (theme) => ({
         DEFAULT: {
           css: {
+            color: theme('colors.gray.900'),
+            maxWidth: 'none',
             pre: {
-              backgroundColor: '#2d2d2d',
-              color: '#f8f8f2',
+              backgroundColor: theme('colors.gray.800'),
+              color: theme('colors.gray.100'),
             },
             code: {
               backgroundColor: 'var(--code-background)',
@@ -34,7 +36,7 @@ module.exports = {
             },
           },
         },
-      },
+      }),
     },
   },
   plugins: [

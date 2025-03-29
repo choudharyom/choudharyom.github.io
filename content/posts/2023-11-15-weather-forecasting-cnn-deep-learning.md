@@ -1,7 +1,9 @@
 ---
 title: "Weather Forecasting with Convolutional Neural Networks: A Mathematical Deep Dive"
 date: "2023-11-15"
-slug: "/weather-forecasting-cnn-deep-learning"
+slug: "weather-forecasting-cnn-deep-learning"
+description: "Discover how Convolutional Neural Networks (CNNs) are revolutionizing weather forecasting through advanced mathematical modeling and machine learning. Learn about Navier-Stokes equations, neural network architectures, and practical implementations in PyTorch for accurate weather prediction."
+searchKeywords: "weather forecasting, CNN, deep learning, neural networks, atmospheric modeling, Python, PyTorch, mathematics, Navier-Stokes equations, machine learning"
 tags: 
   - "Convolutional Neural"
   - "Data Science"
@@ -14,7 +16,6 @@ tags:
   - "Deep Learning"
   - "Atmospheric Modeling"
   - "Python"
-description: "Discover how Convolutional Neural Networks (CNNs) are revolutionizing weather forecasting through advanced mathematical modeling and machine learning"
 ---
 
 ## Introduction: The Mathematical Symphony of Weather Prediction

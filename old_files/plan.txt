@@ -1,4 +1,4 @@
-Project: Build a Medium-like static MVP on GitHub Pages
+Project: Build a static MVP on GitHub Pages
 Domain: choudharyom.com
 Tech: Gatsby (React), EasyMDE, Tailwind/Bootstrap, Markdown files, Disqus, KaTeX, Prism.js
 
@@ -87,7 +87,8 @@ Phase 2: Build the Static MVP
       ---
       title: "Hello World with Math and Code"
       date: "2025-03-28"
-      slug: "/hello-world/"
+      slug: "hello-world"
+      description: "A brief description for SEO and social sharing"
       ---
 
       This is a sample post.
@@ -173,18 +174,19 @@ Phase 3: Add Writing and Publishing Workflow
 
 [X] Step 9: Integrate EasyMDE (Markdown Editor)
     - Created /src/pages/write.js with:
-        - EasyMDE integration (replaced SimpleMDE)
-        - Title input with automatic slug generation
-        - Proper frontmatter generation (title, date, slug)
+        - EasyMDE integration
+        - Title input with automatic slug generation (simplified format)
+        - SEO description field
+        - Proper frontmatter generation
         - Markdown preview and editing features
-        - File download with correct naming format
-        - Markdown tips/cheatsheet
+        - File download with date-based filename
     - Dependencies:
         - Added easymde package
         - Configured Tailwind styling
     - Features:
-        - Auto-formatted frontmatter
-        - YYYY-MM-DD-slug.md filename format
+        - Auto-formatted frontmatter with SEO fields
+        - Clean URLs without dates in slugs
+        - SEO-friendly descriptions
         - Live preview
         - Code syntax highlighting
         - Full toolbar (bold, italic, lists, etc.)
@@ -237,6 +239,20 @@ Phase 4: Enhance Features
     - Math now works in posts using:
         - Inline: $E=mc^2$
         - Block: $$\int_0^\infty e^{-x^2} dx = \frac{\sqrt{\pi}}{2}$$
+
+[X] Step 15.1: Improve SEO and Social Sharing
+    - Added description field to frontmatter
+    - Simplified URL structure (removed dates from slugs)
+    - Enhanced meta tags using react-helmet
+    - Added SEO component for consistent metadata
+    - Dependencies:
+        - gatsby-plugin-react-helmet
+        - react-helmet
+    - Features:
+        - Custom title and description per page
+        - OpenGraph and Twitter card support
+        - Structured data for articles
+        - Improved URL readability
 
 --------------------------
 Phase 5: Deploy and Launch

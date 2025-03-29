@@ -1,7 +1,11 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState, useCallback } from "react"
+import "easymde/dist/easymde.min.css"  // Add this import at the top
 
 const WritePage = () => {
   const [title, setTitle] = useState("")
+  const [description, setDescription] = useState("")
+  const [tags, setTags] = useState([])
+  const [tagInput, setTagInput] = useState("")
   const editorRef = useRef(null)
   const mdeRef = useRef(null)
   const [showFrontmatter, setShowFrontmatter] = useState(true)
@@ -14,15 +18,30 @@ const WritePage = () => {
       .replace(/(^-|-$)+/g, '')
   }
 
-  const generateFrontmatter = () => {
+  const handleAddTag = (e) => {
+    e.preventDefault()
+    if (tagInput && !tags.includes(tagInput)) {
+      setTags([...tags, tagInput])
+      setTagInput("")
+    }
+  }
+
+  const handleRemoveTag = (tagToRemove) => {
+    setTags(tags.filter(tag => tag !== tagToRemove))
+  }
+
+  const generateFrontmatter = useCallback(() => {
     const today = new Date().toISOString().split('T')[0]
     const slug = generateSlug(title)
     return `---
 title: "${title}"
 date: "${today}"
-slug: "/${slug}/"
+slug: "${slug}"
+description: "${description}"
+tags:
+${tags.map(tag => `  - "${tag}"`).join('\n')}
 ---\n\n`
-  }
+  }, [title, description, tags])
 
   useEffect(() => {
     setIsClient(true)
@@ -77,7 +96,7 @@ slug: "/${slug}/"
         mdeRef.current.toTextArea()
       }
     }
-  }, [title, isClient])
+  }, [title, description, tags, isClient, generateFrontmatter])
 
   if (!isClient) {
     return <div>Loading editor...</div>
@@ -102,6 +121,57 @@ slug: "/${slug}/"
         />
       </div>
 
+      {/* Description Section */}
+      <div className="mb-6">
+        <label className="block text-sm font-medium mb-2" htmlFor="description">
+          Post Description (for SEO)
+        </label>
+        <textarea
+          id="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          className="w-full p-2 border rounded focus:ring-2 focus:ring-blue-500"
+          placeholder="Enter a brief description of your post..."
+          rows="3"
+        />
+      </div>
+
+      {/* Tags Section */}
+      <div className="mb-6">
+        <label htmlFor="tagInput" className="block text-sm font-medium mb-2">
+          Tags
+        </label>
+        <div className="flex flex-wrap gap-2 mb-2">
+          {tags.map(tag => (
+            <span key={tag} className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm flex items-center">
+              {tag}
+              <button
+                onClick={() => handleRemoveTag(tag)}
+                className="ml-2 text-blue-600 hover:text-blue-800"
+              >
+                ×
+              </button>
+            </span>
+          ))}
+        </div>
+        <form onSubmit={handleAddTag} className="flex gap-2">
+          <input
+            id="tagInput"
+            type="text"
+            value={tagInput}
+            onChange={(e) => setTagInput(e.target.value)}
+            className="flex-1 p-2 border rounded focus:ring-2 focus:ring-blue-500"
+            placeholder="Add a tag..."
+          />
+          <button
+            type="submit"
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            Add Tag
+          </button>
+        </form>
+      </div>
+
       {/* Frontmatter Preview */}
       {showFrontmatter && (
         <div className="mb-4 p-3 bg-gray-50 rounded border">
@@ -120,8 +190,10 @@ slug: "/${slug}/"
         </div>
       )}
 
-      {/* Editor */}
-      <textarea ref={editorRef} />
+      {/* Editor Container - Add specific styling */}
+      <div className="markdown-editor-container mb-6 border rounded-lg overflow-hidden">
+        <textarea ref={editorRef} className="w-full" />
+      </div>
 
       {/* Tips Section */}
       <div className="mt-4 text-sm text-gray-600">

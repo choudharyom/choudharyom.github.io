@@ -2,11 +2,9 @@ import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
 
-export default function PostTemplate({ data }) {
+const PostTemplate = ({ data }) => {
   const post = data?.markdownRemark
-  if (!post) {
-    return <div>Post not found</div>
-  }
+  if (!post) return <div>Post not found</div>
 
   return (
     <Layout>
@@ -21,6 +19,19 @@ export default function PostTemplate({ data }) {
   )
 }
 
+export default PostTemplate
+
+export const Head = ({ data }) => {
+  const post = data.markdownRemark
+  return (
+    <>
+      <title>{post.frontmatter.title}</title>
+      <meta name="description" content={post.frontmatter.description} />
+    </>
+  )
+}
+
+// Rename to query (not pageQuery) to match Gatsby v5 conventions
 export const query = graphql`
   query($slug: String!) {
     markdownRemark(frontmatter: { slug: { eq: $slug } }) {
@@ -28,7 +39,9 @@ export const query = graphql`
       frontmatter {
         title
         date(formatString: "MMMM DD, YYYY")
+        description
         slug
+        tags
       }
     }
   }

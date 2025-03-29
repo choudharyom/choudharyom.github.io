@@ -1,7 +1,17 @@
 import React, { useEffect, useRef, useState, useCallback } from "react"
 import "easymde/dist/easymde.min.css"  // Add this import at the top
+import { useAuth } from '../components/auth-provider'
+import { navigate } from 'gatsby'
 
 const WritePage = () => {
+  const { isAuthenticated, isWriter, user } = useAuth()
+
+  React.useEffect(() => {
+    if (!isAuthenticated || !isWriter) {
+      navigate('/login')
+    }
+  }, [isAuthenticated, isWriter])
+
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
   const [tags, setTags] = useState([])
@@ -38,10 +48,11 @@ title: "${title}"
 date: "${today}"
 slug: "${slug}"
 description: "${description}"
+author: "${user?.name || 'Anonymous'}"
 tags:
 ${tags.map(tag => `  - "${tag}"`).join('\n')}
 ---\n\n`
-  }, [title, description, tags])
+  }, [title, description, tags, user])
 
   useEffect(() => {
     setIsClient(true)

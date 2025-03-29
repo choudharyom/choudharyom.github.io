@@ -72,13 +72,21 @@ exports.createSchemaCustomization = ({ actions }) => {
   const typeDefs = `
     type MarkdownRemark implements Node {
       frontmatter: Frontmatter!
+      wordCount: WordCount!
     }
+
+    type WordCount {
+      words: Int
+    }
+
     type Frontmatter {
       title: String!
       date: Date! @dateformat
       slug: String!
       description: String
       tags: [String]
+      status: String
+      author: String
     }
   `
   createTypes(typeDefs)

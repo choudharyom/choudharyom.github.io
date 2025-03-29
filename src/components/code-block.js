@@ -1,39 +1,50 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 
 const CodeBlock = ({ children, className }) => {
-  const [copied, setCopied] = useState(false)
-  const language = className?.replace(/language-/, '') || 'text'
-  const languageLabels = {
-    python: 'Python',
-    javascript: 'JavaScript',
-    bash: 'Bash',
-    html: 'HTML',
-    css: 'CSS',
-    text: 'Plain Text'
-  }
+  const language = className?.replace(/language-/, "") || "text";
+  const [buttonText, setButtonText] = useState("Copy");
 
-  const handleCopy = async () => {
-    await navigator.clipboard.writeText(children)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
+  const languageLabels = {
+    python: "Python",
+    javascript: "JavaScript",
+    bash: "Bash",
+    html: "HTML",
+    css: "CSS",
+    text: "Plain Text",
+  };
+
+  const handleCopy = (e) => {
+    const codeBlock = e.currentTarget.closest(".code-block");
+    if (!codeBlock) return;
+
+    const codeElement = codeBlock.querySelector("code");
+    if (!codeElement) return;
+
+    const code = codeElement.textContent;
+    navigator.clipboard.writeText(code).then(() => {
+      setButtonText("Copied!");
+      setTimeout(() => setButtonText("Copy"), 2000);
+    }).catch(err => {
+      console.error("Failed to copy text: ", err);
+    });
+  };
 
   return (
-    <div className="relative">
+    <div className="code-block">
       <div className="code-header">
-        <span>{languageLabels[language] || language}</span>
-        <button 
-          onClick={handleCopy} 
+        <span className="code-language">{languageLabels[language] || language}</span>
+        <button
           className="copy-button"
+          onClick={handleCopy}
         >
-          {copied ? 'Copied!' : 'Copy'}
+          {buttonText}
         </button>
       </div>
-      <pre className={className}>
-        <code className={className}>{children}</code>
+      <pre className={className || ""}>
+        <code>{children}</code>
       </pre>
     </div>
-  )
-}
+  );
+};
 
-export default CodeBlock
+export default CodeBlock;

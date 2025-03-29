@@ -1,5 +1,7 @@
 import React from "react"
 import CodeBlock from "./src/components/code-block"
+import { Auth0Provider } from "@auth0/auth0-react"
+import { AuthProvider } from "./src/components/auth-provider"
 
 // Import base Prism first
 import Prism from "prismjs"
@@ -19,8 +21,17 @@ require("prismjs/components/prism-bash")
 require("prismjs/components/prism-css")
 require("prismjs/components/prism-json")
 
-// Manually initialize Prism
+// Add copy code functionality
 export const onClientEntry = () => {
+  window.copyCode = (button) => {
+    const pre = button.closest('.code-block').querySelector('pre');
+    const code = pre.querySelector('code').textContent;
+    navigator.clipboard.writeText(code).then(() => {
+      button.textContent = 'Copied!';
+      setTimeout(() => button.textContent = 'Copy', 2000);
+    });
+  }
+  // Manually initialize Prism
   Prism.manual = true
 }
 
@@ -37,7 +48,19 @@ export const wrapRootElement = ({ element }) => {
     pre: props => <CodeBlock {...props} />
   }
 
-  return React.cloneElement(element, {
-    components
-  })
+  return (
+    <Auth0Provider
+      domain={process.env.GATSBY_AUTH0_DOMAIN}
+      clientId={process.env.GATSBY_AUTH0_CLIENT_ID}
+      authorizationParams={{
+        redirect_uri: process.env.GATSBY_AUTH0_CALLBACK_URL,
+      }}
+      cacheLocation="localstorage"
+      loginUrl={process.env.GATSBY_AUTH0_LOGIN_URI}
+    >
+      <AuthProvider>
+        {React.cloneElement(element, { components })}
+      </AuthProvider>
+    </Auth0Provider>
+  )
 }

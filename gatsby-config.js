@@ -31,7 +31,12 @@ module.exports = {
           {
             resolve: `gatsby-remark-katex`,
             options: {
-              strict: `ignore`
+              strict: `ignore`,
+              throwOnError: false,
+              trust: true,
+              macros: {
+                "\\f": "\\mathbf{f}"
+              }
             }
           },
           {
@@ -39,8 +44,8 @@ module.exports = {
             options: {
               classPrefix: "language-",
               inlineCodeMarker: null,
-              showLineNumbers: true,
-              noInlineHighlight: false,
+              showLineNumbers: true, // Enable line numbers via Prism.js
+              noInlineHighlight: true,
             },
           }
         ],
@@ -52,5 +57,17 @@ module.exports = {
     "gatsby-plugin-image",
     "gatsby-plugin-sharp",
     "gatsby-transformer-sharp",
+
+    // Remove or comment out this section
+    // Auth0 plugin
+    /*{
+      resolve: 'gatsby-plugin-auth0',
+      options: {
+        domain: process.env.AUTH0_DOMAIN,
+        clientId: process.env.AUTH0_CLIENT_ID,
+        callback: '/callback',
+        afterCallback: '/dashboard'
+      }
+    }*/
   ]
 }

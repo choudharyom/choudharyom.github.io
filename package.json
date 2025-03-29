@@ -23,7 +23,7 @@
     "build": "gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
-    "deploy": "gatsby build && gh-pages -d public -b om_70x"
+    "deploy": "gatsby build && gh-pages -d public"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.16",

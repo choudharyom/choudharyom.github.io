@@ -1,7 +1,10 @@
 class MarketDataService {
     constructor() {
         this.baseUrl = 'https://finnhub.io/api/v1';
-        this.apiKey = 'YOUR_FINNHUB_API_KEY'; // Replace with your Finnhub API key
+        this.apiKey = window.env.get('FINNHUB_API_KEY');
+        if (!this.apiKey) {
+            console.error('FINNHUB_API_KEY not found in .env file');
+        }
         this.socket = null;
         this.subscribers = new Map();
     }

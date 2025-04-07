@@ -1,0 +1,176 @@
+/* Theme Variables */
+:root {
+    /* Light Theme */
+    --light-bg-primary: #ffffff;
+    --light-bg-secondary: #f8f9fa;
+    --light-bg-tertiary: #e9ecef;
+    --light-text-primary: #212529;
+    --light-text-secondary: #6c757d;
+    --light-border-color: #dee2e6;
+    --light-accent-color: #2196F3;
+    --light-hover-color: #f8f9fa;
+    --light-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --light-chart-bg: #ffffff;
+    --light-chart-grid: rgba(0, 0, 0, 0.1);
+    
+    /* Dark Theme */
+    --dark-bg-primary: #131722;
+    --dark-bg-secondary: #1e222d;
+    --dark-bg-tertiary: #2a2e39;
+    --dark-text-primary: #d1d4dc;
+    --dark-text-secondary: #787b86;
+    --dark-border-color: #2a2e39;
+    --dark-accent-color: #2196F3;
+    --dark-hover-color: #2a2e39;
+    --dark-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    --dark-chart-bg: #131722;
+    --dark-chart-grid: rgba(255, 255, 255, 0.1);
+}
+
+/* Light Theme */
+body:not(.theme-dark) {
+    --bg-primary: var(--light-bg-primary);
+    --bg-secondary: var(--light-bg-secondary);
+    --bg-tertiary: var(--light-bg-tertiary);
+    --text-primary: var(--light-text-primary);
+    --text-secondary: var(--light-text-secondary);
+    --border-color: var(--light-border-color);
+    --hover-color: var(--light-hover-color);
+    --shadow: var(--light-shadow);
+    --chart-bg: var(--light-chart-bg);
+    --chart-grid: var(--light-chart-grid);
+}
+
+/* Dark Theme */
+body.theme-dark {
+    --bg-primary: var(--dark-bg-primary);
+    --bg-secondary: var(--dark-bg-secondary);
+    --bg-tertiary: var(--dark-bg-tertiary);
+    --text-primary: var(--dark-text-primary);
+    --text-secondary: var(--dark-text-secondary);
+    --border-color: var(--dark-border-color);
+    --hover-color: var(--dark-hover-color);
+    --shadow: var(--dark-shadow);
+    --chart-bg: var(--dark-chart-bg);
+    --chart-grid: var(--dark-chart-grid);
+}
+
+/* Theme Transitions */
+body {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body * {
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* Chart Theme Overrides */
+.theme-dark .tv-lightweight-charts {
+    background-color: var(--dark-chart-bg) !important;
+}
+
+body:not(.theme-dark) .tv-lightweight-charts {
+    background-color: var(--light-chart-bg) !important;
+}
+
+/* Component Theme-Specific Styles */
+
+/* Buttons */
+.theme-dark .btn-primary {
+    background-color: var(--dark-accent-color);
+}
+
+body:not(.theme-dark) .btn-primary {
+    background-color: var(--light-accent-color);
+}
+
+/* Inputs */
+.theme-dark input, .theme-dark select, .theme-dark textarea {
+    background-color: var(--dark-bg-tertiary);
+    border-color: var(--dark-border-color);
+    color: var(--dark-text-primary);
+}
+
+body:not(.theme-dark) input, 
+body:not(.theme-dark) select, 
+body:not(.theme-dark) textarea {
+    background-color: var(--light-bg-primary);
+    border-color: var(--light-border-color);
+    color: var(--light-text-primary);
+}
+
+/* Modal */
+.theme-dark .modal-content {
+    background-color: var(--dark-bg-secondary);
+    box-shadow: var(--dark-shadow);
+}
+
+body:not(.theme-dark) .modal-content {
+    background-color: var(--light-bg-primary);
+    box-shadow: var(--light-shadow);
+}
+
+/* Scrollbar */
+/* Webkit browsers */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.theme-dark ::-webkit-scrollbar-thumb {
+    background-color: var(--dark-bg-tertiary);
+    border-radius: 4px;
+}
+
+body:not(.theme-dark) ::-webkit-scrollbar-thumb {
+    background-color: var(--light-bg-tertiary);
+    border-radius: 4px;
+}
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--bg-tertiary) transparent;
+}
+
+/* Chart Elements */
+.theme-dark .chart-controls button {
+    color: var(--dark-text-secondary);
+}
+
+body:not(.theme-dark) .chart-controls button {
+    color: var(--light-text-secondary);
+}
+
+/* Indicators */
+.theme-dark .indicator-value {
+    background-color: var(--dark-bg-tertiary);
+    border-color: var(--dark-border-color);
+}
+
+body:not(.theme-dark) .indicator-value {
+    background-color: var(--light-bg-tertiary);
+    border-color: var(--light-border-color);
+}
+
+/* Watchlist */
+.theme-dark .watchlist-item:hover {
+    background-color: var(--dark-hover-color);
+}
+
+body:not(.theme-dark) .watchlist-item:hover {
+    background-color: var(--light-hover-color);
+}
+
+/* Bottom Panel */
+.theme-dark .panel-tab.active {
+    border-color: var(--dark-accent-color);
+}
+
+body:not(.theme-dark) .panel-tab.active {
+    border-color: var(--light-accent-color);
+}

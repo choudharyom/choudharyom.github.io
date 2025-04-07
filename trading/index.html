@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/chart.css">
+    <link rel="stylesheet" href="assets/css/layout.css">
+    <link rel="stylesheet" href="assets/css/themes.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+</head>
+<body class="theme-dark">
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <div class="loading-text">Loading market data...</div>
+    </div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <div class="logo">
+                    <img src="assets/img/logo.svg" alt="Trade" id="logoImg">
+                    <span>Trade</span>
+                </div>
+                <div class="symbol-search">
+                    <input type="text" id="symbolSearch" placeholder="Search symbol...">
+                    <button id="searchBtn"><i class="fas fa-search"></i></button>
+                    <div class="search-results" id="searchResults"></div>
+                </div>
+            </div>
+            <div class="header-center">
+                <div class="timeframe-selector">
+                    <button class="timeframe-btn" data-timeframe="1m">1m</button>
+                    <button class="timeframe-btn" data-timeframe="5m">5m</button>
+                    <button class="timeframe-btn active" data-timeframe="15m">15m</button>
+                    <button class="timeframe-btn" data-timeframe="1h">1h</button>
+                    <button class="timeframe-btn" data-timeframe="4h">4h</button>
+                    <button class="timeframe-btn" data-timeframe="1D">1D</button>
+                    <button class="timeframe-btn" data-timeframe="1W">1W</button>
+                </div>
+            </div>
+            <div class="header-right">
+                <button id="themeToggle" class="icon-btn"><i class="fas fa-moon"></i></button>
+                <div class="auth-container">
+                    <button id="loginBtn" class="auth-btn">Login</button>
+                    <button id="registerBtn" class="auth-btn">Register</button>
+                    <div class="user-menu" id="userMenu">
+                        <span id="username">Username</span>
+                        <button id="logoutBtn"><i class="fas fa-sign-out-alt"></i></button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-menu">
+                    <button class="sidebar-item active" data-tab="watchlist">
+                        <i class="fas fa-star"></i>
+                        <span>Watchlist</span>
+                    </button>
+                    <button class="sidebar-item" data-tab="indicators">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Indicators</span>
+                    </button>
+                    <button class="sidebar-item" data-tab="drawing">
+                        <i class="fas fa-pencil-alt"></i>
+                        <span>Drawing</span>
+                    </button>
+                    <button class="sidebar-item" data-tab="alerts">
+                        <i class="fas fa-bell"></i>
+                        <span>Alerts</span>
+                    </button>
+                    <button class="sidebar-item" data-tab="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </button>
+                </div>
+                
+                <!-- Tab Content -->
+                <div class="sidebar-content">
+                    <!-- Watchlist Tab -->
+                    <div class="tab-panel active" id="watchlistTab">
+                        <div class="watchlist-header">
+                            <h3>Watchlist</h3>
+                            <button id="addWatchlistBtn"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <div class="watchlist-selector">
+                            <select id="watchlistSelect">
+                                <option value="default">Default</option>
+                                <option value="crypto">Crypto</option>
+                                <option value="forex">Forex</option>
+                            </select>
+                        </div>
+                        <div class="watchlist-table">
+                            <div class="watchlist-table-header">
+                                <div class="col">Symbol</div>
+                                <div class="col">Last Price</div>
+                                <div class="col">Change %</div>
+                            </div>
+                            <div class="watchlist-items" id="watchlistItems">
+                                <!-- Watchlist items will be added dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Indicators Tab -->
+                    <div class="tab-panel" id="indicatorsTab">
+                        <h3>Indicators</h3>
+                        <div class="indicator-categories">
+                            <div class="indicator-category">
+                                <h4>Trend</h4>
+                                <ul class="indicator-list">
+                                    <li data-indicator="sma">
+                                        <span>Simple Moving Average (SMA)</span>
+                                        <button class="add-indicator-btn"><i class="fas fa-plus"></i></button>
+                                    </li>
+                                    <li data-indicator="ema">
+                                        <span>Exponential Moving Average (EMA)</span>
+                                        <button class="add-indicator-btn"><i class="fas fa-plus"></i></button>
+                                    </li>
+                                    <li data-indicator="bollinger">
+                                        <span>Bollinger Bands</span>
+                                        <button class="add-indicator-btn"><i class="fas fa-plus"></i></button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="indicator-category">
+                                <h4>Oscillators</h4>
+                                <ul class="indicator-list">
+                                    <li data-indicator="rsi">
+                                        <span>Relative Strength Index (RSI)</span>
+                                        <button class="add-indicator-btn"><i class="fas fa-plus"></i></button>
+                                    </li>
+                                    <li data-indicator="macd">
+                                        <span>MACD</span>
+                                        <button class="add-indicator-btn"><i class="fas fa-plus"></i></button>
+                                    </li>
+                                    <li data-indicator="stochastic">
+                                        <span>Stochastic</span>
+                                        <button class="add-indicator-btn"><i class="fas fa-plus"></i></button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="indicator-category">
+                                <h4>Volume</h4>
+                                <ul class="indicator-list">
+                                    <li data-indicator="volume">
+                                        <span>Volume</span>
+                                        <button class="add-indicator-btn"><i class="fas fa-plus"></i></button>
+                                    </li>
+                                    <li data-indicator="obv">
+                                        <span>On-Balance Volume (OBV)</span>
+                                        <button class="add-indicator-btn"><i class="fas fa-plus"></i></button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="applied-indicators" id="appliedIndicators">
+                            <h4>Applied Indicators</h4>
+                            <ul id="indicatorsList">
+                                <!-- Applied indicators will be added here -->
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Drawing Tab -->
+                    <div class="tab-panel" id="drawingTab">
+                        <h3>Drawing Tools</h3>
+                        <div class="drawing-tools">
+                            <button class="drawing-tool" data-tool="line">
+                                <i class="fas fa-slash"></i>
+                                <span>Line</span>
+                            </button>
+                            <button class="drawing-tool" data-tool="horizontalLine">
+                                <i class="fas fa-minus"></i>
+                                <span>Horizontal</span>
+                            </button>
+                            <button class="drawing-tool" data-tool="verticalLine">
+                                <i class="fas fa-grip-lines-vertical"></i>
+                                <span>Vertical</span>
+                            </button>
+                            <button class="drawing-tool" data-tool="rectangle">
+                                <i class="far fa-square"></i>
+                                <span>Rectangle</span>
+                            </button>
+                            <button class="drawing-tool" data-tool="fibonacci">
+                                <i class="fas fa-wave-square"></i>
+                                <span>Fibonacci</span>
+                            </button>
+                            <button class="drawing-tool" data-tool="text">
+                                <i class="fas fa-font"></i>
+                                <span>Text</span>
+                            </button>
+                        </div>
+                        <div class="drawing-properties">
+                            <h4>Properties</h4>
+                            <div class="property-group">
+                                <label>Color</label>
+                                <input type="color" id="drawingColor" value="#1E88E5">
+                            </div>
+                            <div class="property-group">
+                                <label>Line Width</label>
+                                <input type="range" id="lineWidth" min="1" max="5" value="2">
+                            </div>
+                            <div class="property-group">
+                                <button id="clearDrawings" class="full-width-btn">Clear All</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Alerts Tab -->
+                    <div class="tab-panel" id="alertsTab">
+                        <h3>Alerts</h3>
+                        <button id="createAlertBtn" class="full-width-btn">
+                            <i class="fas fa-plus"></i> Create Alert
+                        </button>
+                        <div class="alerts-list" id="alertsList">
+                            <!-- Alerts will be added here -->
+                            <div class="empty-state">
+                                <i class="fas fa-bell-slash"></i>
+                                <p>No alerts configured</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Settings Tab -->
+                    <div class="tab-panel" id="settingsTab">
+                        <h3>Settings</h3>
+                        <div class="settings-group">
+                            <h4>Chart Settings</h4>
+                            <div class="setting-item">
+                                <label for="chartType">Chart Type</label>
+                                <select id="chartType">
+                                    <option value="candlestick">Candlestick</option>
+                                    <option value="line">Line</option>
+                                    <option value="bar">Bar</option>
+                                    <option value="area">Area</option>
+                                    <option value="heiken-ashi">Heiken-Ashi</option>
+                                </select>
+                            </div>
+                            <div class="setting-item">
+                                <label for="gridLines">Grid Lines</label>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="gridLines" checked>
+                                    <span class="slider"></span>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <label for="crosshair">Crosshair</label>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="crosshair" checked>
+                                    <span class="slider"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-group">
+                            <h4>Interface</h4>
+                            <div class="setting-item">
+                                <label for="darkMode">Dark Mode</label>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="darkMode" checked>
+                                    <span class="slider"></span>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <label for="autoSave">Auto-Save Layouts</label>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="autoSave" checked>
+                                    <span class="slider"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Chart Area -->
+            <div class="chart-container">
+                <div class="chart-header">
+                    <div class="symbol-info">
+                        <h2 id="currentSymbol">AAPL</h2>
+                        <span id="companyName">Apple Inc.</span>
+                    </div>
+                    <div class="price-info">
+                        <div class="current-price" id="currentPrice">$178.72</div>
+                        <div class="price-change positive" id="priceChange">+1.25 (0.70%)</div>
+                    </div>
+                    <div class="chart-controls">
+                        <div class="chart-type-selector">
+                            <button class="chart-type-btn active" data-type="candlestick"><i class="fas fa-chart-bar"></i></button>
+                            <button class="chart-type-btn" data-type="line"><i class="fas fa-chart-line"></i></button>
+                            <button class="chart-type-btn" data-type="area"><i class="fas fa-chart-area"></i></button>
+                        </div>
+                        <div class="chart-actions">
+                            <button id="fullscreenBtn" class="icon-btn"><i class="fas fa-expand"></i></button>
+                            <button id="screenshotBtn" class="icon-btn"><i class="fas fa-camera"></i></button>
+                            <button id="settingsBtn" class="icon-btn"><i class="fas fa-cog"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-wrapper">
+                    <div id="chart"></div>
+                </div>
+                <!-- Additional Chart Panels for Indicators -->
+                <div class="indicator-panels" id="indicatorPanels">
+                    <!-- Additional charts for separate indicators like RSI, MACD will be added here -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bottom Panel -->
+        <div class="bottom-panel">
+            <div class="panel-tabs">
+                <button class="panel-tab active" data-panel="marketOverview">Market Overview</button>
+                <button class="panel-tab" data-panel="economicCalendar">Economic Calendar</button>
+                <button class="panel-tab" data-panel="news">News</button>
+            </div>
+            <div class="panel-content">
+                <div class="panel-item active" id="marketOverviewPanel">
+                    <div class="market-overview-container">
+                        <div class="market-section">
+                            <h4>Major Indices</h4>
+                            <div class="market-items" id="majorIndices">
+                                <!-- Market items will be added dynamically -->
+                            </div>
+                        </div>
+                        <div class="market-section">
+                            <h4>Most Active</h4>
+                            <div class="market-items" id="mostActive">
+                                <!-- Market items will be added dynamically -->
+                            </div>
+                        </div>
+                        <div class="market-section">
+                            <h4>Crypto</h4>
+                            <div class="market-items" id="cryptoMarket">
+                                <!-- Market items will be added dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-item" id="economicCalendarPanel">
+                    <div class="economic-calendar-container" id="economicCalendar">
+                        <!-- Economic calendar data will be added dynamically -->
+                        <div class="loading-message">Loading economic calendar...</div>
+                    </div>
+                </div>
+                <div class="panel-item" id="newsPanel">
+                    <div class="news-container" id="newsContainer">
+                        <!-- News items will be added dynamically -->
+                        <div class="loading-message">Loading news...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Login</h3>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Login</button>
+                        <p>Don't have an account? <a href="#" id="showRegisterModal">Register</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create Account</h3>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="registerUsername">Username</label>
+                        <input type="text" id="registerUsername" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <input type="email" id="registerEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Password</label>
+                        <input type="password" id="registerPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Register</button>
+                        <p>Already have an account? <a href="#" id="showLoginModal">Login</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert Creation Modal -->
+    <div class="modal" id="alertModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create Alert</h3>
+                <button class="close-modal"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="alertForm">
+                    <div class="form-group">
+                        <label for="alertSymbol">Symbol</label>
+                        <input type="text" id="alertSymbol" value="AAPL" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="alertCondition">Condition</label>
+                        <select id="alertCondition" required>
+                            <option value="price_above">Price Above</option>
+                            <option value="price_below">Price Below</option>
+                            <option value="price_change">% Change</option>
+                            <option value="volume_above">Volume Above</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="alertValue">Value</label>
+                        <input type="number" id="alertValue" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="alertExpiration">Expiration</label>
+                        <select id="alertExpiration">
+                            <option value="day">End of Day</option>
+                            <option value="week">End of Week</option>
+                            <option value="month">End of Month</option>
+                            <option value="never">Never</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">Create Alert</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/marketData.js"></script>
+    <script src="assets/js/indicators.js"></script>
+    <script src="assets/js/chart.js"></script>
+    <script src="assets/js/watchlist.js"></script>
+    <script src="assets/js/drawing.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

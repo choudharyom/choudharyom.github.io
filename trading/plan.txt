@@ -22,56 +22,61 @@
 [X] Add volume indicator
 [X] Add price scale and time scale
 [X] Implement crosshair
-[X] Add chart screenshot functionality
-[X] Add fullscreen mode
+[ ] Add chart screenshot functionality
+[ ] Add fullscreen mode
+[ ] Implement company name display
+[ ] Add price change calculation
+[ ] Add settings panel integration
 
 ## Technical Indicators
 [X] Implement SMA (Simple Moving Average)
 [X] Implement EMA (Exponential Moving Average)
 [X] Implement Bollinger Bands
 [X] Implement RSI (Relative Strength Index)
-[X] Add indicator management UI
-[X] Allow indicator parameter customization
+[ ] Add indicator management UI
+[ ] Allow indicator parameter customization
 [ ] Add MACD indicator
 [ ] Add Stochastic Oscillator
 [ ] Add ATR (Average True Range)
 [ ] Add custom indicator support
+[ ] Implement separate indicator panels
 
 ## Drawing Tools
-[X] Implement line drawing
-[X] Add horizontal/vertical lines
-[X] Add rectangle tool
-[X] Add Fibonacci retracement
-[X] Add text annotation
-[X] Implement drawing properties panel
+[ ] Implement line drawing
+[ ] Add horizontal/vertical lines
+[ ] Add rectangle tool
+[ ] Add Fibonacci retracement
+[ ] Add text annotation
+[ ] Implement drawing properties panel
 [ ] Add trend lines
-[ ] Add Fibonacci fan
-[ ] Add Andrews' Pitchfork
-[ ] Add Elliott Wave tool
+[ ] Add drawing persistence
+[ ] Implement clear drawings functionality
+[ ] Add drawing properties controls
 
 ## Market Data Integration
 [X] Implement Finnhub API integration
 [X] Set up WebSocket for real-time data
-[X] Implement symbol search
-[X] Add price formatting
-[X] Handle market data error states
-[ ] Add alternative data sources
-[ ] Implement market depth/order book
-[ ] Add trade history panel
-[ ] Integrate multiple exchanges
+[ ] Implement symbol search with suggestions
+[ ] Add comprehensive price formatting
+[ ] Handle market data error states
+[ ] Implement Market Overview Panel
+    [ ] Major Indices data
+    [ ] Most Active stocks
+    [ ] Crypto market data
+[ ] Add Economic Calendar integration
+[ ] Implement News feed with real-time updates
 
 ## Watchlist Features
 [X] Create watchlist UI
-[X] Implement multiple watchlists
-[X] Add symbol add/remove functionality
-[X] Implement real-time price updates
-[X] Add sorting functionality
+[ ] Implement watchlist CRUD operations
+[ ] Add real-time price updates
+[ ] Implement watchlist selector
+[ ] Add sorting functionality
 [ ] Add custom column support
-[ ] Implement watchlist sharing
 [ ] Add price alerts for watchlist items
 [ ] Add export/import functionality
 
-## Authentication System
+## Authentication System (Optional)
 [X] Implement user registration
 [X] Add login functionality
 [X] Add session management
@@ -81,42 +86,43 @@
 [ ] Add OAuth integration
 [ ] Add two-factor authentication
 
-## Additional Features
-[X] Implement economic calendar panel
-[X] Add market overview section
-[X] Add news feed
-[ ] Implement alerts system
-[ ] Add paper trading
-[ ] Add portfolio tracking
-[ ] Implement screener functionality
-[ ] Add social trading features
-[ ] Add chart templates
-[ ] Implement chart sharing
+## Settings and Preferences
+[ ] Implement dark/light mode toggle
+[ ] Add grid lines toggle
+[ ] Implement crosshair toggle
+[ ] Add auto-save layouts feature
+[ ] Implement layout persistence
+[ ] Add user preferences storage
 
-## Performance Optimization
-[X] Implement data caching
-[X] Add lazy loading for panels
-[ ] Optimize WebSocket connections
-[ ] Implement data compression
-[ ] Add service worker for offline support
-[ ] Optimize chart rendering
-[ ] Implement virtual scrolling for large datasets
+## Alert System
+[ ] Implement alert creation interface
+[ ] Add alert notifications
+[ ] Handle alert expiration
+[ ] Implement alert management
+[ ] Add alert history
+[ ] Implement alert types (price, volume, technical)
+
+## Error Handling and UX
+[ ] Add loading states for data fetching
+[ ] Implement error handling
+[ ] Add user notifications system
+[ ] Implement responsive design adjustments
+[ ] Add offline mode support
+[ ] Implement data validation
 
 ## Documentation
 [X] Create basic README
 [ ] Add API documentation
 [ ] Create user guide
 [ ] Add contributing guidelines
-[ ] Document chart patterns
-[ ] Add keyboard shortcuts guide
+[ ] Document keyboard shortcuts
 
 ## Testing
-[ ] Add unit tests for utilities
+[ ] Add unit tests
 [ ] Implement integration tests
 [ ] Add E2E testing
 [ ] Create test documentation
 [ ] Add performance benchmarks
-[ ] Implement stress testing
 
 ## Deployment
 [ ] Set up CI/CD pipeline
@@ -124,7 +130,6 @@
 [ ] Add error tracking
 [ ] Implement analytics
 [ ] Set up monitoring
-[ ] Create backup strategy
 
 ## Security
 [X] Implement basic authentication
@@ -133,14 +138,33 @@
 [ ] Add CSRF protection
 [ ] Set up security headers
 [ ] Implement input validation
-[ ] Add audit logging
 
-## Future Enhancements
-[ ] Multi-language support
-[ ] Mobile app development
-[ ] Desktop application
-[ ] API marketplace
-[ ] Premium features
-[ ] Community features
-[ ] Educational content
-[ ] Trading bot integration
+# Plan.txt
+
+HIGH PRIORITY:
+1. Implement real-time websocket connection for live price updates
+2. Add error handling for API failures and network issues
+3. Implement data caching system for better performance
+4. Set up user authentication and session management
+5. Add chart indicator calculations and rendering
+
+MEDIUM PRIORITY:
+6. Implement drawing tools functionality
+7. Add alert system backend logic
+8. Create watchlist management system
+9. Implement economic calendar integration
+10. Add news feed integration
+
+LOW PRIORITY:
+11. Add chart settings persistence
+12. Implement chart screenshot functionality
+13. Add social sharing features
+14. Create user preferences system
+15. Add mobile-responsive optimizations
+
+TECHNICAL DEBT:
+- Optimize API calls and data handling
+- Implement proper error logging
+- Add unit tests for critical components
+- Improve code documentation
+- Set up continuous integration pipeline

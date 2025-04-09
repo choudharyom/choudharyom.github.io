@@ -1,0 +1,28 @@
+.main {
+    padding-top: 6rem;
+    padding-bottom: 2rem;
+    min-height: calc(100vh - 12rem);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* Medium screens and up */
+@media (min-width: 768px) {
+    .container {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+}
+
+/* Larger screens */
+@media (min-width: 1280px) {
+    .container {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}

@@ -1,26 +1,39 @@
-import Header from './Header'
-import Footer from './Footer'
+import { useEffect } from 'react';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
+import styles from '@/styles/Layout.module.css';
 
-export default function Layout({ children }) {
+const Layout = ({ children }) => {
+  // Add a scroll progress bar for reading experience
+  useEffect(() => {
+    const progressBar = document.createElement('div');
+    progressBar.className = styles.progressBar;
+    document.body.appendChild(progressBar);
+
+    const updateProgress = () => {
+      const scrollPosition = window.scrollY;
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercentage = (scrollPosition / scrollHeight) * 100;
+      progressBar.style.width = `${scrollPercentage}%`;
+    };
+
+    window.addEventListener('scroll', updateProgress);
+    
+    return () => {
+      window.removeEventListener('scroll', updateProgress);
+      if (document.body.contains(progressBar)) {
+        document.body.removeChild(progressBar);
+      }
+    };
+  }, []);
+
   return (
-    <div className="layout">
+    <div className={styles.layout}>
       <Header />
-      <main className="main-content">
-        {children}
-      </main>
+      <main className={styles.main}>{children}</main>
       <Footer />
-
-      <style jsx>{`
-        .layout {
-          min-height: 100vh;
-          display: flex;
-          flex-direction: column;
-        }
-        .main-content {
-          flex: 1;
-          padding: 20px;
-        }
-      `}</style>
     </div>
-  )
-}
+  );
+};
+
+export default Layout;

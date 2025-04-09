@@ -1,0 +1,161 @@
+.footer {
+  background-color: #f6f9fc;
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
+.footerContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.footerFlexContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.footerAbout {
+  margin-bottom: 1.5rem;
+}
+
+.footerTitle {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #1a73e8;
+}
+
+.footerDescription {
+  margin-top: 0.5rem;
+  color: #757575;
+}
+
+.footerCategories {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.footerLinks {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.footerCategoryTitle,
+.footerLinksTitle {
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #292929;
+}
+
+.footerList {
+  list-style: none;
+  padding: 0;
+}
+
+.footerListItem {
+  margin-bottom: 0.5rem;
+}
+
+.footerLink {
+  color: #757575;
+  text-decoration: none;
+}
+
+.footerLink:hover {
+  color: #1a73e8;
+}
+
+.footerConnect {
+  margin-top: 1.5rem;
+}
+
+.footerConnectTitle {
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #292929;
+}
+
+.footerSocialLinks {
+  display: flex;
+  gap: 1rem;
+}
+
+.footerSocialLink {
+  color: #757575;
+}
+
+.footerSocialLink:hover {
+  color: #1a73e8;
+}
+
+.footerCopyright {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e6e6e6;
+  text-align: center;
+  color: #757575;
+}
+
+/* Dark Mode Styles */
+.darkFooter {
+  background-color: #212121;
+}
+
+.darkFooterTitle {
+  color: #4285f4;
+}
+
+.darkFooterDescription,
+.darkFooterLink,
+.darkFooterSocialLink,
+.darkFooterCopyright {
+  color: #9e9e9e;
+}
+
+.darkFooterLink:hover,
+.darkFooterSocialLink:hover {
+  color: #4285f4;
+}
+
+.darkFooterCopyright {
+  border-top-color: #424242;
+}
+
+/* Medium Screen (md) Styles */
+@media (min-width: 768px) {
+  .footerFlexContainer {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .footerAbout {
+    width: 30%;
+  }
+
+  .footerCategories {
+    width: 20%;
+    grid-template-columns: 1fr;
+  }
+
+  .footerLinks {
+    width: 20%;
+    grid-template-columns: 1fr;
+  }
+
+  .footerConnect {
+    width: 30%;
+    margin-top: 0;
+  }
+}
+
+/* Large Screen (lg) Styles */
+@media (min-width: 1024px) {
+  .footerContainer {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}

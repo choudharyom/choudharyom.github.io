@@ -1,0 +1,113 @@
+.header {
+    background-color: white;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    z-index: 50;
+}
+
+.headerContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.headerLogo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #1a73e8;
+}
+
+.headerNav {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .headerNav {
+        display: flex;
+        gap: 2rem;
+    }
+}
+
+.headerNavLink {
+    color: #292929;
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+
+.headerNavLink:hover {
+    color: #1a73e8;
+}
+
+.headerActions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.headerDarkModeToggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.25rem;
+    color: #757575;
+    transition: color 0.2s ease-in-out;
+}
+
+.headerDarkModeToggle:hover {
+    color: #1a73e8;
+}
+
+.headerMenuButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.25rem;
+    color: #757575;
+}
+
+.headerProfile {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .headerProfile {
+        display: block;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+    }
+}
+
+/* Dark Mode Styles */
+.darkHeader {
+    background-color: #121212;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.darkHeaderLogo {
+    color: #4285f4;
+}
+
+.darkHeaderNavLink {
+    color: #e0e0e0;
+}
+
+.darkHeaderNavLink:hover {
+    color: #4285f4;
+}
+
+.darkHeaderDarkModeToggle {
+    color: #9e9e9e;
+}
+
+.darkHeaderDarkModeToggle:hover {
+    color: #4285f4;
+}
+
+.darkHeaderMenuButton {
+    color: #9e9e9e;
+}

@@ -1,67 +1,55 @@
-# Personal Blog with Gatsby
+# Personal Portfolio & Blog
 
-A Medium-like static blog built with Gatsby, React, and EasyMDE.
+A Next.js-powered portfolio and blog website showcasing projects, neural network visualizations, and technical writing.
 
-## Writing Posts
+## Features
 
-### Quick Start
+- Responsive Design
+- Blog with MDX Support
+- Neural Network Visualizations
+- Dark/Light Theme
+- Authentication System
 
-1. Visit `/write` on your local development server
-2. Enter a title in the "Post Title" field
-3. Write your content using the Markdown editor
-4. Click the download button (↓) in the toolbar to save your post
+## Tech Stack
 
-### Post Structure
+- Next.js 13
+- React 18
+- TensorFlow.js
+- CSS Modules
+- ESLint
 
-Posts are automatically formatted with:
-- Filename: `YYYY-MM-DD-slug.md`
-- Frontmatter:
-  ```yaml
-  ---
-  title: "Your Title"
-  date: "YYYY-MM-DD"
-  slug: "/your-title-as-slug/"
-  ---
-  ```
+## Getting Started
 
-### Markdown Tips
-
-Basic syntax:
-- `# Header 1`, `## Header 2`, `### Header 3`
-- `**bold**` or `__bold__`
-- `*italic*` or `_italic_`
-- ``` `code` ```
-- Code blocks:
-  ````
-  ```language
-  your code here
-  ```
-  ````
-- `[Link text](URL)`
-- `![Alt text](image URL)`
-
-### Publishing Flow
-
-1. Download your post using the editor
-2. Move the .md file to `/content/posts/`
-3. Commit and push to GitHub
-4. Site will auto-rebuild with new content
-
-## Development
-
+1. **Clone the repository**
 ```bash
-# Install dependencies
-npm install
-
-# Start development server
-npm run develop
-
-# Build site
-npm run build
-
-# Serve built site
-npm run serve
+git clone https://github.com/choudharyom/choudharyom.github.io.git
+cd choudharyom.github.io
 ```
 
-Visit `http://localhost:8000` to view your site.
-Visit `http://localhost:8000/write` to create new posts.
+2. **Install dependencies**
+```bash
+npm install
+```
+
+3. **Run development server**
+```bash
+npm run dev
+```
+
+4. **Build for production**
+```bash
+npm run build
+npm start
+```
+
+## Project Structure
+
+- `components/` - Reusable React components
+- `pages/` - Next.js pages and API routes
+- `styles/` - Global styles and CSS modules
+- `lib/` - Utility functions and APIs
+- `public/` - Static assets
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first.

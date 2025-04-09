@@ -1,56 +1,29 @@
 {
-  "name": "choudharyom.github.io",
-  "version": "1.0.0",
+  "name": "choudharyom-blog",
+  "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "@auth0/auth0-react": "^2.2.4",
-    "@auth0/auth0-spa-js": "^2.1.3",
-    "@mdx-js/react": "^2.3.0",
-    "easymde": "^2.20.0",
-    "gatsby": "^5.13.1",
-    "gatsby-plugin-image": "^3.13.0",
-    "gatsby-plugin-mdx": "^5.13.0",
-    "gatsby-plugin-postcss": "^6.13.0",
-    "gatsby-plugin-sharp": "^5.13.0",
-    "gatsby-remark-katex": "^7.13.0",
-    "gatsby-remark-prismjs": "^7.13.0",
-    "gatsby-source-filesystem": "^5.13.0",
-    "gatsby-transformer-remark": "^6.13.0",
-    "gatsby-transformer-sharp": "^5.13.0",
-    "katex": "^0.13.24",
-    "prismjs": "^1.29.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-helmet": "^6.1.0",
-    "react-markdown": "^9.0.1",
-    "rehype-raw": "^7.0.0",
-    "remark-gfm": "^4.0.0"
-  },
   "scripts": {
-    "develop": "gatsby develop",
-    "start": "gatsby develop",
-    "build": "gatsby build",
-    "serve": "gatsby serve",
-    "clean": "gatsby clean",
-    "deploy": "gatsby build && gh-pages -d public"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "export": "next build && next export",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@tensorflow/tfjs": "^4.2.0",
+    "next": "^12.3.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-markdown": "^8.0.5",
+    "react-syntax-highlighter": "^15.5.0",
+    "rehype-katex": "^6.0.2",
+    "remark-math": "^5.1.1",
+    "katex": "^0.16.4",
+    "firebase": "^9.16.0",
+    "next-themes": "^0.2.1"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.10",
-    "autoprefixer": "^10.4.16",
-    "gh-pages": "^6.1.1",
-    "postcss": "^8.4.33",
-    "tailwindcss": "^3.4.1"
-  },
-  "resolutions": {
-    "string-similarity": "^4.0.4",
-    "rimraf": "^5.0.5",
-    "glob": "^10.3.10",
-    "katex": "^0.13.24",
-    "gatsby-remark-katex": "^7.12.0"
-  },
-  "overrides": {
-    "react-server-dom-webpack": {
-      "react": "^18.2.0"
-    }
+    "eslint": "8.32.0",
+    "eslint-config-next": "13.1.5"
   }
 }

@@ -1,0 +1,29 @@
+:root {
+  --primary-color: #0070f3;
+  --background-color: #ffffff;
+  --text-color: #000000;
+}
+
+[data-theme='dark'] {
+  --background-color: #000000;
+  --text-color: #ffffff;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}

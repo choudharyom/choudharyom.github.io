@@ -72,43 +72,45 @@ const BlogPostLayout = ({ children, meta, author }) => { // Add author prop
         </article>
 
         {/* Sidebar */}
-        <aside className={`${styles.sidebar} md:w-1/4 px-4 mt-8 md:mt-0`}>
-            <div className="sticky top-24">
-                {/* About Author Card */}
-                <div className={`${styles.card} mb-6`}>
-                    <div className="p-4">
-                        <h3 className="font-bold text-lg mb-3">About the Author</h3>
-                        <div className="flex items-center mb-4">
-                            <img src={displayAuthor.imageUrl} alt={`Photo of ${displayAuthor.name}`} className="w-14 h-14 rounded-full mr-3"/>
-                            <div>
-                                <h4 className="font-bold">{displayAuthor.name}</h4>
-                                <p className="text-sm text-gray-600">{displayAuthor.title}</p>
-                            </div>
-                        </div>
-                        <p className="text-sm mb-3">{displayAuthor.bio}</p>
-                        {/* TODO: Implement follow functionality */}
-                        <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all">Follow</button>
-                    </div>
-                </div>
-                
-                {/* Table of Contents Card - Only render if items exist */}
-                {tocItems.length > 0 && (
-                  <div className={`${styles.toc} ${styles.card} p-4`}>
-                      <h3 className="font-bold text-lg mb-4">Table of Contents</h3>
-                      <nav>
-                          {tocItems.map(item => (
-                              <a 
-                                key={item.id} 
-                                href={`#${item.id}`} 
-                                className={`${styles.tocLink} ${item.level === 2 ? styles.tocH2 : styles.tocH3}`}
-                              >
-                                {item.title}
-                              </a>
-                          ))}
-                      </nav>
+        <aside className={`${styles.sidebar}`}>
+          {/* No need for sticky class here anymore */}
+          <div>
+            {/* About Author Card */}
+            <div className={`${styles.card} mb-6`}>
+              <div className="p-4">
+                <h3 className="font-semibold text-xl mb-4 text-gray-900 dark:text-gray-100">About the Author</h3>
+                <div className="flex items-center mb-4">
+                  <img
+                    src={displayAuthor.imageUrl}
+                    alt={`Photo of ${displayAuthor.name}`}
+                    className="w-16 h-16 rounded-full mr-4 border-2 border-gray-200 dark:border-gray-700"
+                  />
+                  <div>
+                    <h4 className="font-semibold text-lg text-gray-900 dark:text-gray-100">{displayAuthor.name}</h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">{displayAuthor.title}</p>
                   </div>
-                )}
+                </div>
+                <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">{displayAuthor.bio}</p>
+                <button className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium py-2.5 px-4 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg">
+                  Follow
+                </button>
+              </div>
             </div>
+
+            {/* Table of Contents Card */}
+            {tocItems.length > 0 && (
+              <div className={`${styles.card} p-4`}>
+                <h3 className="font-semibold text-xl mb-4 text-gray-900 dark:text-gray-100">Table of Contents</h3>
+                <nav>
+                  {tocItems.map((item) => (
+                    <a key={item.id} href={`#${item.id}`} className={`${styles.tocLink} ${item.level === 2 ? styles.tocH2 : styles.tocH3}`}>
+                      {item.title}
+                    </a>
+                  ))}
+                </nav>
+              </div>
+            )}
+          </div>
         </aside>
       </div>
     </>

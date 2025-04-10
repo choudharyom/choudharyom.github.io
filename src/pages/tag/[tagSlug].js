@@ -24,8 +24,8 @@ const TagPage = ({ posts, tagSlug }) => {
         <ul className={styles.postList}> {/* Use ul for list */}
           {posts.map((post) => (
             <li key={post.id} className={styles.postItem}> {/* Add list item */}
-              <Link href={`/blog/${post.slug}`}>
-                <a className={styles.postLink}>{post.title}</a>
+              <Link href={`/blog/${post.slug}`} className={styles.postLink}>
+                {post.title}
               </Link>
               <p className={styles.postExcerpt}>{post.excerpt}</p> {/* Optional: Show excerpt */}
             </li>

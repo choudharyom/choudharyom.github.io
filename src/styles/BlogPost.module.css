@@ -1,21 +1,29 @@
 /* Enhanced Sidebar */
 .sidebar {
-  /* Existing styles remain */
-  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #f9fafb 0%, #f1f5f9 100%);
+  border-radius: 16px;
+  padding: 1.5rem;
+  width: 100%; /* Default for mobile */
+  max-width: 100%; /* Default for mobile */
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  height: fit-content; /* Key change: Height based on content */
 }
 
-/* Modern Card Styling */
+/* Card Styling */
 .card {
-  background-color: var(--bg-color-secondary, #ffffff);
-  border: none;
+  background: rgba(255, 255, 255, 0.9); /* Slightly translucent for glassmorphism */
+  backdrop-filter: blur(10px); /* Glass effect (works in modern browsers) */
+  border: 1px solid rgba(255, 255, 255, 0.5); /* Subtle border */
   border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem; /* More padding */
+  margin-bottom: 1.5rem; /* Increased spacing */
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+  transform: translateY(-4px); /* More pronounced lift */
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1); /* Deeper shadow on hover */
 }
 
 /* Enhanced TOC */
@@ -23,21 +31,24 @@
   display: flex;
   align-items: center;
   text-decoration: none;
-  color: var(--text-color-secondary, #555);
-  font-size: 0.9rem;
-  padding: 0.5rem 0;
+  color: #4b5563; /* Modern gray */
+  font-size: 0.95rem; /* Slightly larger for readability */
+  font-weight: 500; /* Medium weight for modern feel */
+  padding: 0.75rem 0; /* More padding */
   position: relative;
-  transition: color 0.2s ease-in-out, padding-left 0.2s ease-in-out;
+  transition: color 0.2s ease-in-out, padding-left 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
 
 .tocLink::before {
-  content: '';
+    content: '';
   position: absolute;
-  left: -1rem;
-  top: 0;
-  height: 100%;
-  width: 4px;
-  background-color: transparent;
+  left: -0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 6px; /* Dot instead of full bar */
+  width: 6px;
+  border-radius: 50%; /* Circular indicator */
+    background-color: transparent;
   transition: background-color 0.2s ease-in-out;
 }
 
@@ -45,18 +56,27 @@
   color: var(--link-color, #1a73e8);
   padding-left: 0.5rem;
 }
+.tocLink.active {
+    color: #2563eb; /* Vibrant blue */
+    padding-left: 0.5rem;
+    background-color: rgba(37, 99, 235, 0.1); /* Subtle background highlight */
+  }
 
 .tocLink.active::before {
-  background-color: var(--link-color, #1a73e8);
+  background-color: #2563eb; /* Match active color */
 }
 
 .tocLink:hover {
-  color: var(--link-color, #1a73e8);
+    color: #2563eb;
+    background-color: rgba(37, 99, 235, 0.05); /* Lighter hover effect */
+}
+.tocH2 {
+  padding-left: 1rem;
+}
+.tocH3 {
+  padding-left: 2rem; /* Slightly reduced for balance */
 }
 
-.tocH3 {
-  padding-left: 1.5rem; /* Increased indent for better hierarchy */
-}
 
 /* Dark mode enhancements */
 [data-theme='dark'] .card {
@@ -68,13 +88,28 @@
   box-shadow: 0 7px 14px rgba(0, 0, 0, 0.25), 0 3px 6px rgba(0, 0, 0, 0.2);
 }
 
-[data-theme='dark'] .tocLink.active {
-  color: var(--link-color-dark, #64b5f6);
+[data-theme='dark'] .sidebar {
+  background: linear-gradient(135deg, #2d3748 0%, #1f2937 100%); /* Dark gradient */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
-[data-theme='dark'] .tocLink.active::before {
-  background-color: var(--link-color-dark, #64b5f6);
+[data-theme='dark'] .card {
+  background: rgba(55, 65, 81, 0.9); /* Dark glass effect */
+  border: 1px solid rgba(75, 85, 99, 0.5);
+  backdrop-filter: blur(10px);
 }
+
+[data-theme='dark'] .card:hover {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+[data-theme='dark'] .tocLink {
+  color: #d1d5db; /* Light gray for dark mode */
+}
+
+[data-theme='dark'] .sidebar {
+  
+}
+
 
 /* --- Re-adding Base Layout Styles --- */
 
@@ -133,17 +168,14 @@
 .pageContainer {
   display: flex;
   flex-direction: column; /* Stack on mobile */
-  max-width: 1100px; /* Adjust max-width to accommodate sidebar */
+  max-width: 1200px; /* Slightly increased for better spacing */
   margin: 2rem auto;
-  padding: 1rem; /* Add some padding */
+  padding: 1rem;
 }
 
 .articleContent {
   flex: 1; /* Takes up remaining space */
-  max-width: 800px; /* Keep article content readable */
-  margin: 0 auto; /* Center article content if sidebar isn't shown */
-  padding: 1rem; /* Padding within the article area */
-  /* Background/border/shadow might be redundant if card style is preferred */
+  padding: 1rem;
   background-color: var(--bg-color, #fff);
   border: 1px solid var(--border-color, #eee);
   border-radius: 8px;
@@ -151,39 +183,41 @@
 }
 
 /* Responsive layout for medium screens and up */
-@media (min-width: 768px) { /* Corresponds to Tailwind's 'md' breakpoint */
+@media (min-width: 768px) {
   .pageContainer {
     flex-direction: row; /* Side-by-side layout */
     gap: 2rem; /* Space between article and sidebar */
-    padding: 2rem; /* More padding on larger screens */
+    padding: 2rem;
   }
 
   .articleContent {
     flex-grow: 1; /* Allow article to grow */
     flex-shrink: 1; /* Allow article to shrink */
-    flex-basis: 0; /* Important for flex sizing */
-    max-width: none; /* Remove max-width when sidebar is present */
-    margin: 0; /* Remove auto margin */
+    flex-basis: 0; /* Base size before growing/shrinking */
+    max-width: calc(100% - 340px); /* Ensure it respects sidebar width */
+    margin: 0;
   }
 
-  .sidebar {
-    flex-shrink: 0; /* Prevent sidebar from shrinking */
-    margin-left: auto; /* Pushes sidebar to the right */
-    /* Width is controlled by md:w-1/4 in the component */
-  }
+   .sidebar {
+        flex-grow: 0; /* Prevent sidebar from growing */
+        flex-shrink: 0; /* Prevent sidebar from shrinking */
+        width: 300px; /* Fixed width for sidebar */
+        max-width: 300px; /* Constrain sidebar width */
+        height: fit-content; /* Constrain height to content */
+        position: sticky; /* Make sidebar sticky */
+        top: 2rem; /* Distance from top when sticky */
+    }
 }
 
-/* --- Dark Mode Adjustments for Base Layout --- */
-[data-theme='dark'] .container {
+/* Dark mode adjustments */
+[data-theme='dark'] .sidebar {
+  background-color: #333;
+}
+
+[data-theme='dark'] .articleContent {
   background-color: var(--bg-color-dark, #2d2d2d);
   border-color: var(--border-color-dark, #444);
   box-shadow: none;
-}
-
-[data-theme='dark'] .container h1,
-[data-theme='dark'] .content h2,
-[data-theme='dark'] .content {
-  color: var(--text-color-primary-dark, #eee);
 }
 
 [data-theme='dark'] .meta {
@@ -193,10 +227,4 @@
 
 [data-theme='dark'] .meta a {
   color: var(--link-color-dark, #64b5f6);
-}
-
-[data-theme='dark'] .articleContent {
-  background-color: var(--bg-color-dark, #2d2d2d);
-  border-color: var(--border-color-dark, #444);
-  box-shadow: none;
 }

@@ -14,7 +14,6 @@ export default function Home({ featuredPosts }) {
         <meta name="description" content="Exploring mathematics and neural networks with clear explanations and interactive demos" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <main className={styles.main}>
         <section className={styles.hero}>
           {/* Hero Section */}
@@ -48,8 +47,10 @@ export default function Home({ featuredPosts }) {
           <h2 className={styles.sectionTitle}>Explore Topics</h2>
           <div className={styles.topicGrid}>
             <Link href="/tag/neural-networks" className={styles.topicCard}>
+              <div>
                 <h3>Neural Networks</h3>
                 <p>Fundamentals to advanced concepts</p>
+              </div>
             </Link>
             {/* ... other topic cards ... */}
           </div>

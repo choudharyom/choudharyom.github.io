@@ -12,8 +12,8 @@ const BlogIndexPage = ({ posts }) => {
         {posts && posts.length > 0 ? (
           posts.map((post) => (
             <li key={post.id} className={styles.postItem}> {/* Use post.id */}
-              <Link href={`/blog/${post.slug}`}>
-                <a className={styles.postLink}>{post.title}</a>
+              <Link href={`/blog/${post.slug}`} className={styles.postLink}>
+                {post.title}
               </Link>
               {/* Optional: Add excerpt or date here */}
               <p className={styles.postExcerpt}>{post.excerpt}</p>

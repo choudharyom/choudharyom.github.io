@@ -23,20 +23,20 @@ const Header = () => {
 
   return (
     // Use .header and add .scrolled (defined below)
-    <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}> 
+    <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
       {/* Use .headerContainer */}
       <div className={styles.headerContainer}> 
-        <Link href="/">
-           {/* Use .headerLogo */}
-          <a className={styles.headerLogo}>
-            <Image
-              src="/images/logo.svg" // Ensure this path is correct
-              alt="Choudhary Om Logo"
-              width={40}
-              height={40}
-            />
-            <span>ChoudharyOm</span>
-          </a>
+        <Link href="/" className={styles.headerLogo}>
+          {/* Use .headerLogo */}
+
+          <Image
+            src="/images/logo.svg" // Ensure this path is correct
+            alt="Choudhary Om Logo"
+            width={40}
+            height={40}
+          />
+          <span>ChoudharyOm</span>
+
         </Link>
 
         {/* Search Bar - Use .searchBar (defined below) */}
@@ -67,33 +67,39 @@ const Header = () => {
 
         {/* Navigation - Use .headerNav and .open (defined below) */}
         <nav className={`${styles.headerNav} ${menuOpen ? styles.open : ''}`}>
-          <Link href="/blog">
+          <Link
+            href="/blog"
+            className={`${styles.headerNavLink} ${router.pathname.startsWith('/blog') ? styles.active : ''}`}>
              {/* Use .headerNavLink and .active (defined below) */}
-            <a className={`${styles.headerNavLink} ${router.pathname.startsWith('/blog') ? styles.active : ''}`}>Articles</a>
+            Articles
           </Link>
-          <Link href="/tag/neural-networks">
-            <a className={`${styles.headerNavLink} ${router.pathname.startsWith('/tag/neural-networks') ? styles.active : ''}`}>Neural Networks</a>
+          <Link
+            href="/tag/neural-networks"
+            className={`${styles.headerNavLink} ${router.pathname.startsWith('/tag/neural-networks') ? styles.active : ''}`}>
+            Neural Networks
           </Link>
-          <Link href="/about">
-            <a className={`${styles.headerNavLink} ${router.pathname === '/about' ? styles.active : ''}`}>About</a>
+          <Link
+            href="/about"
+            className={`${styles.headerNavLink} ${router.pathname === '/about' ? styles.active : ''}`}>
+            About
           </Link>
           <ThemeToggle />
           
           {/* User Menu - Use .userMenu (defined below) */}
           {user ? (
             <div className={styles.userMenu}>
-              <Link href="/profile">
-                 {/* Use .profileLink (defined below) */}
-                <a className={styles.profileLink}>
-                  <Image
-                    src={user.photoURL || "/images/default-avatar.png"} // Ensure this path is correct
-                    alt={user.displayName || "User"}
-                    width={32}
-                    height={32}
-                     /* Use .avatar (defined below) */
-                    className={styles.avatar}
-                  />
-                </a>
+              <Link href="/profile" className={styles.profileLink}>
+                {/* Use .profileLink (defined below) */}
+
+                <Image
+                  src={user.photoURL || "/images/default-avatar.png"} // Ensure this path is correct
+                  alt={user.displayName || "User"}
+                  width={32}
+                  height={32}
+                   /* Use .avatar (defined below) */
+                  className={styles.avatar}
+                />
+
               </Link>
                {/* Use .signOutButton (defined below) */}
               <button onClick={signOut} className={styles.signOutButton}>
@@ -101,9 +107,9 @@ const Header = () => {
               </button>
             </div>
           ) : (
-            <Link href="/login">
+            <Link href="/login" className={styles.loginButton}>
                {/* Use .loginButton (defined below) */}
-              <a className={styles.loginButton}>Sign In</a>
+              Sign In
             </Link>
           )}
         </nav>

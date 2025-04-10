@@ -17,7 +17,7 @@ const PostCard = ({ post }) => {
       )}
       <h2>
         <Link href={`/blog/${slug}`}>
-          <a>{title || 'Untitled Post'}</a>
+          {title || 'Untitled Post'}
         </Link>
       </h2>
       {date && <p><small>Date: {date}</small></p>}

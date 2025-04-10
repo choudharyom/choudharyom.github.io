@@ -106,11 +106,6 @@
   color: #d1d5db; /* Light gray for dark mode */
 }
 
-[data-theme='dark'] .sidebar {
-  
-}
-
-
 /* --- Re-adding Base Layout Styles --- */
 
 /* Original container styles (might be unused if pageContainer is always used) */

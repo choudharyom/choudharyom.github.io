@@ -12,8 +12,22 @@ const PostCard = ({ post }) => {
   return (
     // Replace with your actual card structure and styling
     <div style={{ border: '1px solid #ccc', padding: '1rem', marginBottom: '1rem', borderRadius: '8px' }}>
-      {coverImage && (
-        <Image src={coverImage} alt={title || 'Post image'} width={300} height={200} style={{ objectFit: 'cover' }} />
+      {coverImage ? (
+        <Image
+          src={coverImage.startsWith('/') ? `/public${coverImage}` : coverImage}
+          alt={title || 'Post image'}
+          width={300}
+          height={200}
+          style={{ objectFit: 'cover' }}
+        />
+      ) : (
+        <Image
+          src="/public/images/placeholder-la.jpg"
+          alt={title || 'Post image'}
+          width={300}
+          height={200}
+          style={{ objectFit: 'cover' }}
+        />
       )}
       <h2>
         <Link href={`/blog/${slug}`}>

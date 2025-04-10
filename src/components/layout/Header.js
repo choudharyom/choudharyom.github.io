@@ -30,7 +30,7 @@ const Header = () => {
           {/* Use .headerLogo */}
 
           <Image
-            src="/images/logo.svg" // Ensure this path is correct
+            src="/public/images/logo.png" // Ensure this path is correct
             alt="Choudhary Om Logo"
             width={40}
             height={40}
@@ -92,7 +92,7 @@ const Header = () => {
                 {/* Use .profileLink (defined below) */}
 
                 <Image
-                  src={user.photoURL || "/images/default-avatar.png"} // Ensure this path is correct
+                  src={user.photoURL || "/public/images/default-avatar.png"} // Ensure this path is correct
                   alt={user.displayName || "User"}
                   width={32}
                   height={32}

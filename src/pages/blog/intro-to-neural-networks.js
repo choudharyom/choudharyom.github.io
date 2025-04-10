@@ -2,14 +2,22 @@ import BlogPostLayout from '@/components/layout/BlogPostLayout';
 import styles from '@/styles/BlogPost.module.css'; // Keep styles for content elements
 
 const IntroToNeuralNetworks = () => {
-  // Optional: Define meta information for the layout (e.g., for Head component)
+  // Define meta information
   const meta = {
     title: 'Introduction to Neural Networks',
     // description: 'A brief overview of neural networks...',
   };
 
+  // Define author information
+  const author = {
+    name: 'Choudhary Om',
+    title: 'AI Researcher & Developer',
+    bio: 'I write about machine learning, neural networks, and mathematical foundations of AI. Currently working on research in deep learning optimization.',
+    // imageUrl: '/path/to/your/image.jpg' // Optional: Add image path later
+  };
+
   return (
-    <BlogPostLayout meta={meta}>
+    <BlogPostLayout meta={meta} author={author}> {/* Pass author prop */}
       {/* The content below will be rendered inside the <article> tag in BlogPostLayout */}
       <h1>Introduction to Neural Networks</h1>
       <p className={styles.meta}>Published on: April 10, 2025 | Tags: <a href="/tag/neural-networks">neural-networks</a>, <a href="/tag/machine-learning">machine-learning</a></p>

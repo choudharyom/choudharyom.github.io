@@ -1,8 +1,89 @@
+/* Enhanced Sidebar */
+.sidebar {
+  /* Existing styles remain */
+  transition: all 0.3s ease;
+}
+
+/* Modern Card Styling */
+.card {
+  background-color: var(--bg-color-secondary, #ffffff);
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+}
+
+/* Enhanced TOC */
+.tocLink {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--text-color-secondary, #555);
+  font-size: 0.9rem;
+  padding: 0.5rem 0;
+  position: relative;
+  transition: color 0.2s ease-in-out, padding-left 0.2s ease-in-out;
+}
+
+.tocLink::before {
+  content: '';
+  position: absolute;
+  left: -1rem;
+  top: 0;
+  height: 100%;
+  width: 4px;
+  background-color: transparent;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.tocLink.active {
+  color: var(--link-color, #1a73e8);
+  padding-left: 0.5rem;
+}
+
+.tocLink.active::before {
+  background-color: var(--link-color, #1a73e8);
+}
+
+.tocLink:hover {
+  color: var(--link-color, #1a73e8);
+}
+
+.tocH3 {
+  padding-left: 1.5rem; /* Increased indent for better hierarchy */
+}
+
+/* Dark mode enhancements */
+[data-theme='dark'] .card {
+  background-color: var(--bg-color-secondary-dark, #3a3a3a);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme='dark'] .card:hover {
+  box-shadow: 0 7px 14px rgba(0, 0, 0, 0.25), 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme='dark'] .tocLink.active {
+  color: var(--link-color-dark, #64b5f6);
+}
+
+[data-theme='dark'] .tocLink.active::before {
+  background-color: var(--link-color-dark, #64b5f6);
+}
+
+/* --- Re-adding Base Layout Styles --- */
+
+/* Original container styles (might be unused if pageContainer is always used) */
 .container {
   padding: 2rem;
   max-width: 800px;
-  margin: 2rem auto; /* Add some margin top/bottom */
-  background-color: var(--bg-color, #fff); /* Use CSS variables for theming */
+  margin: 2rem auto;
+  background-color: var(--bg-color, #fff);
   border: 1px solid var(--border-color, #eee);
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
@@ -48,7 +129,51 @@
   margin-bottom: 1rem;
 }
 
-/* Add basic dark mode support if variables are set */
+/* Layout styles for Page Container, Article, Sidebar */
+.pageContainer {
+  display: flex;
+  flex-direction: column; /* Stack on mobile */
+  max-width: 1100px; /* Adjust max-width to accommodate sidebar */
+  margin: 2rem auto;
+  padding: 1rem; /* Add some padding */
+}
+
+.articleContent {
+  flex: 1; /* Takes up remaining space */
+  max-width: 800px; /* Keep article content readable */
+  margin: 0 auto; /* Center article content if sidebar isn't shown */
+  padding: 1rem; /* Padding within the article area */
+  /* Background/border/shadow might be redundant if card style is preferred */
+  background-color: var(--bg-color, #fff);
+  border: 1px solid var(--border-color, #eee);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Responsive layout for medium screens and up */
+@media (min-width: 768px) { /* Corresponds to Tailwind's 'md' breakpoint */
+  .pageContainer {
+    flex-direction: row; /* Side-by-side layout */
+    gap: 2rem; /* Space between article and sidebar */
+    padding: 2rem; /* More padding on larger screens */
+  }
+
+  .articleContent {
+    flex-grow: 1; /* Allow article to grow */
+    flex-shrink: 1; /* Allow article to shrink */
+    flex-basis: 0; /* Important for flex sizing */
+    max-width: none; /* Remove max-width when sidebar is present */
+    margin: 0; /* Remove auto margin */
+  }
+
+  .sidebar {
+    flex-shrink: 0; /* Prevent sidebar from shrinking */
+    margin-left: auto; /* Pushes sidebar to the right */
+    /* Width is controlled by md:w-1/4 in the component */
+  }
+}
+
+/* --- Dark Mode Adjustments for Base Layout --- */
 [data-theme='dark'] .container {
   background-color: var(--bg-color-dark, #2d2d2d);
   border-color: var(--border-color-dark, #444);
@@ -70,109 +195,8 @@
   color: var(--link-color-dark, #64b5f6);
 }
 
-/* New styles for Page Container, Article, Sidebar, Cards, TOC */
-
-.pageContainer {
-  display: flex;
-  flex-direction: column; /* Stack on mobile */
-  max-width: 1100px; /* Adjust max-width to accommodate sidebar */
-  margin: 2rem auto;
-  padding: 1rem; /* Add some padding */
-}
-
-.articleContent {
-  flex: 1; /* Takes up remaining space */
-  max-width: 800px; /* Keep article content readable */
-  margin: 0 auto; /* Center article content if sidebar isn't shown */
-  padding: 1rem; /* Padding within the article area */
-  background-color: var(--bg-color, #fff);
-  border: 1px solid var(--border-color, #eee);
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-.sidebar {
-  /* Width is handled by Tailwind class md:w-1/4 */
-  /* Margin top handled by Tailwind classes mt-8 md:mt-0 */
-  /* Padding handled by Tailwind class px-4 */
-}
-
-.card {
-  background-color: var(--bg-color-secondary, #f9f9f9); /* Slightly different background for cards */
-  border: 1px solid var(--border-color, #eee);
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-  /* Padding handled by Tailwind class p-4 */
-  /* Margin bottom handled by Tailwind class mb-6 */
-}
-
-.toc nav {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem; /* Space between links */
-}
-
-.tocLink {
-  display: block;
-  text-decoration: none;
-  color: var(--text-color-secondary, #555);
-  font-size: 0.9rem;
-  transition: color 0.2s ease-in-out;
-}
-
-.tocLink:hover {
-  color: var(--link-color, #1a73e8);
-  text-decoration: underline;
-}
-
-.tocH2 {
-  font-weight: 500; /* Slightly bolder for H2 */
-}
-
-.tocH3 {
-  padding-left: 1rem; /* Indent H3 links */
-  font-size: 0.85rem;
-}
-
-/* Responsive layout for medium screens and up */
-@media (min-width: 768px) { /* Corresponds to Tailwind's 'md' breakpoint */
-  .pageContainer {
-    flex-direction: row; /* Side-by-side layout */
-    gap: 2rem; /* Space between article and sidebar */
-    padding: 2rem; /* More padding on larger screens */
-  }
-
-  .articleContent {
-    flex-grow: 1; /* Allow article to grow */
-    flex-shrink: 1; /* Allow article to shrink */
-    flex-basis: 0; /* Important for flex sizing */
-    max-width: none; /* Remove max-width when sidebar is present */
-    margin: 0; /* Remove auto margin */
-  }
-
-  .sidebar {
-    flex-shrink: 0; /* Prevent sidebar from shrinking */
-    /* Width is controlled by md:w-1/4 */
-  }
-}
-
-/* Dark mode adjustments for new elements */
 [data-theme='dark'] .articleContent {
   background-color: var(--bg-color-dark, #2d2d2d);
   border-color: var(--border-color-dark, #444);
   box-shadow: none;
-}
-
-[data-theme='dark'] .card {
-  background-color: var(--bg-color-secondary-dark, #3a3a3a);
-  border-color: var(--border-color-dark, #444);
-  box-shadow: none;
-}
-
-[data-theme='dark'] .tocLink {
-  color: var(--text-color-secondary-dark, #aaa);
-}
-
-[data-theme='dark'] .tocLink:hover {
-  color: var(--link-color-dark, #64b5f6);
 }

@@ -2,12 +2,21 @@ import BlogPostLayout from '@/components/layout/BlogPostLayout';
 import styles from '@/styles/BlogPost.module.css'; // Keep styles for content elements
 
 const LinearAlgebraBasics = () => {
+  // Define meta information
   const meta = {
     title: 'Linear Algebra Basics for Machine Learning',
   };
 
+  // Define author information
+  const author = {
+    name: 'Choudhary Om',
+    title: 'AI Researcher & Developer',
+    bio: 'I write about machine learning, neural networks, and mathematical foundations of AI. Currently working on research in deep learning optimization.',
+    // imageUrl: '/path/to/your/image.jpg' // Optional: Add image path later
+  };
+
   return (
-    <BlogPostLayout meta={meta}>
+    <BlogPostLayout meta={meta} author={author}> {/* Pass author prop */}
       <h1>Linear Algebra Basics for Machine Learning</h1>
       <p className={styles.meta}>Published on: April 10, 2025 | Tags: <a href="/tag/linear-algebra">linear-algebra</a>, <a href="/tag/mathematics">mathematics</a>, <a href="/tag/machine-learning">machine-learning</a></p>
 

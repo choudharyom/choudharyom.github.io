@@ -17,26 +17,26 @@ const Footer = () => {
           <div className={styles.footerCategories}>
             <h3 className={styles.footerCategoryTitle}>Content</h3>
             <ul className={styles.footerList}>
-              <li className={styles.footerListItem}><Link href="/blog"><a className={styles.footerLink}>Articles</a></Link></li>
-              <li className={styles.footerListItem}><Link href="/tag/neural-networks"><a className={styles.footerLink}>Neural Networks</a></Link></li>
-              <li className={styles.footerListItem}><Link href="/tag/linear-algebra"><a className={styles.footerLink}>Linear Algebra</a></Link></li>
-              <li className={styles.footerListItem}><Link href="/tag/tensorflow"><a className={styles.footerLink}>TensorFlow</a></Link></li>
+              <li className={styles.footerListItem}><Link href="/blog" className={styles.footerLink}>Articles</Link></li>
+              <li className={styles.footerListItem}><Link href="/tag/neural-networks" className={styles.footerLink}>Neural Networks</Link></li>
+              <li className={styles.footerListItem}><Link href="/tag/linear-algebra" className={styles.footerLink}>Linear Algebra</Link></li>
+              <li className={styles.footerListItem}><Link href="/tag/tensorflow" className={styles.footerLink}>TensorFlow</Link></li>
             </ul>
           </div>
 
           <div className={styles.footerLinks}>
             <h3 className={styles.footerLinksTitle}>About</h3>
             <ul className={styles.footerList}>
-              <li className={styles.footerListItem}><Link href="/about"><a className={styles.footerLink}>About Me</a></Link></li>
-              <li className={styles.footerListItem}><Link href="/contact"><a className={styles.footerLink}>Contact</a></Link></li>
+              <li className={styles.footerListItem}><Link href="/about" className={styles.footerLink}>About Me</Link></li>
+              <li className={styles.footerListItem}><Link href="/contact" className={styles.footerLink}>Contact</Link></li>
             </ul>
           </div>
 
           <div className={styles.footerLinks}> {/* Reusing footerLinks style for consistency */}
             <h3 className={styles.footerLinksTitle}>Legal</h3>
             <ul className={styles.footerList}>
-              <li className={styles.footerListItem}><Link href="/privacy"><a className={styles.footerLink}>Privacy Policy</a></Link></li>
-              <li className={styles.footerListItem}><Link href="/terms"><a className={styles.footerLink}>Terms of Use</a></Link></li>
+              <li className={styles.footerListItem}><Link href="/privacy" className={styles.footerLink}>Privacy Policy</Link></li>
+              <li className={styles.footerListItem}><Link href="/terms" className={styles.footerLink}>Terms of Use</Link></li>
             </ul>
           </div>
 

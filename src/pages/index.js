@@ -24,12 +24,8 @@ export default function Home({ featuredPosts }) {
               Exploring the fascinating intersection of mathematics and artificial intelligence
             </p>
             <div className={styles.buttonGroup}>
-              <Link href="/blog">
-                <a className={styles.primaryButton}>Read Articles</a>
-              </Link>
-              <Link href="/about">
-                <a className={styles.secondaryButton}>About Me</a>
-              </Link>
+              <Link href="/blog" className={styles.primaryButton}>Read Articles</Link>
+              <Link href="/about" className={styles.secondaryButton}>About Me</Link>
             </div>
           </div>
           <div className={styles.heroVisual}>
@@ -51,11 +47,9 @@ export default function Home({ featuredPosts }) {
         <section className={styles.topics}>
           <h2 className={styles.sectionTitle}>Explore Topics</h2>
           <div className={styles.topicGrid}>
-            <Link href="/tag/neural-networks">
-              <a className={styles.topicCard}>
+            <Link href="/tag/neural-networks" className={styles.topicCard}>
                 <h3>Neural Networks</h3>
                 <p>Fundamentals to advanced concepts</p>
-              </a>
             </Link>
             {/* ... other topic cards ... */}
           </div>

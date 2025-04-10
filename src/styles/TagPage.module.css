@@ -1,0 +1,57 @@
+.container {
+  padding: 2rem;
+  max-width: 900px; /* Slightly wider for post lists */
+  margin: 0 auto;
+}
+
+.container h1 {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #eee; /* Add a separator */
+  padding-bottom: 1rem;
+}
+
+.postList {
+  /* Styles for the list of posts will go here */
+  margin-top: 1.5rem;
+  list-style: none; /* Remove default list bullets */
+  padding: 0;
+}
+
+.postItem {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color, #eee);
+}
+
+.postItem:last-child {
+  border-bottom: none; /* Remove border from last item */
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.postLink {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--link-color, #1a73e8);
+  text-decoration: none;
+  display: block; /* Make link take full width */
+  margin-bottom: 0.5rem;
+}
+
+.postLink:hover {
+  text-decoration: underline;
+  color: var(--link-hover-color, #0d47a1);
+}
+
+.postExcerpt {
+  color: var(--text-color-secondary, #555);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Style for the 'no posts found' message */
+.container > p {
+  color: #555;
+  font-style: italic;
+  margin-top: 1rem;
+}

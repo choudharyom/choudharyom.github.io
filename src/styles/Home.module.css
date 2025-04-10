@@ -1,0 +1,139 @@
+/* Basic styles for Home page - add your specific styles here */
+
+.container {
+  /* Add container styles */
+  padding: 0 2rem;
+}
+
+.main {
+  /* Add main styles */
+  min-height: 100vh;
+  padding: 4rem 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero {
+  /* Add hero styles */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 4rem;
+}
+
+.heroContent {
+  /* Add hero content styles */
+  max-width: 600px;
+}
+
+.title {
+  /* Add title styles */
+  margin: 0;
+  line-height: 1.15;
+  font-size: 4rem;
+}
+
+.description {
+  /* Add description styles */
+  line-height: 1.5;
+  font-size: 1.5rem;
+}
+
+.buttonGroup {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.primaryButton {
+    /* Add primary button styles */
+    padding: 0.75rem 1.5rem;
+    background-color: blue; /* Placeholder */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.secondaryButton {
+    /* Add secondary button styles */
+    padding: 0.75rem 1.5rem;
+    background-color: grey; /* Placeholder */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+
+.heroVisual {
+  /* Add hero visual styles */
+}
+
+.featuredSection {
+  /* Add featured section styles */
+  margin-bottom: 4rem;
+  width: 100%;
+}
+
+.sectionTitle {
+  /* Add section title styles */
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.grid {
+  /* Add grid styles */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  width: 100%;
+}
+
+.topics {
+  /* Add topics section styles */
+   margin-bottom: 4rem;
+   width: 100%;
+}
+
+.topicGrid {
+  /* Add topic grid styles */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.topicCard {
+  /* Add topic card styles */
+  border: 1px solid #eaeaea;
+  padding: 1.5rem;
+  border-radius: 10px;
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.topicCard:hover,
+.topicCard:focus,
+.topicCard:active {
+  color: #0070f3;
+  border-color: #0070f3;
+}
+
+.topicCard h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+}
+
+.topicCard p {
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.5;
+}

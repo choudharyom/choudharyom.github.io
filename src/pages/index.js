@@ -4,6 +4,7 @@ import Link from 'next/link';
 import styles from '@/styles/Home.module.css';
 import PostCard from '@/components/blog/PostCard';
 import SimpleNNVisualization from '@/components/neural-network/SimpleNNVisualization';
+import { getAllPosts } from '@/lib/posts'; // Import the helper function
 
 export default function Home({ featuredPosts }) {
   return (
@@ -65,19 +66,10 @@ export default function Home({ featuredPosts }) {
 }
 
 export function getStaticProps() {
-  const featuredPosts = [
-    {
-      id: 1,
-      title: 'Understanding Backpropagation with Calculus',
-      excerpt: 'A step-by-step walkthrough of the mathematics behind neural network training',
-      slug: 'understanding-backpropagation',
-      coverImage: '/images/backprop.jpg',
-      date: '2023-01-15',
-      readingTime: '8 min',
-      tags: ['neural-networks', 'calculus']
-    },
-    // ... other featured posts ...
-  ];
+  // Fetch all posts using the helper function
+  // For now, we'll treat all posts as "featured"
+  // In a real app, you might filter or select specific posts here
+  const featuredPosts = getAllPosts();
 
   return {
     props: {

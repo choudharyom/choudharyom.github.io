@@ -1,0 +1,31 @@
+.container {
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.container h1 {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1rem;
+}
+
+.postList {
+  list-style: none;
+  padding: 0;
+}
+
+.postItem {
+  margin-bottom: 1rem;
+}
+
+.postLink {
+  font-size: 1.2rem;
+  color: var(--link-color, #1a73e8);
+  text-decoration: none;
+}
+
+.postLink:hover {
+  text-decoration: underline;
+  color: var(--link-hover-color, #0d47a1);
+}

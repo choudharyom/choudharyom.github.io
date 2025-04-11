@@ -1,4 +1,5 @@
 import styles from '@/styles/BlogPost.module.css';
+import aboutStyles from '@/styles/About.module.css';
 import Head from 'next/head'; // Import Head for potential meta tags later
 import React from 'react'; // Import React
 
@@ -48,8 +49,8 @@ const BlogPostLayout = ({ children, meta, author }) => { // Add author prop
 
   // Default author info if not provided or incomplete
   const displayAuthor = {
-    name: author?.name || 'Choudhary Om',
-    title: author?.title || 'AI Researcher & Developer',
+    name: author?.name || 'Om 🐯 Choudhary 🧘‍♂️',
+    title: author?.title || 'Software Architect👾',
     bio: author?.bio || 'I write about machine learning, neural networks, and mathematical foundations of AI. Currently working on research in deep learning optimization.',
     imageUrl: author?.imageUrl || 'https://via.placeholder.com/60' // Default placeholder
   };
@@ -76,25 +77,25 @@ const BlogPostLayout = ({ children, meta, author }) => { // Add author prop
           {/* No need for sticky class here anymore */}
           <div>
             {/* About Author Card */}
-            <div className={`${styles.card} mb-6`}>
-              <div className="p-4">
-                <h3 className="font-semibold text-xl mb-4 text-gray-900 dark:text-gray-100">About the Author</h3>
-                <div className="flex items-center mb-4">
-                  <img
-                    src={displayAuthor.imageUrl}
-                    alt={`Photo of ${displayAuthor.name}`}
-                    className="w-16 h-16 rounded-full mr-4 border-2 border-gray-200 dark:border-gray-700"
-                  />
-                  <div>
-                    <h4 className="font-semibold text-lg text-gray-900 dark:text-gray-100">{displayAuthor.name}</h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">{displayAuthor.title}</p>
-                  </div>
-                </div>
-                <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">{displayAuthor.bio}</p>
-                <button className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-medium py-2.5 px-4 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg">
-                  Follow
-                </button>
+            <div className={aboutStyles.heroCard} style={{ marginBottom: '1.5rem' }}>
+              <div className={aboutStyles.avatarWrapper}>
+                <img
+                  src={displayAuthor.imageUrl}
+                  alt={`Photo of ${displayAuthor.name}`}
+                  className={aboutStyles.avatar}
+                />
               </div>
+              <h1 className={aboutStyles.name} style={{ fontSize: '1.4rem', marginBottom: '0.2rem' }}>
+                <span className={aboutStyles.animatedUnderline}>{displayAuthor.name}</span>
+              </h1>
+              <h2 className={aboutStyles.subtitle} style={{ fontSize: '1.05rem', marginBottom: '0.7rem' }}>
+                {displayAuthor.title}
+              </h2>
+              <p className={aboutStyles.intro} style={{ fontSize: '0.98rem', marginBottom: '0.7rem' }}>
+                <span className={aboutStyles.animatedIntro}>
+                  {displayAuthor.bio}
+                </span>
+              </p>
             </div>
 
             {/* Table of Contents Card */}

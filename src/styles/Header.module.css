@@ -1,204 +1,401 @@
 .header {
-    background-color: white;
-    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-    position: fixed;
-    width: 100%;
-    z-index: 50;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px) saturate(1.2);
+  box-shadow: 0 4px 24px rgba(60, 60, 120, 0.10), 0 1.5px 6px rgba(0,0,0,0.04);
+  position: fixed;
+  width: 100%;
+  z-index: 50;
+  border-radius: 0 0 1.5rem 1.5rem;
+  transition: background 0.3s, box-shadow 0.3s;
 }
 
 .headerContainer {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1rem 1.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .headerLogo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #1a73e8;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #6366f1;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.headerLogo span {
+  font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 900;
+  font-size: 1.25rem;
+  letter-spacing: 0.01em;
+}
+
+.headerLogo:hover {
+  color: #f59e42;
 }
 
 .headerNav {
-    display: none;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(248, 250, 252, 0.98);
+  backdrop-filter: blur(8px) saturate(1.1);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.headerNav.open {
+  display: flex;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 @media (min-width: 768px) {
-    .headerNav {
-        display: flex;
-        gap: 2rem;
-    }
+  .headerNav {
+    position: static;
+    display: flex;
+    flex-direction: row;
+    background: none;
+    width: auto;
+    height: auto;
+    opacity: 1;
+    pointer-events: auto;
+    gap: 2rem;
+    align-items: center;
+    backdrop-filter: none;
+  }
+  .headerNav.open {
+    display: flex;
+    opacity: 1;
+    pointer-events: auto;
+  }
 }
 
 .headerNavLink {
-    color: #292929;
-    text-decoration: none;
-    transition: color 0.2s ease-in-out;
+  color: #232946;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.08rem;
+  position: relative;
+  padding: 0.2rem 0.5rem;
+  transition: color 0.2s;
 }
 
-.headerNavLink:hover {
-    color: #1a73e8;
+.headerNavLink::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #a5b4fc 0%, #fca5a5 100%);
+  border-radius: 1em;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
 }
 
-.headerActions {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+.headerNavLink:hover,
+.headerNavLink:focus {
+  color: #6366f1;
 }
 
-.headerDarkModeToggle {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1.25rem;
-    color: #757575;
-    transition: color 0.2s ease-in-out;
-}
-
-.headerDarkModeToggle:hover {
-    color: #1a73e8;
-}
-
-.headerMenuButton {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1.25rem;
-    color: #757575;
-}
-
-.headerProfile {
-    display: none;
-}
-
-@media (min-width: 768px) {
-    .headerProfile {
-        display: block;
-        width: 2.5rem;
-        height: 2.5rem;
-        border-radius: 50%;
-    }
-}
-
-/* Dark Mode Styles */
-.darkHeader {
-    background-color: #121212;
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-.darkHeaderLogo {
-    color: #4285f4;
-}
-
-.darkHeaderNavLink {
-    color: #e0e0e0;
-}
-
-.darkHeaderNavLink:hover {
-    color: #4285f4;
-}
-
-.darkHeaderDarkModeToggle {
-    color: #9e9e9e;
-}
-
-.darkHeaderDarkModeToggle:hover {
-    color: #4285f4;
-}
-
-.darkHeaderMenuButton {
-    color: #9e9e9e;
-}
-
-/* Added placeholder styles for missing classes */
-
-.scrolled {
-    /* Styles for when the header is scrolled */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: rgba(255, 255, 255, 0.95); /* Example: slightly transparent */
-}
-
-.darkHeader.scrolled {
-    background-color: rgba(18, 18, 18, 0.95); /* Example: slightly transparent dark */
-    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
-}
-
-.searchBar {
-    /* Styles for the search bar */
-    display: flex;
-    align-items: center;
-    /* Add more styles */
-}
-
-.searchBar input {
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px 0 0 4px;
-}
-
-.searchBar button {
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-left: none;
-    background-color: #f0f0f0;
-    border-radius: 0 4px 4px 0;
-    cursor: pointer;
-}
-
-.open {
-    /* Styles for the mobile menu when open */
-    display: block; /* Or flex, grid, etc. depending on layout */
+.headerNavLink:hover::after,
+.headerNavLink:focus::after,
+.active::after {
+  transform: scaleX(1);
 }
 
 .active {
-    /* Styles for the active navigation link */
-    font-weight: bold;
-    color: #1a73e8; /* Example active color */
+  font-weight: 900;
+  color: #6366f1;
 }
 
-.darkHeader .active {
-    color: #4285f4; /* Example dark active color */
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.headerMenuButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.22rem;
+  padding: 0.5rem;
+  margin-left: 1rem;
+  z-index: 60;
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.headerMenuButton span {
+  display: block;
+  width: 28px;
+  height: 3px;
+  background: #6366f1;
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+  position: relative;
+}
+
+.headerMenuButton:hover span {
+  background: #f59e42;
+}
+
+.headerMenuButton:focus {
+  outline: 2px solid #6366f1;
+}
+
+/* Hamburger to X animation */
+.headerMenuButton.open span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.headerMenuButton.open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0.7);
+}
+
+.headerMenuButton.open span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+.headerProfile {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .headerProfile {
+    display: block;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+  }
+}
+
+.scrolled {
+  box-shadow: 0 8px 32px rgba(60, 60, 120, 0.14), 0 2px 8px rgba(0,0,0,0.06);
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  background: #f3f4f6;
+  border-radius: 1.2rem;
+  box-shadow: 0 1px 4px rgba(60,60,120,0.04);
+  padding: 0.1rem 0.5rem;
+  margin: 0 1.2rem;
+  transition: box-shadow 0.2s;
+}
+
+.searchBar input {
+  padding: 0.5rem 0.7rem;
+  border: none;
+  background: transparent;
+  border-radius: 1.2rem 0 0 1.2rem;
+  font-size: 1rem;
+  outline: none;
+  color: #232946;
+  width: 140px;
+  transition: background 0.2s;
+}
+
+.searchBar input:focus {
+  background: #e0e7ef;
+}
+
+.searchBar button {
+  padding: 0.4rem 0.6rem;
+  border: none;
+  background: none;
+  border-radius: 0 1.2rem 1.2rem 0;
+  cursor: pointer;
+  color: #6366f1;
+  transition: color 0.2s;
+}
+
+.searchBar button:hover {
+  color: #f59e42;
+}
+
+.open {
+  display: block;
 }
 
 .userMenu {
-    /* Styles for the user menu container */
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .profileLink {
-    /* Styles for the profile link */
-    display: block;
+  display: block;
 }
 
 .avatar {
-    /* Styles for the user avatar image */
-    border-radius: 50%;
-    display: block;
+  border-radius: 50%;
+  display: block;
+  box-shadow: 0 2px 8px rgba(60,60,120,0.10);
+  border: 2px solid #e0e7ef;
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.avatar:hover {
+  border-color: #a5b4fc;
+  box-shadow: 0 4px 16px rgba(60,60,120,0.18);
 }
 
 .signOutButton {
-    /* Styles for the sign out button */
-    background: none;
-    border: 1px solid #ccc;
-    padding: 0.3rem 0.6rem;
-    cursor: pointer;
-    border-radius: 4px;
+  background: none;
+  border: 1px solid #ccc;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: 600;
+  color: #232946;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.signOutButton:hover {
+  border-color: #6366f1;
+  color: #6366f1;
 }
 
 .loginButton {
-    /* Styles for the sign in button */
-    background-color: #1a73e8;
-    color: white;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 4px;
-    text-decoration: none;
+  background: linear-gradient(90deg, #6366f1 0%, #fca5a5 100%);
+  color: white;
+  padding: 0.5rem 1.1rem;
+  border: none;
+  border-radius: 1.2rem;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.05rem;
+  box-shadow: 0 2px 8px rgba(60,60,120,0.08);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.loginButton:hover {
+  background: linear-gradient(90deg, #fca5a5 0%, #6366f1 100%);
+  box-shadow: 0 4px 16px rgba(60,60,120,0.12);
+}
+
+@media (max-width: 600px) {
+  .headerContainer {
+    padding: 0.7rem 0.5rem;
+  }
+  .headerLogo {
+    font-size: 1.1rem;
+  }
+  .searchBar input {
+    width: 80px;
+    font-size: 0.95rem;
+  }
+}
+
+.darkHeader {
+  background: rgba(18, 18, 18, 0.85);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18), 0 1.5px 6px rgba(255,255,255,0.04);
+}
+
+.darkHeader .headerLogo {
+  color: #a5b4fc;
+}
+
+.darkHeader .headerLogo:hover {
+  color: #fca5a5;
+}
+
+.darkHeader .headerNavLink {
+  color: #e0e7ef;
+}
+
+.darkHeader .headerNavLink:hover,
+.darkHeader .headerNavLink:focus {
+  color: #a5b4fc;
+}
+
+.darkHeader .active {
+  color: #a5b4fc;
+}
+
+.darkHeader .headerMenuButton span {
+  background: #a5b4fc;
+}
+
+.darkHeader .headerMenuButton:hover span {
+  background: #fca5a5;
+}
+
+.darkHeader .searchBar {
+  background: #232946;
+}
+
+.darkHeader .searchBar input {
+  color: #e0e7ef;
+  background: transparent;
+}
+
+.darkHeader .searchBar input:focus {
+  background: #18181b;
+}
+
+.darkHeader .searchBar button {
+  color: #a5b4fc;
+}
+
+.darkHeader .searchBar button:hover {
+  color: #fca5a5;
+}
+
+.darkHeader .avatar {
+  border-color: #232946;
+}
+
+.darkHeader .avatar:hover {
+  border-color: #a5b4fc;
+}
+
+.darkHeader .signOutButton {
+  color: #e0e7ef;
+  border-color: #232946;
+}
+
+.darkHeader .signOutButton:hover {
+  color: #a5b4fc;
+  border-color: #a5b4fc;
 }
 
 .darkHeader .loginButton {
-     background-color: #4285f4;
+  background: linear-gradient(90deg, #a5b4fc 0%, #fca5a5 100%);
+  color: #232946;
+}
+
+.darkHeader .loginButton:hover {
+  background: linear-gradient(90deg, #fca5a5 0%, #a5b4fc 100%);
 }

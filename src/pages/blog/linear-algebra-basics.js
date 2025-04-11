@@ -9,8 +9,8 @@ const LinearAlgebraBasics = () => {
 
   // Define author information
   const author = {
-    name: 'Choudhary Om',
-    title: 'AI Researcher & Developer',
+    name: 'Om 🐯 Choudhary 🧘‍♂️',
+    title: 'Software Architect👾',
     bio: 'I write about machine learning, neural networks, and mathematical foundations of AI. Currently working on research in deep learning optimization.',
     // imageUrl: '/path/to/your/image.jpg' // Optional: Add image path later
   };

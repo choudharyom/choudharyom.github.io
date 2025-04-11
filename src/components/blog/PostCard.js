@@ -1,45 +1,48 @@
 import Link from 'next/link';
 import Image from 'next/image';
-// Add styles import if needed, e.g., import styles from './PostCard.module.css';
+import styles from './PostCard.module.css';
 
 const PostCard = ({ post }) => {
   if (!post) {
-    return null; // Or some placeholder if post is undefined
+    return null;
   }
 
   const { title, excerpt, slug, coverImage, date, readingTime, tags } = post;
 
   return (
-    // Replace with your actual card structure and styling
-    <div style={{ border: '1px solid #ccc', padding: '1rem', marginBottom: '1rem', borderRadius: '8px' }}>
+    <div className={styles.card}>
       {coverImage ? (
         <Image
           src={coverImage.startsWith('/') ? `/public${coverImage}` : coverImage}
           alt={title || 'Post image'}
-          width={300}
-          height={200}
-          style={{ objectFit: 'cover' }}
+          width={600}
+          height={360}
+          className={styles.cardImage}
         />
       ) : (
         <Image
           src="/public/images/placeholder-la.jpg"
           alt={title || 'Post image'}
-          width={300}
-          height={200}
-          style={{ objectFit: 'cover' }}
+          width={600}
+          height={360}
+          className={styles.cardImage}
         />
       )}
-      <h2>
-        <Link href={`/blog/${slug}`}>
-          {title || 'Untitled Post'}
-        </Link>
-      </h2>
-      {date && <p><small>Date: {date}</small></p>}
-      {readingTime && <p><small>Reading Time: {readingTime}</small></p>}
-      <p>{excerpt || 'No excerpt available.'}</p>
+      <Link href={`/blog/${slug}`} className={styles.cardTitle}>
+        {title || 'Untitled Post'}
+      </Link>
+      <div className={styles.cardMeta}>
+        {date && <span>{date}</span>}
+        {readingTime && <span>{readingTime}</span>}
+      </div>
+      <div className={styles.cardExcerpt}>
+        {excerpt || 'No excerpt available.'}
+      </div>
       {tags && tags.length > 0 && (
-        <div>
-          Tags: {tags.join(', ')}
+        <div className={styles.cardTags}>
+          {tags.map((tag) => (
+            <span key={tag} className={styles.tag}>{tag}</span>
+          ))}
         </div>
       )}
     </div>

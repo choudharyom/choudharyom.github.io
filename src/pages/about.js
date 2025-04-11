@@ -1,15 +1,28 @@
-import styles from '@/styles/About.module.css'; // Assuming we might want specific styles later
+import styles from '@/styles/About.module.css';
 
 const AboutPage = () => {
   return (
     <div className={styles.container}>
-      <h1>About the Author</h1>
-      <h2>Author: Choudhary Om</h2>
-        <h3>AI Researcher & Developer</h3>
-        <p>
-          I write about machine learning, neural networks, and mathematical foundations of AI.
-          Currently working on research in deep learning optimization.
+      <div className={styles.heroCard}>
+        <div className={styles.avatarWrapper}>
+          <img
+            src="/public/images/logo.png"
+            alt="Om Choudhary Avatar"
+            className={styles.avatar}
+          />
+        </div>
+        <h1 className={styles.name}>
+          <span className={styles.animatedUnderline}>Om 🐯 Choudhary 🧘‍♂️</span>
+        </h1>
+        <h2 className={styles.subtitle}>
+          Coffee Maker☕ | Software Architect👾
+        </h2>
+        <p className={styles.intro}>
+          <span className={styles.animatedIntro}>
+            I am passionate about AI and maths.
+          </span>
         </p>
+      </div>
     </div>
   );
 };

@@ -1,12 +1,11 @@
-/* Basic styles for Home page - add your specific styles here */
+/* Modernized Home Page Styles */
 
 .container {
-  /* Add container styles */
   padding: 0 2rem;
+  width: 100%;
 }
 
 .main {
-  /* Add main styles */
   min-height: 100vh;
   padding: 4rem 0;
   flex: 1;
@@ -14,126 +13,228 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 
+/* Hero Section */
 .hero {
-  /* Add hero styles */
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   margin-bottom: 4rem;
+  background: linear-gradient(120deg, #0070f3 0%, #7928ca 100%);
+  border-radius: 2rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+  padding: 3rem 3.5rem;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
 }
 
 .heroContent {
-  /* Add hero content styles */
   max-width: 600px;
+  z-index: 1;
 }
 
 .title {
-  /* Add title styles */
   margin: 0;
-  line-height: 1.15;
+  line-height: 1.1;
   font-size: 4rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: #fff;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.10);
 }
 
 .description {
-  /* Add description styles */
   line-height: 1.5;
   font-size: 1.5rem;
+  margin-top: 1.5rem;
+  color: #e0e7ff;
 }
 
 .buttonGroup {
-    margin-top: 2rem;
-    display: flex;
-    gap: 1rem;
+  margin-top: 2.5rem;
+  display: flex;
+  gap: 1.25rem;
 }
 
 .primaryButton {
-    /* Add primary button styles */
-    padding: 0.75rem 1.5rem;
-    background-color: blue; /* Placeholder */
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-decoration: none;
+  padding: 0.85rem 2rem;
+  background: linear-gradient(90deg, #00c6ff 0%, #0070f3 100%);
+  color: #fff;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 2px 12px rgba(0,112,243,0.10);
+  transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+}
+
+.primaryButton:hover {
+  background: linear-gradient(90deg, #0070f3 0%, #00c6ff 100%);
+  box-shadow: 0 4px 24px rgba(0,112,243,0.18);
+  transform: translateY(-2px) scale(1.03);
 }
 
 .secondaryButton {
-    /* Add secondary button styles */
-    padding: 0.75rem 1.5rem;
-    background-color: grey; /* Placeholder */
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-decoration: none;
+  padding: 0.85rem 2rem;
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+  border: 1.5px solid #fff;
+  border-radius: 0.75rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 2px 12px rgba(121,40,202,0.10);
+  transition: background 0.2s, box-shadow 0.2s, transform 0.1s, color 0.2s;
 }
 
+.secondaryButton:hover {
+  background: rgba(255,255,255,0.28);
+  color: #7928ca;
+  box-shadow: 0 4px 24px rgba(121,40,202,0.18);
+  transform: translateY(-2px) scale(1.03);
+}
 
 .heroVisual {
-  /* Add hero visual styles */
+  z-index: 1;
+  margin-left: 2rem;
+  min-width: 320px;
+  max-width: 420px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+/* Featured Articles Section */
 .featuredSection {
-  /* Add featured section styles */
+  margin-bottom: 4rem;
+  width: 100%;
+  background: linear-gradient(120deg, #f7f9fa 60%, #e0e7ff 100%);
+  border-radius: 2rem;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.06);
+  padding: 3rem 2rem 2.5rem 2rem;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.sectionTitle {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-weight: 800;
+  color: #22223b;
+  letter-spacing: -0.5px;
+  text-shadow: 0 2px 12px rgba(0,112,243,0.06);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2.5rem;
+  width: 100%;
+  margin-top: 1.5rem;
+  padding-bottom: 0.5rem;
+}
+
+/* Topics Section */
+.topics {
   margin-bottom: 4rem;
   width: 100%;
 }
 
-.sectionTitle {
-  /* Add section title styles */
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-  text-align: center;
-}
-
-.grid {
-  /* Add grid styles */
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  width: 100%;
-}
-
-.topics {
-  /* Add topics section styles */
-   margin-bottom: 4rem;
-   width: 100%;
-}
-
 .topicGrid {
-  /* Add topic grid styles */
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  margin-top: 1.5rem;
 }
 
 .topicCard {
-  /* Add topic card styles */
-  border: 1px solid #eaeaea;
-  padding: 1.5rem;
-  border-radius: 10px;
+  border: none;
+  padding: 2rem 1.5rem;
+  border-radius: 1.25rem;
   text-decoration: none;
-  color: inherit;
-  transition: color 0.15s ease, border-color 0.15s ease;
+  color: #22223b;
+  background: linear-gradient(120deg, #e0e7ff 0%, #f7f9fa 100%);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  transition: color 0.18s, box-shadow 0.18s, background 0.18s, transform 0.12s;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 160px;
 }
 
 .topicCard:hover,
 .topicCard:focus,
 .topicCard:active {
   color: #0070f3;
-  border-color: #0070f3;
+  background: linear-gradient(120deg, #c7d2fe 0%, #e0e7ff 100%);
+  box-shadow: 0 8px 32px rgba(0,112,243,0.10);
+  transform: translateY(-3px) scale(1.03);
 }
 
 .topicCard h3 {
   margin: 0 0 1rem 0;
   font-size: 1.5rem;
+  font-weight: 700;
 }
 
 .topicCard p {
   margin: 0;
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   line-height: 1.5;
+  color: #4b5563;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1100px) {
+  .hero {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 2.5rem 1.5rem;
+  }
+  .heroVisual {
+    margin-left: 0;
+    margin-top: 2rem;
+    min-width: 220px;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 700px) {
+  .main {
+    padding: 2rem 0;
+  }
+  .hero {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.5rem 0.5rem;
+    border-radius: 1rem;
+  }
+  .heroContent {
+    max-width: 100%;
+  }
+  .title {
+    font-size: 2.2rem;
+  }
+  .sectionTitle {
+    font-size: 1.5rem;
+  }
+  .grid {
+    gap: 1.25rem;
+  }
+  .topicGrid {
+    gap: 1rem;
+  }
+  .topicCard {
+    padding: 1.25rem 0.75rem;
+    border-radius: 0.75rem;
+    min-height: 120px;
+  }
 }

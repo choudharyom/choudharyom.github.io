@@ -31,7 +31,7 @@ const Header = () => {
 
           <Image
             src="/public/images/logo.png" // Ensure this path is correct
-            alt="Choudhary Om Logo"
+            alt="Choudhary Om"
             width={40}
             height={40}
           />
@@ -59,7 +59,13 @@ const Header = () => {
         </div>
 
         {/* Mobile Menu Button - Use .headerMenuButton */}
-        <button className={styles.headerMenuButton} onClick={() => setMenuOpen(!menuOpen)}>
+        <button
+          className={`${styles.headerMenuButton} ${menuOpen ? styles.open : ''}`}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          aria-controls="main-navigation"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
           <span></span>
           <span></span>
           <span></span>

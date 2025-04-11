@@ -79,9 +79,7 @@
 
 .articleContent h2 {
   font-size: 1.6rem;
-  border-left: 4px solid #a5b4fc;
   padding-left: 0.7rem;
-  background: linear-gradient(90deg, #f3f4f6 60%, transparent 100%);
 }
 
 .articleContent h3 {

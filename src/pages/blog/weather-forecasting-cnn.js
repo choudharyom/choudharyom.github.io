@@ -23,12 +23,48 @@ export default function WeatherForecastingCNN() {
           name="description"
           content="Explore how Convolutional Neural Networks (CNNs) are transforming weather prediction through advanced mathematical modeling and machine learning techniques."
         />
-        <link rel="canonical" href="https://yourwebsite.com/weather-forecasting-cnn-deep-learning" />
+        <link rel="canonical" href="https://choudharyom.com/weather-forecasting-cnn-deep-learning" />
         {/* Prism.js CSS theme for colorful code */}
         <link
           href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css"
           rel="stylesheet"
         />
+        <style>{`
+          .highlight {
+            background: #f7f9fb;
+            border-left: 6px solid #4a76c5;
+            border-radius: 12px 0 0 12px;
+            box-shadow: 0 2px 12px 0 rgba(74, 118, 197, 0.07), 0 1.5px 4px 0 rgba(0,0,0,0.03);
+            padding: 1.5em 1.5em 1.5em 2em;
+            margin: 2em 0;
+            transition: box-shadow 0.2s;
+          }
+          .highlight:hover {
+            box-shadow: 0 4px 24px 0 rgba(74, 118, 197, 0.13), 0 2px 8px 0 rgba(0,0,0,0.06);
+          }
+          .highlight h3 {
+            color: #4a76c5;
+            font-weight: 700;
+            margin-top: 0;
+            margin-bottom: 0.7em;
+            font-size: 1.25em;
+            letter-spacing: 0.01em;
+          }
+          .highlight ul {
+            margin: 0;
+            padding-left: 1.2em;
+          }
+          .highlight li {
+            margin-bottom: 0.3em;
+            font-size: 1.07em;
+          }
+          @media (max-width: 600px) {
+            .highlight {
+              padding: 1em 1em 1em 1.2em;
+              border-radius: 8px 0 0 8px;
+            }
+          }
+        `}</style>
       </Head>
       {/* MathJax script for client-side rendering */}
       <Script
@@ -155,33 +191,31 @@ export default function WeatherForecastingCNN() {
             The Navier-Stokes equations are a set of partial differential equations that describe the motion of fluid substances, such as air and water, by modeling the conservation of mass, momentum, and energy. In the context of weather forecasting, these equations govern the behavior of the atmosphere, capturing phenomena like wind patterns, pressure gradients, and temperature changes that drive weather systems.
           </p>
           <div className="math-definition">
-            <h3>The Navier-Stokes Equations</h3>
-            <p>The incompressible form of the Navier-Stokes equations, often used in atmospheric modeling, consists of two main components:</p>
-            <ul>
-              <li><strong>Continuity Equation (Conservation of Mass):</strong></li>
-              <span>{`\\[\\nabla \\cdot \\mathbf{u} = 0\\]`}</span>
-              <p>This ensures that the fluid is incompressible, meaning the divergence of the velocity field {`\\(\\mathbf{u}\\)`} is zero.</p>
-              <li><strong>Momentum Equation (Conservation of Momentum):</strong></li>
-              <span>{`\\[\\frac{\\partial \\mathbf{u}}{\\partial t} + (\\mathbf{u} \\cdot \\nabla) \\mathbf{u} = -\\frac{1}{\\rho} \\nabla p + \\nu \\nabla^2 \\mathbf{u} + \\mathbf{f}\\]`}</span>
-              <p>Where:</p>
-              <ul>
-                <li>{`\\(\\mathbf{u}\\)`} is the velocity field of the fluid.</li>
-                <li>{`\\(t\\)`} is time.</li>
-                <li>{`\\(\\rho\\)`} is the fluid density.</li>
-                <li>{`\\(p\\)`} is the pressure.</li>
-                <li>{`\\(\\nu\\)`} is the kinematic viscosity.</li>
-                <li>{`\\(\\mathbf{f}\\)`} represents external forces (e.g., gravity, Coriolis force in weather models).</li>
-              </ul>
-            </ul>
-            <p>These equations describe how the velocity of a fluid evolves over time under the influence of pressure gradients, viscosity, and external forces.</p>
-          </div>
+  <h3>The Navier-Stokes Equations</h3>
+  <p>The incompressible form of the Navier-Stokes equations, often used in atmospheric modeling, consists of two main components:</p>
+  <p><strong>Continuity Equation (Conservation of Mass):</strong></p>
+  <span>{`\\[\\nabla \\cdot \\mathbf{u} = 0\\]`}</span>
+  <p>This ensures that the fluid is incompressible, meaning the divergence of the velocity field {`\\(\\mathbf{u}\\)`} is zero.</p>
+  <p><strong>Momentum Equation (Conservation of Momentum):</strong></p>
+  <span>{`\\[\\frac{\\partial \\mathbf{u}}{\\partial t} + (\\mathbf{u} \\cdot \\nabla) \\mathbf{u} = -\\frac{1}{\\rho} \\nabla p + \\nu \\nabla^2 \\mathbf{u} + \\mathbf{f}\\]`}</span>
+  <p>Where:</p>
+  <ul>
+    <li>{`\\(\\mathbf{u}\\)`} is the velocity field of the fluid.</li>
+    <li>{`\\(t\\)`} is time.</li>
+    <li>{`\\(\\rho\\)`} is the fluid density.</li>
+    <li>{`\\(p\\)`} is the pressure.</li>
+    <li>{`\\(\\nu\\)`} is the kinematic viscosity.</li>
+    <li>{`\\(\\mathbf{f}\\)`} represents external forces (e.g., gravity, Coriolis force in weather models).</li>
+  </ul>
+  <p>These equations describe how the velocity of a fluid evolves over time under the influence of pressure gradients, viscosity, and external forces.</p>
+</div>
           <div className="highlight">
             <h3>Navier-Stokes in Weather Forecasting</h3>
             <p>
               In traditional weather forecasting, numerical weather prediction (NWP) models solve the Navier-Stokes equations on a discretized grid of the atmosphere. These models incorporate additional equations for thermodynamics and moisture to simulate the complex interactions that produce weather phenomena. For example:
             </p>
             <ul>
-              <li>Wind patterns are driven by pressure gradients ({`-\\frac{1}{\\rho} \\nabla p`}).</li>
+            <li>Wind patterns are driven by pressure gradients ({`-\\frac{1}{\\rho} \\nabla p`}).</li>
               <li>The Coriolis force, included in {`\\(\\mathbf{f}\\)`}, accounts for the Earth's rotation, influencing large-scale weather systems like cyclones.</li>
               <li>Viscosity ({`\\nu \\nabla^2 \\mathbf{u}`}) models the diffusion of momentum, though it’s often small in atmospheric flows.</li>
             </ul>

@@ -1,75 +1,61 @@
-:root {
-  /* Primary brand colors */
-  --primary-color: #0070f3;
-  --primary-gradient: linear-gradient(90deg, #0070f3 0%, #00c6ff 100%);
-  --secondary-color: #7928ca;
-  --accent-color: #ff4081;
-  --success-color: #21c87a;
-  --warning-color: #ffb300;
-  --error-color: #ff5252;
-
-  /* Backgrounds */
-  --background-color: #ffffff;
-  --background-alt: #f7f9fa;
-  --card-bg: rgba(255,255,255,0.85);
-  --glass-bg: rgba(255,255,255,0.6);
-  --glass-blur: blur(12px);
-
-  /* Text */
-  --text-color: #111827;
-  --text-secondary: #6b7280;
-
-  /* Borders & Shadows */
-  --border-color: #e5e7eb;
-  --shadow-soft: 0 4px 24px rgba(0,0,0,0.08);
-  --shadow-glass: 0 8px 32px rgba(0,0,0,0.12);
-
-  /* Tag/Chip */
-  --tag-bg: #e3f2fd;
-  --tag-color: #1976d2;
+/* Custom Python code block styling to match attached image */
+pre.language-python, code.language-python {
+  background: #23241f !important;
+  color: #f8f8f2 !important;
+  border-radius: 10px;
+  padding: 1.2em 1.5em;
+  font-family: 'Fira Mono', 'Menlo', 'Monaco', 'Consolas', monospace;
+  font-size: 1.08em;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.13);
+  margin: 1.5em 0;
+  overflow-x: auto;
+  border: none;
 }
 
-[data-theme='dark'] {
-  --background-color: #18181b;
-  --background-alt: #23272f;
-  --card-bg: rgba(24,24,27,0.85);
-  --glass-bg: rgba(24,24,27,0.6);
-  --glass-blur: blur(12px);
-
-  --primary-color: #60a5fa;
-  --primary-gradient: linear-gradient(90deg, #60a5fa 0%, #a78bfa 100%);
-  --secondary-color: #a78bfa;
-  --accent-color: #ff80b5;
-  --success-color: #34d399;
-  --warning-color: #fbbf24;
-  --error-color: #f87171;
-
-  --text-color: #f3f4f6;
-  --text-secondary: #a1a1aa;
-
-  --border-color: #27272a;
-  --shadow-soft: 0 4px 24px rgba(0,0,0,0.32);
-  --shadow-glass: 0 8px 32px rgba(0,0,0,0.44);
-
-  --tag-bg: #1e293b;
-  --tag-color: #60a5fa;
+/* Syntax highlighting overrides */
+pre.language-python .token.comment,
+code.language-python .token.comment {
+  color: #8dc891 !important; /* green */
+  font-style: italic;
+}
+pre.language-python .token.keyword,
+code.language-python .token.keyword,
+pre.language-python .token.import,
+code.language-python .token.import {
+  color: #66d9ef !important; /* blue */
+  font-weight: 500;
+}
+pre.language-python .token.string,
+code.language-python .token.string {
+  color: #e6db74 !important; /* yellowish */
+}
+pre.language-python .token.number,
+code.language-python .token.number {
+  color: #ae81ff !important; /* purple */
+}
+pre.language-python .token.function,
+code.language-python .token.function {
+  color: #a6e22e !important; /* greenish */
+}
+pre.language-python .token.operator,
+code.language-python .token.operator {
+  color: #f92672 !important; /* pink */
+}
+pre.language-python .token.class-name,
+code.language-python .token.class-name {
+  color: #fd971f !important; /* orange */
+}
+pre.language-python .token.punctuation,
+code.language-python .token.punctuation {
+  color: #f8f8f2 !important;
+}
+pre.language-python .token.variable,
+code.language-python .token.variable {
+  color: #f8f8f2 !important;
 }
 
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  background-color: var(--background-color);
-  color: var(--text-color);
-}
-
-* {
-  box-sizing: border-box;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
+/* Remove line numbers if present */
+pre.language-python .line-numbers,
+code.language-python .line-numbers {
+  display: none !important;
 }

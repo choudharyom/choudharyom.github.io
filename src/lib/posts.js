@@ -37,6 +37,25 @@ const samplePosts = [
       <p>Operations like matrix multiplication, dot products, and finding determinants or inverses are crucial. For example, matrix multiplication is used extensively in neural network layers to transform input data.</p>
       <p>Understanding these concepts is essential for grasping how many machine learning algorithms, from linear regression to deep learning models, actually work under the hood.</p>
     ` // Added basic content
+  },
+  {
+    id: 'weather-forecasting-cnn',
+    slug: 'weather-forecasting-cnn',
+    title: 'Weather Forecasting with Convolutional Neural Networks: A Mathematical Deep Dive',
+    excerpt: 'Explore how Convolutional Neural Networks (CNNs) are transforming weather prediction through advanced mathematical modeling and machine learning techniques.',
+    coverImage: '/images/placeholder-nn.jpg',
+    date: '2025-04-11',
+    readingTime: '8 min',
+    tags: ['deep-learning', 'cnn', 'weather', 'mathematics'],
+    content: `
+      <p>In the intricate world of <strong>weather forecasting</strong>, <strong>Convolutional Neural Networks (CNNs)</strong> have emerged as a groundbreaking approach to understanding and predicting atmospheric dynamics. This deep learning technique bridges the gap between complex mathematical principles and practical meteorological predictions, offering unprecedented insights into the chaotic nature of weather systems.</p>
+      <ul>
+        <li>CNNs transform how we interpret spatial weather data</li>
+        <li>Mathematical modeling meets machine learning</li>
+        <li>Potential applications across multiple sectors</li>
+      </ul>
+      <p>Read the full article for a mathematical deep dive and real-world case studies.</p>
+    `
   }
   // Add more posts here
 ];

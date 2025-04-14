@@ -2,7 +2,6 @@
 
 /* Sidebar */
 .sidebar {
-  /* No outer block styling, just layout and spacing */
   padding: 0;
   width: 100%;
   max-width: 100%;
@@ -39,14 +38,12 @@
 /* Article Content Modern Card Style */
 .articleContent {
   flex: 1;
-  padding: 2.5rem 2.5rem 2.5rem 2.5rem;
-  background: var(--card-bg);
-  backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--border-color);
-  border-radius: 1.5rem;
-  box-shadow: var(--shadow-soft);
+  padding: 2rem 2rem 2.5rem 2rem;
+  background: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
   margin-bottom: 2rem;
-  transition: background 0.3s, box-shadow 0.3s;
   font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   color: #232946;
   line-height: 1.8;
@@ -64,22 +61,24 @@
 .articleContent h6 {
   font-weight: 800;
   color: #232946;
-  margin-top: 2.2rem;
-  margin-bottom: 1.1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.8rem;
   line-height: 1.2;
   letter-spacing: 0.01em;
   position: relative;
 }
 
 .articleContent h1 {
-  font-size: 2.2rem;
-  border-bottom: 2px solid #a5b4fc;
-  padding-bottom: 0.3rem;
+  font-size: 2.5rem;
+  font-weight: 900;
+  border-bottom: none;
+  padding-bottom: 0;
 }
 
 .articleContent h2 {
-  font-size: 1.6rem;
-  padding-left: 0.7rem;
+  font-size: 1.5rem;
+  padding-left: 0;
+  color: #333;
 }
 
 .articleContent h3 {
@@ -128,8 +127,7 @@
   padding: 1rem 1.5rem;
   border-radius: 0.7rem;
   font-style: italic;
-  font-size: 1.08rem;
-  box-shadow: 0 2px 8px rgba(60,60,120,0.04);
+  letter-spacing: 0.01em;
 }
 
 .articleContent pre {
@@ -168,8 +166,6 @@
   box-shadow: 0 2px 12px rgba(60,60,120,0.10);
   transition: transform 0.2s, box-shadow 0.2s;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .articleContent img:hover {
@@ -177,10 +173,195 @@
   box-shadow: 0 8px 32px rgba(60,60,120,0.18);
 }
 
+/* --- Medium-style Post Header --- */
+.postHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0;
+  border-bottom: none;
+  gap: 0.2rem;
+}
+
+/* Meta row: avatar, name, publishedIn, date, all inline */
+.metaRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%; /* Ensure it takes full width for proper alignment */
+  justify-content: flex-start; /* Align to the left */
+}
+
+.authorAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: none;
+  box-shadow: none;
+  background: none;
+}
+
+.metaText {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.authorName {
+  font-weight: 400;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.followLink {
+  font-weight: 400;
+  font-size: 0.9rem;
+  color: #666;
+  cursor: pointer;
+  margin-right: 0.1rem;
+}
+
+.followLink:hover {
+  text-decoration: underline;
+}
+
+.dot {
+  margin: 0 0.3em;
+  color: #aaa;
+  font-size: 0.8em;
+  user-select: none;
+}
+
+.publishedIn {
+  color: #666;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.date {
+  color: #666;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.readingTime {
+  color: #666;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+/* Action bar with light lines above and below */
+.actionBarWrapper {
+  width: 100%;
+}
+
+.actionBarLine {
+  border: none;
+  border-top: 1px solid #e5e7eb;
+  margin: 0;
+  height: 1px;
+  width: 100%;
+}
+
+.actionBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  width: 100%;
+}
+
+.actionBarLeft,
+.actionBarRight {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.actionBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  width: 100%;
+}
+
+.actionBarLeft,
+.actionBarRight {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.actionButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: #232946;
+  font-size: 1.13rem;
+  cursor: pointer;
+  padding: 0.18rem 0.38rem;
+  border-radius: 0.5rem;
+  transition: background 0.15s, color 0.15s;
+  min-width: 36px;
+  min-height: 36px;
+}
+
+.actionButton svg {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+.actionButton:hover {
+  background: #f3f4f6;
+  color: #6366f1;
+}
+
+@media (max-width: 600px) {
+  .postHeader {
+    margin-bottom: 1rem;
+  }
+  .metaRow {
+    gap: 0.4rem;
+  }
+  .authorAvatar {
+    width: 28px;
+    height: 28px;
+  }
+  .metaText {
+    font-size: 0.85rem;
+  }
+  .authorName,
+  .followLink,
+  .publishedIn,
+  .date,
+  .readingTime {
+    font-size: 0.85rem;
+  }
+  .actionBarLeft,
+  .actionBarRight {
+    gap: 0.8rem;
+  }
+  .actionButton {
+    font-size: 1rem;
+    min-width: 28px;
+    min-height: 28px;
+    padding: 0.12rem 0.18rem;
+  }
+}
+
 .articleContent hr {
   border: none;
-  border-top: 2px dashed #a5b4fc;
-  margin: 2.5rem 0;
 }
 
 .articleContent table {
@@ -220,14 +401,14 @@
 
 @media (max-width: 900px) {
   .articleContent {
-    padding: 1.2rem 0.7rem;
+    padding: 1rem 0.7rem;
     font-size: 1.01rem;
   }
   .articleContent h1 {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
   }
   .articleContent h2 {
-    font-size: 1.18rem;
+    font-size: 1.3rem;
   }
   .articleContent h3 {
     font-size: 1.05rem;
@@ -275,9 +456,11 @@
   color: var(--primary-color);
   background-color: rgba(37, 99, 235, 0.08);
 }
+
 .tocH2 {
   padding-left: 1rem;
 }
+
 .tocH3 {
   padding-left: 2rem;
 }
@@ -363,10 +546,9 @@
 }
 
 [data-theme='dark'] .articleContent {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-soft);
-  backdrop-filter: var(--glass-blur);
+  background: none;
+  border: none;
+  box-shadow: none;
 }
 
 [data-theme='dark'] .tocLink {

@@ -16,7 +16,22 @@ const LinearAlgebraBasics = () => {
   };
 
   return (
-    <BlogPostLayout meta={meta} author={author}> {/* Pass author prop */}
+  
+    <BlogPostLayout
+      meta={{
+        title: "Linear Algebra Basics for Machine Learning",
+        description: "Learn the basics of linear algebra for machine learning.",
+        publishedIn: "On Algebra",
+        date: "2025-04-10",
+        readingTime: "5 min read", // Optional: calculate dynamically if needed
+      }}
+      author={{
+        name: "Om Choudhary",
+        title: "Software Architect👾",
+        bio: "I write about machine learning, neural networks, and mathematical foundations of AI.",
+        imageUrl: "https://via.placeholder.com/60",
+      }}
+    >
       <h1>Linear Algebra Basics for Machine Learning</h1>
       <p className={styles.meta}>Published on: April 10, 2025 | Tags: <a href="/tag/linear-algebra">linear-algebra</a>, <a href="/tag/mathematics">mathematics</a>, <a href="/tag/machine-learning">machine-learning</a></p>
 

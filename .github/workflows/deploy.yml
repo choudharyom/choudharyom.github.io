@@ -3,7 +3,7 @@ name: Deploy Next.js to GitHub Pages
 on:
   push:
     branches:
-      - om_70x # Or your primary development branch (e.g., develop, source)
+      - main # Or your primary development branch (e.g., develop, source)
   workflow_dispatch: # Allows manual triggering
 
 permissions:

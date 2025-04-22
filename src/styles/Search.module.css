@@ -1,0 +1,89 @@
+/* src/styles/Search.module.css */
+
+.container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem 2rem;
+  min-height: 60vh; /* Ensure footer doesn't jump up */
+}
+
+.container h1 {
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--color-primary); /* Use your theme variable */
+  padding-bottom: 0.5rem;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  border: 1px solid var(--color-border); /* Use theme variable */
+  border-radius: 4px;
+  margin-bottom: 2rem;
+  background-color: var(--color-background-secondary); /* Use theme variable */
+  color: var(--color-text-primary); /* Use theme variable */
+}
+
+.resultsTitle {
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: var(--color-text-secondary); /* Use theme variable */
+}
+
+.resultsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.resultItem {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-border-light); /* Use theme variable */
+}
+
+.resultItem:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.resultLink {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--color-link); /* Use theme variable */
+  text-decoration: none;
+  display: block; /* Make the whole title clickable */
+  margin-bottom: 0.4rem;
+}
+
+.resultLink:hover {
+  text-decoration: underline;
+  color: var(--color-link-hover); /* Use theme variable */
+}
+
+.resultExcerpt {
+  color: var(--color-text-secondary); /* Use theme variable */
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+}
+
+.resultTags {
+    font-size: 0.85rem;
+    color: var(--color-text-tertiary); /* Use theme variable */
+    font-style: italic;
+}
+
+
+.error {
+  color: #e53e3e; /* Red color for errors */
+  font-weight: bold;
+}
+
+/* Add responsive styles if needed */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+}

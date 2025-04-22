@@ -15,10 +15,6 @@ const nextConfig = {
     // loaderFile: './src/lib/imageLoader.js', // Example
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'firebasestorage.googleapis.com',
-      },
-      {
         protocol: 'http',
         hostname: 'localhost',
       }

@@ -25,7 +25,8 @@
   padding: 0;
   margin: 0;
   display: grid;
-  gap: 1.75rem; /* Same gap as search results */
+  gap: 2rem; /* Increase gap slightly for a 2-column layout */
+  grid-template-columns: repeat(2, 1fr); /* Create two equal columns */
 }
 
 /* --- Post Item (Card) --- */
@@ -118,6 +119,11 @@
   .container h1 {
     font-size: 2rem;
   }
+  .postList {
+    grid-template-columns: 1fr; /* Single column */
+    gap: 1.75rem; /* Can revert to original gap if desired */
+  }
+
   .postItem {
     padding: 1.2rem;
   }

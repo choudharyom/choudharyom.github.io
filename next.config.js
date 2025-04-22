@@ -7,6 +7,7 @@ const isProd = process.env.NODE_ENV === 'production';
 const assetPrefix = isProd ? '/choudharyom-blog' : '';
 
 const nextConfig = {
+  output: 'export',
   reactStrictMode: true,
   images: {
     // Make sure image loader works with assetPrefix if needed,
@@ -29,6 +30,7 @@ const nextConfig = {
   env: { // Add this block
     NEXT_PUBLIC_ASSET_PREFIX: assetPrefix,
   },
+  trailingSlash: true,
   // If using `next export`, ensure trailing slashes match GitHub Pages expectations
   // trailingSlash: true, // Often needed for GH Pages subdirectories
 }

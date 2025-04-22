@@ -1,7 +1,7 @@
 // scripts/generate-search-index.js
-const fs = require('fs');
-const path = require('path');
-const { getAllPosts } = require('../src/lib/posts'); // Adjust path if necessary
+import { getAllPosts } from '../src/lib/posts.js';
+import fs from 'fs';
+import path from 'path';
 
 console.log('Generating search index...');
 

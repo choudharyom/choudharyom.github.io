@@ -34,4 +34,4 @@ const nextConfig = {
   // trailingSlash: true, // Often needed for GH Pages subdirectories
 }
 
-module.exports = nextConfig
+export default nextConfig;

@@ -107,7 +107,7 @@ export default function WeatherForecastingCNN() {
             {/* Render meta line here if BlogPostLayout doesn't */}
 
         <section>
-            <h2>Introduction: The Mathematical Symphony of Weather Prediction</h2>
+            <h2 id="introduction">Introduction: The Mathematical Symphony of Weather Prediction</h2>
             <p>
               In the intricate world of <strong>weather forecasting</strong>, <strong>Convolutional Neural Networks (CNNs)</strong> have emerged as a groundbreaking approach to understanding and predicting atmospheric dynamics. This deep learning technique bridges the gap between complex mathematical principles and practical meteorological predictions, offering unprecedented insights into the chaotic nature of weather systems.
             </p>
@@ -121,7 +121,7 @@ export default function WeatherForecastingCNN() {
             </div>
           </section>
           <section>
-            <h2>Case Studies</h2>
+            <h2 id="case-studies">Case Studies</h2>
             <div className="highlight">
               <h3>Weather Forecasting with CNNs</h3>
               <p><strong>Goal:</strong> Predict temperature and precipitation likelihood for a specific location.</p>
@@ -191,7 +191,7 @@ export default function WeatherForecastingCNN() {
             </div>
           </section>
           <section className="math-definition">
-            <h2>Mathematical Foundations of Weather Prediction</h2>
+            <h2 id="math-foundation">Mathematical Foundations of Weather Prediction</h2>
             <p>
               At the heart of weather forecasting lies a complex system of differential equations describing atmospheric dynamics. Let's explore the mathematical representation:
             </p>
@@ -210,7 +210,7 @@ export default function WeatherForecastingCNN() {
             </div>
           </section>
           <section>
-            <h2>Navier-Stokes Equations: The Mathematical Backbone of Fluid Dynamics</h2>
+            <h2 id="Navier-Stokes-Equations">Navier-Stokes Equations: The Mathematical Backbone of Fluid Dynamics</h2>
             <p>
               The Navier-Stokes equations are a set of partial differential equations that describe the motion of fluid substances, such as air and water, by modeling the conservation of mass, momentum, and energy. In the context of weather forecasting, these equations govern the behavior of the atmosphere, capturing phenomena like wind patterns, pressure gradients, and temperature changes that drive weather systems.
             </p>
@@ -265,7 +265,7 @@ export default function WeatherForecastingCNN() {
             </div>
           </section>
           <section>
-            <h2>Convolutional Neural Networks: Powering Spatial Data Processing</h2>
+            <h2 id="convolutional">Convolutional Neural Networks: Powering Spatial Data Processing</h2>
             <p>
               Convolutional Neural Networks (CNNs) are a class of neural networks specifically designed to process structured grid-like data, such as images or time-series data. In the context of weather forecasting, CNNs are particularly well-suited for handling spatial data like satellite imagery and weather maps, which contain critical information about cloud formations, pressure systems, and other atmospheric patterns. Let’s explore the architecture of CNNs, revisit their application in our weather forecasting case study, and examine how backpropagation enables their training.
             </p>
@@ -437,7 +437,7 @@ export default function WeatherForecastingCNN() {
             </div>
           </section>
           <section>
-            <h2>Real-World Applications and Sector Impact</h2>
+            <h2 id="Reald-world">Real-World Applications and Sector Impact</h2>
             <table>
               <thead>
                 <tr>
@@ -466,7 +466,7 @@ export default function WeatherForecastingCNN() {
             </table>
           </section>
           <section>
-            <h2>Future Directions and Challenges</h2>
+            <h2 id="Future-Directions">Future Directions and Challenges</h2>
             <p>While CNNs represent a significant advancement, challenges remain:</p>
             <ul>
               <li>Managing high-dimensional atmospheric data</li>

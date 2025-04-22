@@ -10,6 +10,7 @@ const nextConfig = {
   output: 'export',
   reactStrictMode: true,
   images: {
+    unoptimized: true,
     // Make sure image loader works with assetPrefix if needed,
     // but remotePatterns are usually fine.
     // loader: 'custom', // Example if you needed a custom loader

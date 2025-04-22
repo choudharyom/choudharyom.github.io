@@ -1,0 +1,60 @@
+name: Deploy Next.js to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # Or your primary development branch (e.g., develop, source)
+  workflow_dispatch: # Allows manual triggering
+
+permissions:
+  contents: write # Allow writing to the repository (for pushing to the deployment branch)
+  pages: write # Allow deploying to GitHub Pages
+  id-token: write # Allow authentication for GitHub Pages deployment
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }} # Output the deployed URL
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ⚙️
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18' # Or your preferred Node.js version
+          cache: 'npm'
+
+      - name: Install Dependencies 📦
+        run: npm install
+
+      - name: Build & Export Static Site 🏗️
+        # Important: Add BASE_PATH if your site is deployed to a subdirectory (NOT needed for choudharyom.github.io)
+        # env:
+        #   BASE_PATH: /your-repo-name # Example if deploying to choudharyom.github.io/your-repo-name
+        run: npm run export
+        # The output will be in the 'out' directory
+
+      - name: Add .nojekyll file 🚫
+        run: touch ./out/.nojekyll
+        # Prevents GitHub Pages from running Jekyll, which can interfere with Next.js routing/assets
+
+      - name: Add CNAME file 🌐 (If using custom domain)
+        run: echo "choudharyom.com" > ./out/CNAME
+        # Replace choudharyom.com with your actual custom domain
+
+      - name: Setup Pages 📄
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact ⬆️
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./out # Upload the contents of the 'out' directory
+
+      - name: Deploy to GitHub Pages 🚀
+        id: deployment
+        uses: actions/deploy-pages@v4
+        # This action automatically deploys the uploaded artifact

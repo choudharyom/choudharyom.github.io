@@ -94,18 +94,18 @@ export default function WeatherForecastingCNN() {
             }
           }
         `}</style>
-        {/* MathJax script for client-side rendering */}
-        <Script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" />
-        {/* Prism.js for syntax highlighting */}
-        <Script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"/>
-        <Script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"/>
-      </Head>
+        </Head>
       {/* Use the common content wrapper style */}
       <div className={styles.content}>
         {/* Keep the existing article content */}
           <article>
             {/* Render meta line here if BlogPostLayout doesn't */}
-
+            {/* MathJax script for client-side rendering */}
+            <Script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" />
+            {/* Prism.js for syntax highlighting */}
+            <Script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"/>
+            <Script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"/>
+          
         <section>
             <h2 id="introduction">Introduction: The Mathematical Symphony of Weather Prediction</h2>
             <p>
@@ -239,9 +239,9 @@ export default function WeatherForecastingCNN() {
                 In traditional weather forecasting, numerical weather prediction (NWP) models solve the Navier-Stokes equations on a discretized grid of the atmosphere. These models incorporate additional equations for thermodynamics and moisture to simulate the complex interactions that produce weather phenomena. For example:
               </p>
               <ul>
-              <li>Wind patterns are driven by pressure gradients ({`-\\frac{1}{\\rho} \\nabla p`}).</li>
+              <li>Wind patterns are driven by pressure gradients \({`-\\frac{1}{\\rho} \\nabla p`}\).</li>
                 <li>The Coriolis force, included in {`\\(\\mathbf{f}\\)`}, accounts for the Earth's rotation, influencing large-scale weather systems like cyclones.</li>
-                <li>Viscosity ({`\\nu \\nabla^2 \\mathbf{u}`}) models the diffusion of momentum, though it’s often small in atmospheric flows.</li>
+                <li>Viscosity \({`\\nu \\nabla^2 \\mathbf{u}`}\) models the diffusion of momentum, though it’s often small in atmospheric flows.</li>
               </ul>
               <p>
                 Solving these equations is computationally intensive, requiring supercomputers to simulate the atmosphere over time. However, neural networks, like the one in our weather forecasting case study, can approximate these dynamics by learning patterns directly from data, bypassing the need to solve the equations explicitly.

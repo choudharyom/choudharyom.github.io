@@ -9,6 +9,12 @@ import styles from '@/styles/Header.module.css'; // Note: CSS file uses .headerC
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  console.log("Header Rendered - menuOpen:", menuOpen); // Check initial and re-renders
+
+  const toggleMenu = () => {
+    console.log("Button Clicked - Toggling menuOpen to:", !menuOpen);
+    setMenuOpen(!menuOpen);
+  };
   const router = useRouter();
   const { user, signOut } = useAuth();
 
@@ -64,7 +70,7 @@ const Header = () => {
           aria-label={menuOpen ? "Close menu" : "Open menu"}
           aria-expanded={menuOpen}
           aria-controls="main-navigation"
-          onClick={() => setMenuOpen(!menuOpen)}
+          onClick={toggleMenu}
         >
           <span></span>
           <span></span>

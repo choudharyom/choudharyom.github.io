@@ -241,10 +241,6 @@
   color: #f59e42;
 }
 
-.open {
-  display: block;
-}
-
 .userMenu {
   display: flex;
   align-items: center;

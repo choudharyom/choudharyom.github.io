@@ -1,7 +1,18 @@
+// /workspaces/choudharyom.github.io/next.config.js
+
 /** @type {import('next').NextConfig} */
+
+const isProd = process.env.NODE_ENV === 'production';
+// Define assetPrefix based on environment
+const assetPrefix = isProd ? '/choudharyom-blog' : '';
+
 const nextConfig = {
   reactStrictMode: true,
   images: {
+    // Make sure image loader works with assetPrefix if needed,
+    // but remotePatterns are usually fine.
+    // loader: 'custom', // Example if you needed a custom loader
+    // loaderFile: './src/lib/imageLoader.js', // Example
     remotePatterns: [
       {
         protocol: 'https',
@@ -13,8 +24,14 @@ const nextConfig = {
       }
     ],
   },
-  // For GitHub Pages deployment
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/choudharyom-blog' : '',
+  // Set the assetPrefix for Next.js internal use
+  assetPrefix: assetPrefix,
+  // Expose the assetPrefix to the client-side runtime
+  publicRuntimeConfig: {
+    assetPrefix: assetPrefix,
+  },
+  // If using `next export`, ensure trailing slashes match GitHub Pages expectations
+  // trailingSlash: true, // Often needed for GH Pages subdirectories
 }
 
 module.exports = nextConfig

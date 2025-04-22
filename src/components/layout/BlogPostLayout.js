@@ -85,19 +85,6 @@ const BlogPostLayout = ({ children, meta, author }) => {
                     <span className={styles.authorName}>{displayAuthor.name}</span>
                     <span className={styles.dot}>·</span>
                     <span className={styles.followLink}>Follow</span>
-                    <span className={styles.publishedIn}>
-                      {meta?.publishedIn ? `Published in ${meta.publishedIn}` : ""}
-                    </span>
-                    {meta?.publishedIn && <span className={styles.dot}>·</span>}
-                    <span className={styles.date}>
-                      {meta?.date
-                        ? new Date(meta.date).toLocaleDateString("en-US", {
-                            year: "numeric",
-                            month: "short",
-                            day: "numeric",
-                          })
-                        : ""}
-                    </span>
                     <span className={styles.dot}>·</span>
                     <span className={styles.readingTime}>{readingTime}</span>
                   </div>

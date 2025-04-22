@@ -6,7 +6,7 @@ const AboutPage = () => {
       <div className={styles.heroCard}>
         <div className={styles.avatarWrapper}>
           <img
-            src="/public/images/logo.png"
+            src="/images/AuthorOm.png"
             alt="Om Choudhary Avatar"
             className={styles.avatar}
           />

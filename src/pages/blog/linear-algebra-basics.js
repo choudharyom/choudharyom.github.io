@@ -28,8 +28,8 @@ const LinearAlgebraBasics = () => {
       author={{
         name: "Om Choudhary",
         title: "Software Architect👾",
-        bio: "I write about machine learning, neural networks, and mathematical foundations of AI.",
-        imageUrl: "https://via.placeholder.com/60",
+        bio: "I write about embedded systems, neural networks, and mathematical foundations of AI.",
+        imageUrl: "/images/AuthorOm.png",
       }}
     >
       <h1>Linear Algebra Basics for Machine Learning</h1>

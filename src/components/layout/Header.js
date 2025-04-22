@@ -30,9 +30,9 @@ const Header = () => {
           {/* Use .headerLogo */}
 
           <Image
-            src="/public/images/logo.png" // Ensure this path is correct
+            src="/images/logo.png" // Ensure this path is correct
             alt="Choudhary Om"
-            width={40}
+            width={50}
             height={40}
           />
           <span>ChoudharyOm</span>

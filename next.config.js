@@ -26,6 +26,9 @@ const nextConfig = {
   publicRuntimeConfig: {
     assetPrefix: assetPrefix,
   },
+  env: { // Add this block
+    NEXT_PUBLIC_ASSET_PREFIX: assetPrefix,
+  },
   // If using `next export`, ensure trailing slashes match GitHub Pages expectations
   // trailingSlash: true, // Often needed for GH Pages subdirectories
 }

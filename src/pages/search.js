@@ -4,12 +4,9 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link'; // Import Link
 import Head from 'next/head';
-import getConfig from 'next/config';
 import styles from '@/styles/Search.module.css';
 
-// Get the runtime config
-const { publicRuntimeConfig } = getConfig() || {}; // Add || {} for safety
-const assetPrefix = publicRuntimeConfig?.assetPrefix || ''; // Get assetPrefix, default to ''
+const assetPrefix = process.env.NEXT_PUBLIC_ASSET_PREFIX || '';
 
 const SearchPage = () => {
   const router = useRouter();

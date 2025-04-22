@@ -110,27 +110,33 @@
 /* Styling for tags */
 .resultTags {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-top: 0.8rem;
+  flex-wrap: wrap; /* Allow tags to wrap to the next line */
+  gap: 0.6rem; /* Increase gap slightly for better spacing */
+  margin-top: 1rem; /* More space above the tags */
+  align-items: center; /* Vertically align tags if they wrap */
 }
 
+/* Styling for individual tags (already defined, ensure it looks good) */
 .tag {
   display: inline-block;
-  background-color: var(--color-background-secondary); /* Use global variable */
-  color: var(--color-text-tertiary); /* Use global variable */
-  padding: 0.25rem 0.75rem;
-  border-radius: 1rem;
-  font-size: 0.8rem;
+  background-color: var(--color-background-secondary);
+  color: var(--color-text-tertiary);
+  padding: 0.3rem 0.8rem; /* Slightly more padding */
+  border-radius: 1rem; /* Pill shape */
+  font-size: 0.85rem; /* Slightly larger tag text */
   font-weight: 500;
-  border: 1px solid var(--color-border-light); /* Use global variable */
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s; /* Added border-color */
+  line-height: 1.2; /* Ensure text fits well */
+  border: 1px solid var(--color-border-light);
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  white-space: nowrap; /* Prevent tags from breaking mid-word */
 }
 
 .tag:hover {
-  background-color: var(--color-primary); /* Use global variable */
-  color: white; /* Consider var(--color-on-primary) if defined */
-  border-color: var(--color-primary); /* Use global variable */
+  background-color: var(--color-primary);
+  color: white; /* Or use a specific --color-on-primary variable */
+  border-color: var(--color-primary);
+  /* Optional: Add a subtle transform on hover */
+  transform: translateY(-4px);
 }
 
 

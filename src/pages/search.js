@@ -120,7 +120,12 @@ const SearchPage = () => {
               {post.excerpt && <p className={styles.resultExcerpt}>{post.excerpt}</p>}
               {post.tags && post.tags.length > 0 && (
                  <div className={styles.resultTags}>
-                   Tags: {post.tags.join(', ')}
+                  {/* Map over each tag and apply the .tag style */}
+                  {post.tags.map((tag) => (
+                    <span key={tag} className={styles.tag}>
+                      {tag}
+                    </span>
+                  ))}
                  </div>
               )}
             </li>

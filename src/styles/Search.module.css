@@ -121,22 +121,24 @@
   display: inline-block;
   background-color: var(--color-background-secondary);
   color: var(--color-text-tertiary);
-  padding: 0.3rem 0.8rem; /* Slightly more padding */
-  border-radius: 1rem; /* Pill shape */
-  font-size: 0.85rem; /* Slightly larger tag text */
+  padding: 0.3rem 0.8rem;
+  border-radius: 1rem;
+  font-size: 0.85rem;
   font-weight: 500;
-  line-height: 1.2; /* Ensure text fits well */
+  line-height: 1.2;
   border: 1px solid var(--color-border-light);
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
-  white-space: nowrap; /* Prevent tags from breaking mid-word */
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.2s; /* Added transform */
+  white-space: nowrap;
+  text-decoration: none; /* Ensure no default link underline */
 }
 
 .tag:hover {
   background-color: var(--color-primary);
   color: white; /* Or use a specific --color-on-primary variable */
   border-color: var(--color-primary);
-  /* Optional: Add a subtle transform on hover */
-  transform: translateY(-4px);
+  transform: translateY(-4px) scale(1.03); /* Add a subtle lift/scale effect */
+  text-decoration: none; /* Ensure no underline on hover either */
+  cursor: pointer; /* Explicitly show pointer cursor */
 }
 
 

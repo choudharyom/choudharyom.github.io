@@ -1,31 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap'); /* Keep if needed */
+
+/* --- Container and Heading --- */
 .container {
-  padding: 2rem;
-  max-width: 900px;
-  margin: 0 auto;
+  max-width: 850px; /* Match search page width */
+  margin: 3rem auto 4rem auto;
+  padding: 1rem 1.5rem;
+  min-height: 65vh;
+  font-family: var(--font-primary);
 }
 
 .container h1 {
-  margin-bottom: 2rem;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 1rem;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  margin-bottom: 2.5rem; /* More space below title */
+  border-bottom: 3px solid var(--color-primary);
+  padding-bottom: 0.75rem;
+  letter-spacing: -0.5px;
 }
 
+/* --- Post List (Grid) --- */
 .postList {
   list-style: none;
   padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 1.75rem; /* Same gap as search results */
 }
 
+/* --- Post Item (Card) --- */
 .postItem {
-  margin-bottom: 1rem;
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-medium);
+  padding: 1.5rem 1.75rem;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, background-color 0.2s;
+  /* Remove default margin/padding/border from original style */
+  margin-bottom: 0;
+  padding-bottom: 1.5rem;
+  border-bottom: none;
 }
 
+.postItem:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-medium);
+  background-color: var(--background-alt);
+}
+
+/* --- Post Link (Title) --- */
 .postLink {
-  font-size: 1.2rem;
-  color: var(--link-color, #1a73e8);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-link);
   text-decoration: none;
+  display: block;
+  margin-bottom: 0.6rem;
+  line-height: 1.3;
+  transition: color 0.2s;
 }
 
 .postLink:hover {
+  color: var(--color-link-hover);
   text-decoration: underline;
-  color: var(--link-hover-color, #0d47a1);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+/* --- Post Excerpt --- */
+.postExcerpt {
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem; /* Space before tags */
+}
+
+/* --- Tags Container --- */
+.postTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1rem;
+  align-items: center;
+}
+
+/* --- Individual Tag --- */
+.tag {
+  display: inline-block;
+  background-color: var(--color-background-secondary);
+  color: var(--color-text-tertiary);
+  padding: 0.3rem 0.8rem;
+  border-radius: 1rem; /* Pill shape */
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.2;
+  border: 1px solid var(--color-border-light);
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+  white-space: nowrap;
+  text-decoration: none; /* Ensure no default link underline for Link component */
+}
+
+.tag:hover {
+  background-color: var(--color-primary);
+  color: white; /* Or use a specific --color-on-primary variable */
+  border-color: var(--color-primary);
+  transform: translateY(-2px) scale(1.03); /* Match search tag hover */
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+    margin-top: 2rem;
+  }
+  .container h1 {
+    font-size: 2rem;
+  }
+  .postItem {
+    padding: 1.2rem;
+  }
+  .postLink {
+    font-size: 1.25rem;
+  }
+  .postExcerpt {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container h1 {
+    font-size: 1.8rem;
+  }
+  .postItem {
+    padding: 1rem;
+    border-radius: calc(var(--border-radius-medium) * 0.8);
+  }
+  .postLink {
+    font-size: 1.15rem;
+  }
 }

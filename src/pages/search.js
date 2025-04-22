@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
+import Link from 'next/link'; // Import Link
 import Head from 'next/head';
-import getConfig from 'next/config'; // Import getConfig
+import getConfig from 'next/config';
 import styles from '@/styles/Search.module.css';
 
 // Get the runtime config
@@ -119,14 +119,18 @@ const SearchPage = () => {
               </Link>
               {post.excerpt && <p className={styles.resultExcerpt}>{post.excerpt}</p>}
               {post.tags && post.tags.length > 0 && (
-                 <div className={styles.resultTags}>
-                  {/* Map over each tag and apply the .tag style */}
+                <div className={styles.resultTags}>
+                  {/* Map over each tag and wrap it in a Link */}
                   {post.tags.map((tag) => (
-                    <span key={tag} className={styles.tag}>
+                    <Link
+                      key={tag}
+                      href={`/tags/${encodeURIComponent(tag.toLowerCase())}`} // Link to /tags/tag-name (lowercase, URL-encoded)
+                      className={styles.tag} // Apply the existing tag style
+                    >
                       {tag}
-                    </span>
+                    </Link>
                   ))}
-                 </div>
+                </div>
               )}
             </li>
           ))}

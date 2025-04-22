@@ -1,30 +1,44 @@
 import BlogPostLayout from '@/components/layout/BlogPostLayout';
 import styles from '@/styles/BlogPost.module.css'; // Keep styles for content elements
 
+// --- Define Meta and Author Data Once ---
+const pageMeta = {
+  title: 'Introduction to Neural Networks',
+  description: 'A brief overview of neural networks, their structure, and how they learn, forming the foundation of modern AI.', // Added description
+  date: "2024-05-15", // Example date - Update with actual publish date
+  readingTime: "7 min read", // Example reading time
+  tags: ['neural-networks', 'machine-learning', 'introduction', 'ai'], // Added tags
+};
+
+const pageAuthor = {
+  name: "Om Choudhary", // Consistent name
+  title: 'Software Architect👾',
+  bio: 'I write about machine learning, neural networks, and mathematical foundations of AI. Currently working on research in deep learning optimization.',
+  imageUrl: "/images/AuthorOm.png", // Use consistent image path
+};
+// --- End Data Definition ---
+
 const IntroToNeuralNetworks = () => {
-  // Define meta information
-  const meta = {
-    title: 'Introduction to Neural Networks',
-    // description: 'A brief overview of neural networks...',
-  };
-
-  // Define author information
-  const author = {
-    name: 'Om 🐯 Choudhary 🧘‍♂️',
-    title: 'Software Architect👾',
-    bio: 'I write about machine learning, neural networks, and mathematical foundations of AI. Currently working on research in deep learning optimization.',
-    // imageUrl: '/path/to/your/image.jpg' // Optional: Add image path later
-  };
-
   return (
-    <BlogPostLayout meta={meta} author={author}> {/* Pass author prop */}
-      {/* The content below will be rendered inside the <article> tag in BlogPostLayout */}
-      <h1>Introduction to Neural Networks</h1>
-      <p className={styles.meta}>Published on: April 10, 2025 | Tags: <a href="/tag/neural-networks">neural-networks</a>, <a href="/tag/machine-learning">machine-learning</a></p>
+    <BlogPostLayout
+      meta={pageMeta} // Pass the defined meta object
+      author={pageAuthor} // Pass the defined author object
+    >
+      {/* reuse the title here */}
+      <h1>{pageMeta.title}</h1> 
+
+      {/* Consider moving tag rendering into BlogPostLayout if it's always the same format */}
+      <p className={styles.meta}>
+        Published on: {new Date(pageMeta.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })} | Tags: {' '}
+        {pageMeta.tags.map((tag, index) => (
+          <span key={tag}>
+            <a href={`/tags/${tag}`}>{tag}</a>
+            {index < pageMeta.tags.length - 1 ? ', ' : ''}
+          </span>
+        ))}
+      </p>
 
       <div className={styles.content}>
-        {/* Ensure headings have IDs for the TOC */}
-        <h2 id="introduction">Introduction to Neural Networks</h2>
         <p>
           Neural networks are a cornerstone of modern machine learning and artificial intelligence. Inspired by the structure of the human brain, they consist of interconnected nodes or 'neurons' organized in layers.
         </p>

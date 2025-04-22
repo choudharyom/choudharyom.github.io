@@ -1,0 +1,154 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh; /* Adjust height to position vertically */
+  padding: 2rem 1rem;
+  background-color: var(--background-alt); /* Use a subtle background */
+}
+
+.loginBox {
+  background-color: var(--card-bg);
+  padding: 2.5rem 3rem;
+  border-radius: var(--border-radius-medium);
+  box-shadow: var(--shadow-medium);
+  border: 1px solid var(--border-color);
+  width: 100%;
+  max-width: 450px; /* Limit width of the login box */
+  text-align: center;
+}
+
+.title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 2rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem; /* Space between form elements */
+  text-align: left; /* Align labels/inputs left */
+}
+
+.inputGroup {
+  width: 100%;
+}
+
+.label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  margin-bottom: 0.4rem;
+}
+
+.input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: calc(var(--border-radius-medium) * 0.7); /* Slightly smaller radius */
+  background-color: var(--color-background-secondary);
+  color: var(--color-text-primary);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); /* Use primary color alpha */
+}
+
+/* Adjust focus ring for dark mode if necessary in globals.css */
+/* [data-theme='dark'] .input:focus { box-shadow: 0 0 0 3px rgba(165, 180, 252, 0.2); } */
+
+
+.forgotPassword {
+  text-align: right;
+  font-size: 0.85rem;
+  margin-top: -0.5rem; /* Pull it closer to the password field */
+}
+
+.forgotPassword a {
+  color: var(--color-link);
+  text-decoration: none;
+}
+
+.forgotPassword a:hover {
+  text-decoration: underline;
+  color: var(--color-link-hover);
+}
+
+.button {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff; /* White text */
+  background-color: var(--color-primary);
+  border: none;
+  border-radius: calc(var(--border-radius-medium) * 0.7);
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  margin-top: 0.5rem; /* Add some space above button */
+}
+
+.button:hover {
+  background-color: var(--color-primary-dark); /* Use a darker shade if defined */
+}
+
+.button:active {
+  transform: scale(0.98);
+}
+
+.error {
+  color: #e53e3e; /* Red */
+  background-color: #fff5f5; /* Light red background */
+  border: 1px solid #fca5a5; /* Lighter red border */
+  padding: 0.8rem 1rem;
+  border-radius: calc(var(--border-radius-medium) * 0.7);
+  font-size: 0.9rem;
+  text-align: center;
+  margin-bottom: 0.5rem; /* Space below error */
+}
+
+[data-theme='dark'] .error {
+   background-color: rgba(229, 62, 62, 0.1);
+   color: #fca5a5;
+   border-color: rgba(229, 62, 62, 0.5);
+}
+
+.signupLink {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.signupLink a {
+  color: var(--color-link);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.signupLink a:hover {
+  text-decoration: underline;
+  color: var(--color-link-hover);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .loginBox {
+    padding: 2rem 1.5rem;
+  }
+  .title {
+    font-size: 1.8rem;
+  }
+}

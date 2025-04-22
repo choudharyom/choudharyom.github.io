@@ -1,0 +1,32 @@
+[
+  {
+    "slug": "intro-to-neural-networks",
+    "title": "Introduction to Neural Networks",
+    "excerpt": "A brief overview of neural network structure and the learning process.",
+    "tags": [
+      "neural-networks",
+      "machine-learning"
+    ]
+  },
+  {
+    "slug": "linear-algebra-basics",
+    "title": "Linear Algebra Basics for Machine Learning",
+    "excerpt": "Understanding vectors, matrices, and key operations essential for ML.",
+    "tags": [
+      "linear-algebra",
+      "mathematics",
+      "machine-learning"
+    ]
+  },
+  {
+    "slug": "weather-forecasting-cnn",
+    "title": "Weather Forecasting with Convolutional Neural Networks: A Mathematical Deep Dive",
+    "excerpt": "Explore how Convolutional Neural Networks (CNNs) are transforming weather prediction through advanced mathematical modeling and machine learning techniques.",
+    "tags": [
+      "deep-learning",
+      "cnn",
+      "weather",
+      "mathematics"
+    ]
+  }
+]

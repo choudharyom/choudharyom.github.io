@@ -1,4 +1,41 @@
 /* Custom Python code block styling to match attached image */
+
+:root {
+  --color-primary: #6366f1;
+  --color-link: #6366f1;
+  --color-link-hover: #f59e42;
+  --color-text-primary: #232946;
+  --color-text-secondary: #4b5563;
+  --color-text-tertiary: #6b7280;
+  --card-bg: #ffffff;
+  --background-alt: #f8fafc; /* Renamed from --search-card-bg-hover for broader use */
+  --border-color: #e5e7eb;
+  --color-border-light: #f3f4f6;
+  --shadow-soft: 0 4px 12px rgba(0,0,0,0.05);
+  --shadow-medium: 0 8px 24px rgba(0,0,0,0.08); /* Renamed from --search-shadow-hover */
+  --color-background-secondary: #f3f4f6; /* Renamed from --search-input-bg */
+  --border-radius-medium: 0.75rem; /* Renamed from --search-radius */
+
+  /* Add other global variables if needed */
+  --font-primary: 'Inter', sans-serif;
+}
+
+[data-theme='dark'] {
+  --color-primary: #a5b4fc; /* Use --color-primary directly */
+  --color-link: #a5b4fc;
+  --color-link-hover: #fca5a5;
+  --color-text-primary: #e0e7ef;
+  --color-text-secondary: #9ca3af;
+  --color-text-tertiary: #6b7280;
+  --card-bg: #1f2937;
+  --background-alt: #2c3a4e;
+  --border-color: #374151;
+  --color-border-light: #2c3a4e;
+  --shadow-soft: 0 4px 12px rgba(0,0,0,0.15);
+  --shadow-medium: 0 8px 24px rgba(0,0,0,0.25);
+  --color-background-secondary: #374151;
+}
+
 pre.language-python, code.language-python {
   background: #23241f !important;
   color: #f8f8f2 !important;

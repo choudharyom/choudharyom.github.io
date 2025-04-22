@@ -1,89 +1,206 @@
 /* src/styles/Search.module.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap'); /* Keep this if needed */
+
+/* REMOVE the :root { ... } block */
+/* REMOVE the [data-theme='dark'] { ... } block */
+
 
 .container {
-  max-width: 800px;
-  margin: 2rem auto;
-  padding: 1rem 2rem;
-  min-height: 60vh; /* Ensure footer doesn't jump up */
+  max-width: 850px;
+  margin: 3rem auto 4rem auto;
+  padding: 1rem 1.5rem;
+  min-height: 65vh;
+  font-family: var(--font-primary); /* Use global font variable */
 }
 
 .container h1 {
-  margin-bottom: 1.5rem;
-  border-bottom: 2px solid var(--color-primary); /* Use your theme variable */
-  padding-bottom: 0.5rem;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--color-text-primary); /* Use global variable */
+  margin-bottom: 2rem;
+  border-bottom: 3px solid var(--color-primary); /* Use global variable */
+  padding-bottom: 0.75rem;
+  letter-spacing: -0.5px;
 }
 
+/* Style for the optional search input within the page */
 .searchInput {
   width: 100%;
-  padding: 0.8rem 1rem;
-  font-size: 1rem;
-  border: 1px solid var(--color-border); /* Use theme variable */
-  border-radius: 4px;
-  margin-bottom: 2rem;
-  background-color: var(--color-background-secondary); /* Use theme variable */
-  color: var(--color-text-primary); /* Use theme variable */
+  padding: 0.9rem 1.2rem;
+  font-size: 1.05rem;
+  border: 1px solid var(--border-color); /* Use global variable */
+  border-radius: var(--border-radius-medium); /* Use global variable */
+  margin-bottom: 2.5rem;
+  background-color: var(--color-background-secondary); /* Use global variable */
+  color: var(--color-text-primary); /* Use global variable */
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.04);
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
+.searchInput:focus {
+  outline: none;
+  border-color: var(--color-primary); /* Use global variable */
+  /* Adjust focus ring color if needed, using global primary color */
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+/* Update focus ring for dark mode if necessary in globals.css */
+/* [data-theme='dark'] .searchInput:focus { box-shadow: 0 0 0 3px rgba(165, 180, 252, 0.2); } */
+
+
 .resultsTitle {
-  font-size: 1.5rem;
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  color: var(--color-text-secondary); /* Use theme variable */
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-top: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--color-text-secondary); /* Use global variable */
 }
 
 .resultsList {
   list-style: none;
   padding: 0;
   margin: 0;
+  display: grid;
+  gap: 1.75rem;
 }
 
+/* Card style for each result item */
 .resultItem {
-  margin-bottom: 1.5rem;
+  background-color: var(--card-bg); /* Use global variable */
+  border: 1px solid var(--border-color); /* Use global variable */
+  border-radius: var(--border-radius-medium); /* Use global variable */
+  padding: 1.5rem 1.75rem;
+  box-shadow: var(--shadow-soft); /* Use global variable */
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, background-color 0.2s;
+  margin-bottom: 0;
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--color-border-light); /* Use theme variable */
+  border-bottom: none;
 }
 
-.resultItem:last-child {
-  border-bottom: none;
-  margin-bottom: 0;
+.resultItem:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-medium); /* Use global variable */
+  background-color: var(--background-alt); /* Use global variable */
 }
 
 .resultLink {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: var(--color-link); /* Use theme variable */
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-link); /* Use global variable */
   text-decoration: none;
-  display: block; /* Make the whole title clickable */
-  margin-bottom: 0.4rem;
+  display: block;
+  margin-bottom: 0.6rem;
+  line-height: 1.3;
+  transition: color 0.2s;
 }
 
 .resultLink:hover {
+  color: var(--color-link-hover); /* Use global variable */
   text-decoration: underline;
-  color: var(--color-link-hover); /* Use theme variable */
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
 }
 
 .resultExcerpt {
-  color: var(--color-text-secondary); /* Use theme variable */
-  font-size: 0.95rem;
-  line-height: 1.5;
-  margin-bottom: 0.5rem;
+  color: var(--color-text-secondary); /* Use global variable */
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
 }
 
+/* Styling for tags */
 .resultTags {
-    font-size: 0.85rem;
-    color: var(--color-text-tertiary); /* Use theme variable */
-    font-style: italic;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
 }
 
+.tag {
+  display: inline-block;
+  background-color: var(--color-background-secondary); /* Use global variable */
+  color: var(--color-text-tertiary); /* Use global variable */
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid var(--color-border-light); /* Use global variable */
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s; /* Added border-color */
+}
+
+.tag:hover {
+  background-color: var(--color-primary); /* Use global variable */
+  color: white; /* Consider var(--color-on-primary) if defined */
+  border-color: var(--color-primary); /* Use global variable */
+}
+
+
+/* Styling for status messages */
+.statusMessage {
+  text-align: center;
+  padding: 2rem 1rem;
+  margin-top: 2rem;
+  font-size: 1.1rem;
+  color: var(--color-text-secondary); /* Use global variable */
+  background-color: var(--card-bg); /* Use global variable */
+  border: 1px dashed var(--border-color); /* Use global variable */
+  border-radius: var(--border-radius-medium); /* Use global variable */
+}
 
 .error {
-  color: #e53e3e; /* Red color for errors */
-  font-weight: bold;
+  /* Inherit statusMessage styles and add error specifics */
+  composes: statusMessage;
+  /* Define error-specific colors directly or use dedicated error variables if defined globally */
+  color: #e53e3e;
+  border-color: #e53e3e;
+  font-weight: 600;
+  background-color: #fff5f5;
 }
 
-/* Add responsive styles if needed */
+/* Define dark mode error styles directly here or in globals.css */
+[data-theme='dark'] .error {
+   background-color: rgba(229, 62, 62, 0.1);
+   color: #fca5a5;
+   border-color: rgba(229, 62, 62, 0.5);
+}
+
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
   .container {
     padding: 1rem;
+    margin-top: 2rem;
+  }
+  .container h1 {
+    font-size: 2rem;
+  }
+  .resultsTitle {
+    font-size: 1.5rem;
+  }
+  .resultItem {
+    padding: 1.2rem;
+  }
+  .resultLink {
+    font-size: 1.25rem;
+  }
+  .resultExcerpt {
+    font-size: 0.95rem;
   }
 }
+
+@media (max-width: 480px) {
+  .container h1 {
+    font-size: 1.8rem;
+  }
+  .resultsTitle {
+    font-size: 1.3rem;
+  }
+  .resultItem {
+    padding: 1rem;
+    /* Adjust radius using calc or define a smaller radius variable */
+    border-radius: calc(var(--border-radius-medium) * 0.8);
+  }
+  .resultLink {
+    font-size: 1.15rem;
+  }
+}
+

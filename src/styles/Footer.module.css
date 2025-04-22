@@ -1,213 +1,118 @@
+/* src/styles/Footer.module.css */
+
 .footer {
-  background: linear-gradient(120deg, #f8fafc 0%, #e0e7ef 100%);
-  backdrop-filter: blur(8px) saturate(1.1);
-  box-shadow: 0 4px 32px rgba(60, 60, 120, 0.10), 0 1.5px 6px rgba(0,0,0,0.04);
-  border-radius: 1.5rem 1.5rem 0 0;
-  padding-top: 1rem;
-  padding-bottom: 0rem;
-  margin-top: 0rem;
-  transition: background 0.3s, box-shadow 0.3s;
+  background-color: var(--background-alt); /* Or var(--card-bg) depending on theme */
+  color: var(--color-text-secondary);
+  padding: 3rem 1.5rem 1.5rem 1.5rem; /* More padding top */
+  margin-top: 4rem; /* Space above footer */
+  border-top: 1px solid var(--border-color);
+  font-size: 0.9rem;
 }
 
-.footerContainer {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-.footerFlexContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 2.5rem;
-}
-
-.footerAbout {
-  margin-bottom: 1.5rem;
-}
-
-.footerTitle {
-  font-size: 1.5rem;
-  font-weight: 900;
-  color: #6366f1;
-  letter-spacing: 0.01em;
-  margin-bottom: 0.5rem;
-}
-
-.footerDescription {
-  margin-top: 0.5rem;
-  color: #4b5563;
-  font-size: 1.08rem;
-}
-
-.footerCategories,
-.footerLinks {
+/* Use CSS Grid for the main content sections */
+.footerContent {
+  max-width: 1100px; /* Adjust max-width as needed */
+  margin: 0 auto 2rem auto; /* Center content, space before bottom bar */
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.2rem;
+  gap: 2rem; /* Gap between sections */
+  /* Default: 3 columns on larger screens */
+  grid-template-columns: repeat(3, 1fr);
 }
 
-.footerCategoryTitle,
-.footerLinksTitle,
-.footerConnectTitle {
-  font-weight: 800;
+.sectionTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
   margin-bottom: 1rem;
-  color: #232946;
-  font-size: 1.08rem;
-  letter-spacing: 0.01em;
 }
 
-.footerList {
+/* Navigation List */
+.navList {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
-.footerListItem {
-  margin-bottom: 0.5rem;
+.navList li {
+  margin-bottom: 0.6rem;
 }
 
-.footerLink {
-  color: #6366f1;
+.navList a {
+  color: var(--color-text-secondary);
   text-decoration: none;
-  font-weight: 600;
-  font-size: 1.05rem;
-  position: relative;
-  transition: color 0.2s;
+  transition: color 0.2s ease;
 }
 
-.footerLink::after {
-  content: "";
-  display: block;
-  position: absolute;
-  left: 0;
-  bottom: -2px;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, #a5b4fc 0%, #fca5a5 100%);
-  border-radius: 1em;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+.navList a:hover {
+  color: var(--color-link-hover);
+  text-decoration: underline;
 }
 
-.footerLink:hover,
-.footerLink:focus {
-  color: #f59e42;
-}
-
-.footerLink:hover::after,
-.footerLink:focus::after {
-  transform: scaleX(1);
-}
-
-.footerConnect {
-  margin-top: 1.5rem;
-}
-
-.footerSocialLinks {
+/* Social Links */
+.socialLinks {
   display: flex;
   gap: 1.2rem;
-}
-
-.footerSocialLink {
-  color: #6366f1;
-  font-size: 1.5rem;
-  transition: color 0.2s, transform 0.2s;
-  display: flex;
   align-items: center;
 }
 
-.footerSocialLink:hover,
-.footerSocialLink:focus {
-  color: #f59e42;
-  transform: scale(1.15) rotate(-6deg);
+.socialLinks a {
+  color: var(--color-text-secondary);
+  font-size: 1.5rem; /* Icon size */
+  transition: color 0.2s ease, transform 0.2s ease;
 }
 
-.footerCopyright {
-  margin-top: 0rem;
-  padding-top: 0rem;
-  border-top: 1.5px solid #e0e7ef;
+.socialLinks a:hover {
+  color: var(--color-primary); /* Use primary color for hover */
+  transform: scale(1.1);
+}
+
+/* Footer Bottom Bar */
+.footerBottom {
+  border-top: 1px solid var(--border-color);
+  padding-top: 1.5rem;
   text-align: center;
-  color: #4b5563;
-  font-size: 1.01rem;
-  letter-spacing: 0.01em;
+  font-size: 0.85rem;
+  color: var(--color-text-tertiary);
 }
 
-/* Dark Mode Styles */
-.darkFooter {
-  background: linear-gradient(120deg, #232946 0%, #18181b 100%);
-  box-shadow: 0 4px 32px rgba(0,0,0,0.18), 0 1.5px 6px rgba(255,255,255,0.04);
-}
+/* --- Responsive Adjustments --- */
 
-.darkFooter .footerTitle {
-  color: #a5b4fc;
-}
-
-.darkFooter .footerDescription,
-.darkFooter .footerCategoryTitle,
-.darkFooter .footerLinksTitle,
-.darkFooter .footerConnectTitle,
-.darkFooter .footerCopyright {
-  color: #e0e7ef;
-}
-
-.darkFooter .footerLink {
-  color: #a5b4fc;
-}
-
-.darkFooter .footerLink:hover,
-.darkFooter .footerLink:focus {
-  color: #fca5a5;
-}
-
-.darkFooter .footerLink::after {
-  background: linear-gradient(90deg, #a5b4fc 0%, #fca5a5 100%);
-}
-
-.darkFooter .footerSocialLink {
-  color: #a5b4fc;
-}
-
-.darkFooter .footerSocialLink:hover,
-.darkFooter .footerSocialLink:focus {
-  color: #fca5a5;
-}
-
-.darkFooter .footerCopyright {
-  border-top-color: #232946;
-}
-
-/* Medium Screen (md) Styles */
-@media (min-width: 768px) {
-  .footerFlexContainer {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 2.5rem;
+/* Medium Screens (e.g., Tablets) - Collapse to 2 columns */
+@media (max-width: 768px) {
+  .footerContent {
+    /* Change to 2 columns */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem; /* Slightly reduce gap */
   }
-
-  .footerAbout {
-    width: 24%;
-    min-width: 180px;
-  }
-
-  .footerCategories,
-  .footerLinks {
-    width: 16%;
-    min-width: 120px;
-  }
-
-  .footerConnect {
-    width: 24%;
-    min-width: 180px;
-    margin-top: 0;
+  .footer {
+     padding: 2.5rem 1rem 1rem 1rem; /* Adjust padding */
   }
 }
 
-/* Large Screen (lg) Styles */
-@media (min-width: 1024px) {
-  .footerContainer {
-    padding-left: 2rem;
-    padding-right: 2rem;
+/* Small Screens (e.g., Phones) - Collapse to 1 column */
+@media (max-width: 480px) {
+  .footerContent {
+    /* Change to 1 column */
+    grid-template-columns: 1fr;
+    gap: 2rem; /* Can increase gap again for vertical spacing */
   }
+
+  .footerSection {
+     /* Optional: Center text when in single column */
+     /* text-align: center; */
+  }
+
+  .socialLinks {
+     /* Optional: Justify content center when centered */
+     /* justify-content: center; */
+  }
+
+  .sectionTitle {
+     /* Optional: Center title */
+     /* text-align: center; */
+  }
+
+   .footer {
+     padding: 2rem 1rem 1rem 1rem;
+   }
 }

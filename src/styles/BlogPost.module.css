@@ -107,16 +107,27 @@
 }
 
 .articleContent a {
-  color: #6366f1;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-  font-weight: 600;
-  transition: color 0.2s, text-decoration-color 0.2s;
+  display: inline-block;
+  background-color: var(--color-background-secondary);
+  color: var(--color-text-tertiary);
+  padding: 0.3rem 0.8rem;
+  border-radius: 1rem; /* Pill shape */
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.2;
+  border: 1px solid var(--color-border-light);
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+  white-space: nowrap;
+  text-decoration: none;
 }
 
 .articleContent a:hover {
-  color: #f59e42;
-  text-decoration-color: #f59e42;
+  background-color: var(--color-primary);
+  color: white; /* Or use a specific --color-on-primary variable */
+  border-color: var(--color-primary);
+  transform: translateY(-2px) scale(1.03); /* Match search tag hover */
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .articleContent blockquote {
@@ -625,10 +636,6 @@
   color: var(--link-color, #1a73e8);
   text-decoration: none;
   margin-left: 0.5rem;
-}
-
-.meta a:hover {
-  text-decoration: underline;
 }
 
 .content {

@@ -48,7 +48,7 @@ export default function WeatherForecastingCNN() {
         {pageMeta.tags.map((tag, index) => (
           <span key={tag}>
             <a href={`/tags/${tag}`}>{tag}</a>
-            {index < pageMeta.tags.length - 1 ? ', ' : ''}
+            {index < pageMeta.tags.length - 1 ? '' : ''}
           </span>
         ))}
       </p>

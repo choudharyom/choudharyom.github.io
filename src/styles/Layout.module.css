@@ -11,6 +11,17 @@
     padding-right: 1rem;
 }
 
+.progressBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 8px; /* Or your desired height */
+    background-color: #f68938; /* Use a theme variable or a specific color */
+    width: 0%; /* Initial width */
+    z-index: 9999; /* Ensure it's above other content */
+    transition: width 0.1s linear; /* Optional: smooth transition */
+  }
+
 /* Medium screens and up */
 @media (min-width: 768px) {
     .container {

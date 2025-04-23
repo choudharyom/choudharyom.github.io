@@ -5,7 +5,7 @@ import { AuthProvider } from '@/hooks/useAuth';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <ThemeProvider attribute="class" defaultTheme="system">
+    <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
       <AuthProvider>
         <Layout>
           <Component {...pageProps} />

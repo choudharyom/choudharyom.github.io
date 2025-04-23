@@ -1,65 +1,93 @@
 import { useRouter } from 'next/router';
-import Link from 'next/link'; // Import Link
-import { getAllTags, getPostsByTag } from '@/lib/posts'; // Import helper functions
-// Layout is handled globally in _app.js
-import styles from '@/styles/TagPage.module.css';
+import Link from 'next/link';
+import { getAllTags, getPostsByTag } from '@/lib/posts';
+import styles from '@/styles/TagPage.module.css'; // Use the updated styles
 
-// Receive posts and tagSlug as props from getStaticProps
 const TagPage = ({ posts, tagSlug }) => {
   const router = useRouter();
 
-  // Optional: Show loading state if fallback is true in getStaticPaths
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
 
   return (
-    // Note: We removed Layout from about.js because _app.js had it.
-    // If _app.js wraps *everything*, remove Layout here too.
-    // If _app.js logic is more complex, we might need Layout here.
-    // Let's assume for now _app.js handles layout globally based on previous fix.
     <div className={styles.container}>
       <h1>Posts tagged with: "{tagSlug}"</h1>
       {posts && posts.length > 0 ? (
-        <ul className={styles.postList}> {/* Use ul for list */}
+        <ul className={styles.postList}> {/* Grid layout applied via CSS */}
           {posts.map((post) => (
-            <li key={post.id} className={styles.postItem}> {/* Add list item */}
+            <li key={post.id || post.slug} className={styles.postItem}> {/* Card style applied via CSS */}
+              {/* Post Title Link */}
               <Link href={`/blog/${post.slug}`} className={styles.postLink}>
                 {post.title}
               </Link>
-              <p className={styles.postExcerpt}>{post.excerpt}</p> {/* Optional: Show excerpt */}
+
+              {/* Post Excerpt */}
+              {post.excerpt && (
+                <p className={styles.postExcerpt}>{post.excerpt}</p>
+              )}
+
+              {/* Post Tags */}
+              {post.tags && post.tags.length > 0 && (
+                <div className={styles.postTags}>
+                  {post.tags.map((tag) => (
+                    <Link
+                      key={tag}
+                      // Link to the tag page itself (lowercase, URI encoded)
+                      href={`/tag/${encodeURIComponent(tag.toLowerCase())}`}
+                      // Apply the tag style. Check if current tag matches post tag for potential highlight (optional)
+                      className={`${styles.tag} ${tag.toLowerCase() === tagSlug.toLowerCase() ? styles.activeTag : ''}`} // Add activeTag class if needed
+                    >
+                      {tag}
+                    </Link>
+                  ))}
+                </div>
+              )}
             </li>
           ))}
         </ul>
       ) : (
-        <p>No posts found for the tag "{tagSlug}" yet.</p>
+        // Use the specific class for the message
+        <p className={styles.noPostsMessage}>
+          No posts found for the tag "{tagSlug}" yet.
+        </p>
       )}
     </div>
   );
 };
 
-// Fetch data at build time
 export async function getStaticPaths() {
-  const tags = getAllTags(); // Get all unique tags from our posts lib
+  const tags = getAllTags();
   const paths = tags.map((tag) => ({
-    params: { tagSlug: tag },
+    // Ensure slugs are lowercase and URL-safe if not already handled by getAllTags
+    params: { tagSlug: encodeURIComponent(tag.toLowerCase()) },
   }));
-
-  // fallback: false means pages for tags not listed here will 404.
-  // fallback: true or 'blocking' could be used for dynamically generated pages.
   return { paths, fallback: false };
 }
 
 export async function getStaticProps({ params }) {
-  const { tagSlug } = params;
-  const posts = getPostsByTag(tagSlug); // Fetch posts for this specific tag
+  // Decode the slug if it was encoded in getStaticPaths
+  const tagSlug = decodeURIComponent(params.tagSlug);
+
+  // Ensure getPostsByTag fetches necessary fields, including 'tags' and 'excerpt'
+  const posts = getPostsByTag(tagSlug, [
+    'title',
+    'slug',
+    'date', // Keep date for potential sorting later if needed
+    'excerpt',
+    'tags',
+    // 'id' if your posts have unique IDs, otherwise slug is usually the key
+  ]);
+
+  // Optional: Sort posts if needed (e.g., by date)
+  posts.sort((post1, post2) => (post1.date > post2.date ? -1 : 1));
+
 
   return {
     props: {
-      posts, // Pass the filtered posts to the page component
-      tagSlug, // Pass the tag slug itself for display purposes
+      posts,
+      tagSlug, // Pass the original (decoded) tag slug
     },
-    // Optional: revalidate: 10 // Re-generate page every 10 seconds if needed
   };
 }
 

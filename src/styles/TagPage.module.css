@@ -1,57 +1,165 @@
+/* /workspaces/choudharyom.github.io/src/styles/TagPage.module.css */
+/* Styles adapted from BlogIndex.module.css */
+
+/* --- Container and Heading --- */
 .container {
-  padding: 2rem;
-  max-width: 900px; /* Slightly wider for post lists */
-  margin: 0 auto;
+  max-width: 850px; /* Match search/blog index page width */
+  margin: 3rem auto 4rem auto;
+  padding: 1rem 1.5rem;
+  min-height: 65vh;
+  font-family: var(--font-primary);
 }
 
 .container h1 {
-  margin-bottom: 2rem;
-  border-bottom: 1px solid #eee; /* Add a separator */
-  padding-bottom: 1rem;
+  font-size: 2.2rem; /* Slightly smaller than main blog title */
+  font-weight: 800;
+  color: var(--color-text-primary);
+  margin-bottom: 2.5rem; /* More space below title */
+  border-bottom: 3px solid var(--color-primary);
+  padding-bottom: 0.75rem;
+  letter-spacing: -0.5px;
+  word-break: break-word; /* Ensure long tag names wrap */
 }
 
+/* --- Post List (Grid) --- */
 .postList {
-  /* Styles for the list of posts will go here */
-  margin-top: 1.5rem;
-  list-style: none; /* Remove default list bullets */
+  list-style: none;
   padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 2rem; /* Increase gap slightly for a 2-column layout */
+  grid-template-columns: repeat(2, 1fr); /* Create two equal columns */
 }
 
+/* --- Post Item (Card) --- */
 .postItem {
-  margin-bottom: 1.5rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--border-color, #eee);
-}
-
-.postItem:last-child {
-  border-bottom: none; /* Remove border from last item */
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-medium);
+  padding: 1.5rem 1.75rem;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out, background-color 0.2s;
+  /* Remove default margin/padding/border from original style */
   margin-bottom: 0;
-  padding-bottom: 0;
+  padding-bottom: 1.5rem; /* Ensure padding is consistent */
+  border-bottom: none; /* Remove old border */
 }
 
+.postItem:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-medium);
+  background-color: var(--background-alt);
+}
+
+/* --- Post Link (Title) --- */
 .postLink {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: var(--link-color, #1a73e8);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-link);
   text-decoration: none;
-  display: block; /* Make link take full width */
-  margin-bottom: 0.5rem;
+  display: block;
+  margin-bottom: 0.6rem;
+  line-height: 1.3;
+  transition: color 0.2s;
 }
 
 .postLink:hover {
+  color: var(--color-link-hover);
   text-decoration: underline;
-  color: var(--link-hover-color, #0d47a1);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
 }
 
+/* --- Post Excerpt --- */
 .postExcerpt {
-  color: var(--text-color-secondary, #555);
+  color: var(--color-text-secondary);
   font-size: 1rem;
   line-height: 1.6;
+  margin-bottom: 1rem; /* Space before tags */
+}
+
+/* --- Tags Container --- */
+.postTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1rem;
+  align-items: center;
+}
+
+/* --- Individual Tag --- */
+.tag {
+  display: inline-block;
+  background-color: var(--color-background-secondary);
+  color: var(--color-text-tertiary);
+  padding: 0.3rem 0.8rem;
+  border-radius: 1rem; /* Pill shape */
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.2;
+  border: 1px solid var(--color-border-light);
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+  white-space: nowrap;
+  text-decoration: none; /* Ensure no default link underline for Link component */
+}
+
+.tag:hover {
+  background-color: var(--color-primary);
+  color: white; /* Or use a specific --color-on-primary variable */
+  border-color: var(--color-primary);
+  transform: translateY(-2px) scale(1.03); /* Match search tag hover */
+  text-decoration: none;
+  cursor: pointer;
 }
 
 /* Style for the 'no posts found' message */
-.container > p {
-  color: #555;
+.noPostsMessage { /* Use a specific class for clarity */
+  color: var(--color-text-secondary);
   font-style: italic;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
+  grid-column: 1 / -1; /* Make it span all columns if grid is active */
+  text-align: center;
+  padding: 2rem;
+  background-color: var(--background-alt);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--border-radius-medium);
+}
+
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+    margin-top: 2rem;
+  }
+  .container h1 {
+    font-size: 1.8rem; /* Adjust heading size */
+  }
+  .postList {
+    grid-template-columns: 1fr; /* Single column */
+    gap: 1.75rem;
+  }
+
+  .postItem {
+    padding: 1.2rem;
+  }
+  .postLink {
+    font-size: 1.25rem;
+  }
+  .postExcerpt {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container h1 {
+    font-size: 1.6rem; /* Further adjust heading size */
+  }
+  .postItem {
+    padding: 1rem;
+    border-radius: calc(var(--border-radius-medium) * 0.8);
+  }
+  .postLink {
+    font-size: 1.15rem;
+  }
 }

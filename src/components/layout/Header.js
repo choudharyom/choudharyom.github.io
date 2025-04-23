@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -104,7 +104,7 @@ const Header = () => {
                 {/* Use .profileLink (defined below) */}
 
                 <Image
-                  src={user.photoURL || "/public/images/default-avatar.png"} // Ensure this path is correct
+                  src={user.photoURL || "/images/default-avatar.png"} // Ensure this path is correct
                   alt={user.displayName || "User"}
                   width={32}
                   height={32}

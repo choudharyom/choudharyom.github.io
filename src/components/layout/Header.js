@@ -4,67 +4,88 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import ThemeToggle from '@/components/ui/ThemeToggle';
 import { useAuth } from '@/hooks/useAuth';
-import styles from '@/styles/Header.module.css'; // Note: CSS file uses .headerContainer, .headerLogo etc.
+import styles from '@/styles/Header.module.css';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  console.log("Header Rendered - menuOpen:", menuOpen); // Check initial and re-renders
-
-  const toggleMenu = () => {
-    console.log("Button Clicked - Toggling menuOpen to:", !menuOpen);
-    setMenuOpen(!menuOpen);
-  };
+  const [searchQuery, setSearchQuery] = useState(''); // <-- 1. Add state for search query
   const router = useRouter();
   const { user, signOut } = useAuth();
+
+  // --- 2. Create a search handler function ---
+  const handleSearch = () => {
+    const query = searchQuery.trim(); // Trim whitespace
+    if (query) { // Only search if query is not empty
+      router.push(`/search?q=${encodeURIComponent(query)}`); // Use router to navigate
+      setSearchQuery(''); // Optional: Clear the input after search
+      setMenuOpen(false); // Optional: Close menu if open after search
+    }
+  };
+  // --- End of search handler ---
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  return (
-    // Use .header and add .scrolled (defined below)
-    <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
-      {/* Use .headerContainer */}
-      <div className={styles.headerContainer}> 
-        <Link href="/" className={styles.headerLogo}>
-          {/* Use .headerLogo */}
+  // Handle closing menu on route change
+  useEffect(() => {
+    const handleRouteChange = () => {
+      setMenuOpen(false);
+    };
+    router.events.on('routeChangeComplete', handleRouteChange);
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
 
+
+  return (
+    <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''}`}>
+      <div className={styles.headerContainer}>
+        <Link href="/" className={styles.headerLogo}>
           <Image
-            src="/images/logo.png" // Ensure this path is correct
+            src="/images/logo.png"
             alt="Choudhary Om"
             width={50}
             height={40}
           />
           <span>ChoudharyOm</span>
-
         </Link>
 
-        {/* Search Bar - Use .searchBar (defined below) */}
+        {/* --- Updated Search Bar --- */}
         <div className={styles.searchBar}>
           <input
             type="text"
             placeholder="Search articles..."
+            value={searchQuery} // <-- Bind input value to state
+            onChange={(e) => setSearchQuery(e.target.value)} // <-- Update state on change
             onKeyPress={(e) => {
               if (e.key === 'Enter') {
-                router.push(`/search?q=${e.target.value}`);
+                handleSearch(); // <-- 3. Call handler on Enter
               }
             }}
           />
-          <button aria-label="Search">
+          <button
+            aria-label="Search"
+            onClick={handleSearch} // <-- 3. Call handler on Button Click
+          >
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
           </button>
         </div>
+        {/* --- End of Updated Search Bar --- */}
 
-        {/* Mobile Menu Button - Use .headerMenuButton */}
         <button
           className={`${styles.headerMenuButton} ${menuOpen ? styles.open : ''}`}
           aria-label={menuOpen ? "Close menu" : "Open menu"}
@@ -77,12 +98,10 @@ const Header = () => {
           <span></span>
         </button>
 
-        {/* Navigation - Use .headerNav and .open (defined below) */}
-        <nav className={`${styles.headerNav} ${menuOpen ? styles.open : ''}`}>
+        <nav id="main-navigation" className={`${styles.headerNav} ${menuOpen ? styles.open : ''}`}>
           <Link
             href="/blog"
             className={`${styles.headerNavLink} ${router.pathname.startsWith('/blog') ? styles.active : ''}`}>
-             {/* Use .headerNavLink and .active (defined below) */}
             Articles
           </Link>
           <Link
@@ -96,31 +115,24 @@ const Header = () => {
             About
           </Link>
           <ThemeToggle />
-          
-          {/* User Menu - Use .userMenu (defined below) */}
+
           {user ? (
             <div className={styles.userMenu}>
               <Link href="/profile" className={styles.profileLink}>
-                {/* Use .profileLink (defined below) */}
-
                 <Image
-                  src={user.photoURL || "/images/default-avatar.png"} // Ensure this path is correct
+                  src={user.photoURL || "/images/default-avatar.png"}
                   alt={user.displayName || "User"}
                   width={32}
                   height={32}
-                   /* Use .avatar (defined below) */
                   className={styles.avatar}
                 />
-
               </Link>
-               {/* Use .signOutButton (defined below) */}
               <button onClick={signOut} className={styles.signOutButton}>
                 Sign Out
               </button>
             </div>
           ) : (
             <Link href="/login" className={styles.loginButton}>
-               {/* Use .loginButton (defined below) */}
               Sign In
             </Link>
           )}

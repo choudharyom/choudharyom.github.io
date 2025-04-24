@@ -37,7 +37,7 @@ export default function BlogIndex({ allPosts }) {
                     {post.tags.map((tag) => (
                       <Link
                         key={tag}
-                        href={`/tags/${encodeURIComponent(tag.toLowerCase())}`}
+                        href={`/tag/${encodeURIComponent(tag.toLowerCase())}`}
                         className={styles.tag}
                       >
                         {tag}

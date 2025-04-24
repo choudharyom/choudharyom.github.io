@@ -58,7 +58,13 @@ const SearchPage = () => {
         const titleMatch = post.title?.toLowerCase().includes(currentSearchTerm); // Add optional chaining
         const excerptMatch = post.excerpt?.toLowerCase().includes(currentSearchTerm);
         const tagMatch = post.tags?.some(tag => tag.toLowerCase().includes(currentSearchTerm));
-
+        // --- Add this logging ---
+        if (post.tags?.map(t => t.toLowerCase()).includes('mathematics')) { // Check if the post *should* match
+          console.log(`Checking post: ${post.title} for term: ${currentSearchTerm}`);
+          console.log(`  Tags:`, post.tags);
+          console.log(`  Tag Match Result: ${tagMatch}`);
+        }
+        // --- End logging ---
         return titleMatch || excerptMatch || tagMatch;
       });
 
@@ -121,7 +127,7 @@ const SearchPage = () => {
                   {post.tags.map((tag) => (
                     <Link
                       key={tag}
-                      href={`/tags/${encodeURIComponent(tag.toLowerCase())}`} // Link to /tags/tag-name (lowercase, URL-encoded)
+                      href={`/tag/${encodeURIComponent(tag.toLowerCase())}`} // Link to /tags/tag-name (lowercase, URL-encoded)
                       className={styles.tag} // Apply the existing tag style
                     >
                       {tag}

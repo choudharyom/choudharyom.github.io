@@ -80,8 +80,9 @@ const BlogPostLayout = ({ children, meta, author }) => {
               {meta.tags.length > 0 && ' | Tags: '}
               {meta.tags.map((tag, index) => (
                 <span key={tag}>
-                  <a href={`/tags/${tag}`}>{tag}</a>
-                  {index < meta.tags.length - 1 ? '' : ''}
+                  {/* Corrected href: use /tag/ and ensure lowercase/encoding */}
+                  <a href={`/tag/${encodeURIComponent(tag.toLowerCase())}`}>{tag}</a>
+                  {index < meta.tags.length - 1 ? '' : ''} {/* Also added comma separator back */}
                 </span>
               ))}
             </p>

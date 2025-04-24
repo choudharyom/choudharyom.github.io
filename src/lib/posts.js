@@ -28,7 +28,7 @@ const samplePosts = [
     coverImage: '/images/placeholder-la.jpg',
     date: '2025-04-10',
     readingTime: '4 min',
-    tags: ['linear-algebra', 'mathematics', 'machine-learning'],
+    tags: ['linear-algebra', 'machine-learning', 'mathematics', 'vectors', 'matrices'],
     content: `
       <p>Linear algebra is a fundamental mathematical tool for anyone working in machine learning. It provides the language and operations needed to work with data in high-dimensional spaces.</p>
       <h2>Vectors and Matrices</h2>
@@ -62,21 +62,26 @@ const samplePosts = [
 
 export function getAllPosts() {
   // Sort posts by date or title if needed
-  return samplePosts;
+  return samplePosts.sort((postA, postB) => new Date(postB.date) - new Date(postA.date));
 }
 
 export function getAllTags() {
   const allTags = new Set();
   samplePosts.forEach(post => {
-    post.tags.forEach(tag => allTags.add(tag));
+    // Ensure tags are consistently handled, e.g., lowercase
+    post.tags.forEach(tag => allTags.add(tag.toLowerCase()));
   });
   return Array.from(allTags);
 }
 
 export function getPostsByTag(tagSlug) {
-  return samplePosts.filter(post => post.tags.includes(tagSlug));
+  const lowerCaseTagSlug = tagSlug.toLowerCase(); // Ensure the target slug is lowercase
+  return samplePosts.filter(post =>
+    post.tags.some(tag => tag.toLowerCase() === lowerCaseTagSlug) // Compare lowercase versions
+  );
 }
 
 export function getPostBySlug(slug) {
-    return samplePosts.find(post => post.slug === slug);
+    // Consider making slug comparison case-insensitive too if needed
+    return samplePosts.find(post => post.slug.toLowerCase() === slug.toLowerCase());
 }

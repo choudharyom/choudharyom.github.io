@@ -7,13 +7,24 @@ import GradientDescentDemo from '@/components/blog/GradientDescentDemo';
 
 // --- Define Meta and Author Data Once ---
 const pageMeta = {
+  id: 'la-basics', // Added ID
+  slug: 'linear-algebra-basics', // Added slug
   title: 'Linear Algebra Basics for Machine Learning',
   description: 'A comprehensive overview of essential linear algebra concepts that form the mathematical foundation of modern machine learning algorithms.',
+  coverImage: '/images/placeholder-la.jpg', // Added cover image path
   canonicalUrl: "https://choudharyom.com/linear-algebra-basics",
   date: "2025-04-23",
   readingTime: "10 min read",
   tags: ['linear-algebra', 'machine-learning', 'mathematics', 'vectors', 'matrices'],
-};
+  content: `
+      <p>Linear algebra is a fundamental mathematical tool for anyone working in machine learning. It provides the language and operations needed to work with data in high-dimensional spaces.</p>
+      <h2>Vectors and Matrices</h2>
+      <p>At its core, linear algebra deals with vectors (arrays of numbers) and matrices (grids of numbers). In machine learning, datasets are often represented as matrices, where rows might be samples and columns are features. Vectors can represent individual data points or model parameters.</p>
+      <h2>Key Operations</h2>
+      <p>Operations like matrix multiplication, dot products, and finding determinants or inverses are crucial. For example, matrix multiplication is used extensively in neural network layers to transform input data.</p>
+      <p>Understanding these concepts is essential for grasping how many machine learning algorithms, from linear regression to deep learning models, actually work under the hood.</p>
+    ` // Added basic content
+  };
 
 const pageAuthor = {
   name: "Om Choudhary",

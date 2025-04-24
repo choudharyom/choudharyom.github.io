@@ -1,0 +1,151 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  max-width: 650px; /* Adjust as needed */
+  margin: 0 auto; /* Center the container */
+  font-family: sans-serif;
+}
+
+.controlsContainer {
+  display: flex;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.matrixInputs {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 10px 15px;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 6px;
+  background-color: #fff;
+}
+
+.matrixInputs label {
+  font-weight: bold;
+  text-align: right;
+}
+
+.matrixInputs input {
+  width: 60px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 1em;
+}
+/* Style invalid inputs */
+.matrixInputs input:invalid {
+  border-color: red;
+  box-shadow: 0 0 3px red;
+}
+
+
+.buttonsPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start; /* Align buttons to the left */
+}
+
+.presetButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.buttonsPanel button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #4a76c5;
+  color: white;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.2s ease;
+}
+
+.buttonsPanel button:hover {
+  background-color: #3a5f9f;
+}
+
+.buttonsPanel .resetButton {
+  background-color: #d9534f; /* Red color for reset */
+}
+
+.buttonsPanel .resetButton:hover {
+  background-color: #c9302c;
+}
+
+
+.svgContainer {
+  border: 1px solid #ccc;
+  background-color: #fff;
+  overflow: hidden; /* Hide parts of lines extending beyond */
+  width: 100%; /* Make SVG container responsive */
+  max-width: 550px; /* Max width for the SVG */
+  aspect-ratio: 5 / 4; /* Maintain aspect ratio */
+}
+
+.svgVisualization {
+  display: block; /* Remove extra space below SVG */
+  width: 100%;
+  height: 100%;
+}
+
+/* Styling for SVG elements */
+.gridLine {
+  stroke: #e0e0e0;
+  stroke-width: 0.5;
+  transition: all 0.4s ease-in-out; /* Animate grid lines */
+}
+
+.axisLine {
+  stroke: #888;
+  stroke-width: 1.5;
+}
+
+.originalVector {
+  stroke-width: 2;
+  opacity: 0.5; /* Make original vectors slightly faded */
+}
+
+.transformedVector {
+  stroke-width: 2.5; /* Make transformed vectors stand out */
+  transition: all 0.4s ease-in-out; /* Animate vectors */
+}
+
+.vectorLabel {
+  font-size: 12px;
+  transition: all 0.4s ease-in-out; /* Animate labels */
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+/* Media query for smaller screens */
+@media (max-width: 600px) {
+  .controlsContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+  .buttonsPanel {
+     align-items: center; /* Center buttons */
+  }
+  .presetButtons {
+    justify-content: center; /* Center preset buttons */
+  }
+  .matrixInputs {
+     grid-template-columns: auto auto; /* Keep 2 columns */
+     justify-content: center; /* Center grid items */
+  }
+}

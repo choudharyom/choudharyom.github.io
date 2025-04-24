@@ -1,0 +1,140 @@
+/* src/components/blog/GradientDescentDemo.module.css */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  max-width: 700px; /* Adjust as needed */
+  margin: 20px auto;
+  font-family: sans-serif;
+}
+
+.controlsAndInfo {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around; /* Space out controls and info */
+  gap: 20px;
+  width: 100%;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.controlsSection, .infoSection, .chartSection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 200px; /* Ensure sections have some width */
+}
+
+.controlsSection label, .infoSection p {
+  margin-bottom: 5px;
+  font-size: 0.9em;
+}
+
+.controlsSection input[type="range"] {
+  width: 100%;
+}
+
+.controlsSection select {
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+
+.buttonGroup {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.buttonGroup button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #4a76c5;
+  color: white;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.2s ease;
+}
+
+.buttonGroup button:hover {
+  background-color: #3a5f9f;
+}
+
+.buttonGroup button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+.buttonGroup .resetButton {
+  background-color: #d9534f;
+}
+.buttonGroup .resetButton:hover {
+  background-color: #c9302c;
+}
+
+
+.infoSection strong {
+    display: inline-block;
+    min-width: 80px; /* Align values */
+}
+
+.visualizationContainer {
+  display: flex;
+  flex-direction: column; /* Stack 3D and chart */
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+}
+
+
+.canvasContainer {
+  width: 100%;
+  height: 400px; /* Adjust height */
+  border: 1px solid #ccc;
+  background-color: #e8f0f5; /* Light blue background */
+  position: relative; /* For potential overlays */
+  cursor: grab;
+}
+
+.canvasContainer:active {
+    cursor: grabbing;
+}
+
+.chartContainer {
+    width: 100%;
+    max-width: 500px; /* Limit chart width */
+    height: 150px; /* Adjust height */
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 650px) {
+  .controlsAndInfo {
+    flex-direction: column;
+    align-items: center;
+  }
+   .controlsSection, .infoSection, .chartSection {
+     width: 90%;
+     min-width: unset;
+     align-items: center;
+   }
+   .controlsSection label, .infoSection p {
+     text-align: center;
+   }
+   .infoSection strong {
+       min-width: auto;
+       margin-right: 5px;
+   }
+}

@@ -35,77 +35,10 @@ export default function WeatherForecastingCNN() {
   }, []);
 
   return (
-    <BlogPostLayout
-      meta={pageMeta} // Pass the defined meta object
-      author={pageAuthor} // Pass the defined author object
-    >
-      {/* reuse the title here */}
-      <h1>{pageMeta.title}</h1> 
-
-      {/* Consider moving tag rendering into BlogPostLayout if it's always the same format */}
-      <p className={styles.meta}>
-        Published on: {new Date(pageMeta.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })} | Tags: {' '}
-        {pageMeta.tags.map((tag, index) => (
-          <span key={tag}>
-            <a href={`/tags/${tag}`}>{tag}</a>
-            {index < pageMeta.tags.length - 1 ? '' : ''}
-          </span>
-        ))}
-      </p>
-      <Head>
-        {/* Canonical link can be handled by BlogPostLayout if meta includes it */}
-        <link rel="canonical" href={pageMeta.canonicalUrl} />
-        {/* Prism.js CSS theme - Consider loading globally if used often */}
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
-        {/* Keep inline styles specific to this post's structure */}
-        <style>{`
-          .highlight {
-            background: #f7f9fb;
-            border-left: 6px solid #4a76c5;
-            border-radius: 12px 0 0 12px;
-            box-shadow: 0 2px 12px 0 rgba(74, 118, 197, 0.07), 0 1.5px 4px 0 rgba(0,0,0,0.03);
-            padding: 1.5em 1.5em 1.5em 2em;
-            margin: 2em 0;
-            transition: box-shadow 0.2s;
-          }
-          .highlight:hover {
-            box-shadow: 0 4px 24px 0 rgba(74, 118, 197, 0.13), 0 2px 8px 0 rgba(0,0,0,0.06);
-          }
-          .highlight h3 {
-            color: #4a76c5;
-            font-weight: 700;
-            margin-top: 0;
-            margin-bottom: 0.7em;
-            font-size: 1.25em;
-            letter-spacing: 0.01em;
-          }
-          .highlight ul {
-            margin: 0;
-            padding-left: 1.2em;
-          }
-          .highlight li {
-            margin-bottom: 0.3em;
-            font-size: 1.07em;
-          }
-          @media (max-width: 600px) {
-            .highlight {
-              padding: 1em 1em 1em 1.2em;
-              border-radius: 8px 0 0 8px;
-            }
-          }
-        `}</style>
-        </Head>
-      {/* Use the common content wrapper style */}
+    <BlogPostLayout meta={pageMeta} author={pageAuthor} >
       <div className={styles.content}>
         {/* Keep the existing article content */}
-          <article>
-            {/* Render meta line here if BlogPostLayout doesn't */}
-            {/* MathJax script for client-side rendering */}
-            <Script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML" />
-            {/* Prism.js for syntax highlighting */}
-            <Script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"/>
-            <Script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"/>
-          
+        <article>
         <section>
             <h2 id="introduction">Introduction: The Mathematical Symphony of Weather Prediction</h2>
             <p>

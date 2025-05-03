@@ -1,7 +1,7 @@
 // src/pages/elhclf-configurator/index.js
 
 import React, { useState } from 'react';
-import styles from '@/styles/BlogPost.module.css'; // Keep styles for content elements
+import styles from '@/styles/Configurator.module.css'; // Updated CSS module import
 // Import the defined schema
 import elhclfSchema from '../../lib/elhclf/ElhclfConfiguratorschema.js';
 
@@ -18,28 +18,27 @@ import SummaryView from '../../components/elhclf/SummaryView';
 // Import the generation function
 import { generateConfig } from '../../lib/elhclf/generateConfig';
 
-
 // --- Helper Icons ---
 const CheckIcon = () => (
-  <svg className="w-6 h-6 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+  <svg className={styles.icon} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
   </svg>
 );
 
 const ChevronLeftIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+  <svg xmlns="http://www.w3.org/2000/svg" className={styles.iconLeft} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
   </svg>
 );
 
 const ChevronRightIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+  <svg xmlns="http://www.w3.org/2000/svg" className={styles.iconRight} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
   </svg>
 );
 
 const DownloadIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+  <svg xmlns="http://www.w3.org/2000/svg" className={styles.iconLeft} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
     <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
   </svg>
 );
@@ -184,42 +183,44 @@ const ElhclfConfiguratorPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 text-gray-900 font-sans">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="text-5xl font-extrabold text-center bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 mb-8">
-          Embedded Linux Configurator
-        </h1>
-        <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto text-lg">
-          Create your custom embedded Linux configuration with an ultra-modern interface.
-        </p>
+    <div className={styles.container}>
+      <div className={styles.content}>
+        <div className={styles.header}>
+          <h1 className={styles.title}>
+            Embedded Linux Configurator
+          </h1>
+          <p className={styles.subtitle}>
+            Create your custom embedded Linux configuration with an ultra-modern interface.
+          </p>
+        </div>
 
         {/* Step Indicator */}
-        <div className="mb-12 overflow-x-auto pb-4">
+        <div className={styles.stepNav}>
           <nav aria-label="Progress">
-            <ol className="flex items-center justify-center space-x-6">
+            <ol className={styles.stepList}>
               {steps.map((step, index) => (
-                <li key={step.id} className={`relative flex-1 ${index < steps.length - 1 ? 'pr-8' : ''}`}>
+                <li key={step.id} className={styles.stepItem}>
                   {index <= currentStep ? (
-                    <div className="flex items-center space-x-3">
-                      <span className={`flex items-center justify-center w-12 h-12 rounded-full ${index === currentStep ? 'bg-indigo-600 ring-4 ring-indigo-200' : 'bg-indigo-500'} transition-all duration-300`}>
-                        {index < currentStep ? <CheckIcon /> : <span className="text-white font-bold">{step.id}</span>}
+                    <div className={styles.stepIndicator}>
+                      <span className={index === currentStep ? styles.stepCircleActive : styles.stepCircleCompleted}>
+                        {index < currentStep ? <CheckIcon /> : <span className={styles.stepNumber}>{step.id}</span>}
                       </span>
-                      <span className={`text-sm font-medium ${index === currentStep ? 'text-indigo-700' : 'text-gray-500'} hidden md:inline`}>
+                      <span className={index === currentStep ? styles.stepTextActive : styles.stepTextCompleted}>
                         {step.title}
                       </span>
                     </div>
                   ) : (
-                    <div className="flex items-center space-x-3">
-                      <span className="flex items-center justify-center w-12 h-12 rounded-full bg-gray-200 text-gray-500 font-medium">
+                    <div className={styles.stepIndicator}>
+                      <span className={styles.stepCircleInactive}>
                         {step.id}
                       </span>
-                      <span className="text-sm font-medium text-gray-500 hidden md:inline">
+                      <span className={styles.stepTextInactive}>
                         {step.title}
                       </span>
                     </div>
                   )}
                   {index < steps.length - 1 && (
-                    <div className="absolute top-6 left-12 right-0 h-1 bg-gray-200" />
+                    <div className={styles.stepLine} />
                   )}
                 </li>
               ))}
@@ -228,16 +229,16 @@ const ElhclfConfiguratorPage = () => {
         </div>
 
         {/* Active Step Content */}
-        <div className="bg-white bg-opacity-90 backdrop-blur-md shadow-2xl rounded-2xl p-8 mb-8 border border-gray-100 transition-all duration-300">
+        <div className={styles.stepContent}>
           <ActiveStepComponent {...componentProps} />
         </div>
 
         {/* Navigation Buttons */}
-        <div className="flex justify-between items-center space-x-4">
+        <div className={styles.navigation}>
           <button
             onClick={handlePrevious}
             disabled={currentStep === 0}
-            className="flex items-center px-6 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            className={styles.buttonPrevious}
           >
             <ChevronLeftIcon />
             Previous
@@ -245,7 +246,7 @@ const ElhclfConfiguratorPage = () => {
           {currentStep < steps.length - 1 ? (
             <button
               onClick={handleNext}
-              className="flex items-center px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all duration-300"
+              className={styles.buttonNext}
             >
               Next
               <ChevronRightIcon />
@@ -253,7 +254,7 @@ const ElhclfConfiguratorPage = () => {
           ) : (
             <button
               onClick={handleGenerateClick}
-              className="flex items-center px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all duration-300"
+              className={styles.buttonGenerate}
             >
               <DownloadIcon />
               Generate & Download

@@ -1,5 +1,18 @@
 [
   {
+    "slug": "elhclf-configurator",
+    "title": "Introducing the ELHLCF Configurator: Build Your Embedded Linux System Visually",
+    "excerpt": "",
+    "tags": [
+      "embedded-linux",
+      "configurator",
+      "web-development",
+      "react",
+      "build-systems",
+      "ui-ux"
+    ]
+  },
+  {
     "slug": "weather-forecasting-cnn",
     "title": "Weather Forecasting with Convolutional Neural Networks: A Mathematical Deep Dive",
     "excerpt": "Explore how Convolutional Neural Networks (CNNs) are transforming weather prediction through advanced mathematical modeling and machine learning techniques.",

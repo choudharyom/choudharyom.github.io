@@ -1,4 +1,7 @@
 /* Custom Python code block styling to match attached image */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --color-primary: #6366f1;

@@ -235,3 +235,38 @@ const elhclfSchema = {
 
 // Export the schema object as the default export for this module
 export default elhclfSchema;
+
+// --- TODO List for Future Enhancements ---
+//
+// === Schema Refinements ===
+// - [ ] Validation: Implement formal JSON Schema validation for generated configs.
+// - [ ] Conditional Logic: Explore ways to represent conditional options (e.g., certain kernel options only available for specific architectures).
+// - [ ] Network Management: Add options for specific network managers (NetworkManager, connman, systemd-networkd).
+// - [ ] Display Server: Add section for display server configuration (X.org, Wayland) and related components (window manager, compositor).
+// - [ ] Security: Add section for security hardening (SELinux/AppArmor policies, default firewall rules, user limits, compiler hardening flags).
+// - [ ] Real-time / PREEMPT_RT: Add specific options for configuring real-time kernels and related userspace tools.
+// - [ ] Package Management: Refine `packages` structure - maybe allow specifying package groups or target image features (Yocto-style).
+// - [ ] Users/Groups: Consider more granular permissions/sudoers configuration.
+// - [ ] Filesystem: Add more options for specific filesystems (e.g., Btrfs subvolumes, ZFS features).
+// - [ ] Bootloader Environment: Standardize format for `bootloader.environment` or provide examples for common bootloaders.
+// - [ ] Schema Versioning: Define a clear strategy for handling schema evolution and backward compatibility.
+//
+// === Tooling / UI ===
+// - [ ] UI Component Development: Create dedicated React components for each major section (Target, Kernel, Filesystem, etc.).
+// - [ ] Advanced State Management: Implement more robust state update logic (e.g., using Immer or dedicated reducers) to handle deep nesting and arrays correctly.
+// - [ ] Dynamic UI: Make UI elements conditional based on selections (e.g., show external toolchain path only if type is 'external').
+// - [ ] Presets/Templates: Allow saving/loading configuration presets for common boards or use cases.
+// - [ ] Build System Adapters: Develop the backend logic (`generateConfig` or similar) to translate the generalized schema into specific build system configuration files (Buildroot .config, Yocto local.conf, etc.).
+// - [ ] Error Handling: Improve error reporting in the UI for invalid configurations.
+// - [ ] Help/Tooltips: Add inline help or tooltips explaining complex options.
+// - [ ] Testing: Implement unit/integration tests for schema validation and configuration generation logic.
+//
+// === Build System Support ===
+// - [ ] Expand Overrides: Add specific override sections for more build systems (e.g., OpenWrt, NixOS).
+// - [ ] Deeper Integration: Investigate deeper integration possibilities beyond simple overrides for supported build systems.
+//
+// === Documentation ===
+// - [ ] Update Schema Docs: Keep `ElhclfConfiguratorschema.md` synchronized with schema changes.
+// - [ ] User Guide: Create a guide on how to use the configurator tool.
+// - [ ] Developer Guide: Document how to extend the schema and add support for new build systems or features.
+//

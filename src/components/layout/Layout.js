@@ -28,9 +28,16 @@ const Layout = ({ children }) => {
   }, []);
 
   return (
-    <div className={styles.layout}>
+    // Use Tailwind for flex structure and default background
+    // Remove styles.layout if it only contained flex properties
+    <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900"> {/* Default background */}
       <Header />
-      <main className={styles.main}>{children}</main>
+      {/* Add flex-grow using Tailwind to make main fill space */}
+      {/* Keep styles.main ONLY if it has other non-conflicting styles */}
+      {/* If styles.main is now empty, you can remove it */}
+      <main className={`flex-grow w-full ${styles.main}`}> {/* Add flex-grow */}
+        {children}
+      </main>
       <Footer />
     </div>
   );

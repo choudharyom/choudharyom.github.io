@@ -1,159 +1,267 @@
 // src/pages/elhclf-configurator/index.js
 
 import React, { useState } from 'react';
-// Import the Layout component
-import Layout from '../../components/layout/Layout'; // Adjust path as needed
+import styles from '@/styles/BlogPost.module.css'; // Keep styles for content elements
 // Import the defined schema
-import elhclfSchema from '../../lib/elhclf/ElhclfConfiguratorschema.js'; // Import the schema
+import elhclfSchema from '../../lib/elhclf/ElhclfConfiguratorschema.js';
 
-// Placeholder components - you will create these later based on the plan
-// import TargetSelector from '../../components/elhclf/TargetSelector';
-// import KernelOptions from '../../components/elhclf/KernelOptions';
-// import PackageSelector from '../../components/elhclf/PackageSelector';
-// import FilesystemConfig from '../../components/elhclf/FilesystemConfig';
-// import SummaryView from '../../components/elhclf/SummaryView';
-// import { generateConfig } from '../../lib/elhclf/generateConfig'; // You'll create this function
+// Import components
+import TargetSelector from '../../components/elhclf/TargetSelector';
+import ToolchainConfig from '../../components/elhclf/ToolchainConfig';
+import KernelOptions from '../../components/elhclf/KernelOptions';
+import BootloaderConfig from '../../components/elhclf/BootloaderConfig';
+import FilesystemConfig from '../../components/elhclf/FilesystemConfig';
+import PackageSelector from '../../components/elhclf/PackageSelector';
+import NetworkConfig from '../../components/elhclf/NetworkConfig';
+import SummaryView from '../../components/elhclf/SummaryView';
+
+// Import the generation function
+import { generateConfig } from '../../lib/elhclf/generateConfig';
+
+
+// --- Helper Icons ---
+const CheckIcon = () => (
+  <svg className="w-6 h-6 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+  </svg>
+);
+
+const ChevronLeftIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+  </svg>
+);
+
+const ChevronRightIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+  </svg>
+);
+
+const DownloadIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+  </svg>
+);
+// --- End Helper Icons ---
+
+const steps = [
+  { id: 1, title: 'Target', component: TargetSelector, configKey: 'target', handlerKey: 'handleTargetChange' },
+  { id: 2, title: 'Toolchain', component: ToolchainConfig, configKey: 'toolchain', handlerKey: 'handleToolchainChange' },
+  { id: 3, title: 'Kernel', component: KernelOptions, configKey: 'kernel', handlerKey: 'handleKernelChange' },
+  { id: 4, title: 'Bootloader', component: BootloaderConfig, configKey: 'bootloader', handlerKey: 'handleBootloaderChange' },
+  { id: 5, title: 'Filesystem', component: FilesystemConfig, configKey: 'filesystem', handlerKey: 'handleFilesystemChange' },
+  { id: 6, title: 'Packages', component: PackageSelector, configKey: 'packages', handlerKey: 'handlePackageChange' },
+  { id: 7, title: 'Network', component: NetworkConfig, configKey: 'network', handlerKey: 'handleNetworkChange' },
+  { id: 8, title: 'Summary', component: SummaryView, configKey: 'config', handlerKey: null },
+];
 
 /**
  * Main page component for the Embedded Linux High-Level Configuration Framework (ELHLCF).
- * This component will host the user interface for specifying embedded Linux configurations.
+ * Implements a multi-step wizard UI with modern styling.
  */
 const ElhclfConfiguratorPage = () => {
-  // --- State Management ---
-  // Initialize state using the structure imported from the schema file.
-  // We create a deep copy to avoid potential direct mutation of the imported schema object,
-  // although direct use `useState(elhclfSchema)` is often sufficient if the schema isn't modified elsewhere.
-  const [config, setConfig] = useState(JSON.parse(JSON.stringify(elhclfSchema)));
+  const [config, setConfig] = useState(() => JSON.parse(JSON.stringify(elhclfSchema)));
+  const [currentStep, setCurrentStep] = useState(0);
 
-  // --- Event Handlers ---
-  // NOTE: This basic handler only works for top-level fields or direct nested fields
-  // like config.toolchain.type. It needs to be enhanced for deeper nesting or arrays.
-  // You'll likely create more specific handlers within child components.
-  const handleInputChange = (section, field, value) => {
-    setConfig(prevConfig => {
-      // Basic handling for direct properties or first-level nesting
-      if (prevConfig.hasOwnProperty(section) && typeof prevConfig[section] === 'object' && prevConfig[section] !== null) {
-        return {
-          ...prevConfig,
-          [section]: {
-            ...prevConfig[section],
-            [field]: value,
-          },
-        };
-      } else if (prevConfig.hasOwnProperty(field)) {
-         // Handle top-level fields (though schema doesn't have many)
-         return {
-            ...prevConfig,
-            [field]: value,
-         }
+  const handlers = {
+    handleTargetChange: (field, value) => {
+      setConfig(prevConfig => ({ ...prevConfig, target: { ...prevConfig.target, [field]: value } }));
+    },
+    handleToolchainChange: (field, value) => {
+      setConfig(prevConfig => ({ ...prevConfig, toolchain: { ...prevConfig.toolchain, [field]: value } }));
+    },
+    handleKernelChange: (field, value) => {
+      setConfig(prevConfig => ({ ...prevConfig, kernel: { ...prevConfig.kernel, [field]: value } }));
+    },
+    handleBootloaderChange: (field, value) => {
+      setConfig(prevConfig => ({ ...prevConfig, bootloader: { ...prevConfig.bootloader, [field]: value } }));
+    },
+    handleFilesystemChange: (field, value) => {
+      setConfig(prevConfig => ({ ...prevConfig, filesystem: { ...prevConfig.filesystem, [field]: value } }));
+    },
+    handlePackageChange: (updatedPackagesList) => {
+      setConfig(prevConfig => ({ ...prevConfig, packages: updatedPackagesList }));
+    },
+    handleNetworkChange: (field, value) => {
+      setConfig(prevConfig => ({ ...prevConfig, network: { ...prevConfig.network, [field]: value } }));
+    },
+  };
+
+  const validateStep = (stepIndex) => {
+    const step = steps[stepIndex];
+    const errors = [];
+    const currentConfig = config;
+
+    switch (step.id) {
+      case 1: if (!currentConfig.target?.architecture) errors.push("Target Architecture"); break;
+      case 2: if (!currentConfig.toolchain?.type) errors.push("Toolchain Type");
+              if (currentConfig.toolchain?.type === 'external' && !currentConfig.toolchain?.path) errors.push("External Toolchain Path");
+              if (currentConfig.toolchain?.type === 'local' && !currentConfig.toolchain?.path) errors.push("Local Toolchain Path"); break;
+      case 3: if (!currentConfig.kernel?.source) errors.push("Kernel Source");
+              if (currentConfig.kernel?.source === 'git' && (!currentConfig.kernel.gitUrl || !currentConfig.kernel.gitRef)) errors.push("Kernel Git URL/Ref");
+              if (currentConfig.kernel?.source === 'tarball' && !currentConfig.kernel.tarballUrl) errors.push("Kernel Tarball URL");
+              if (currentConfig.kernel?.source === 'local' && !currentConfig.kernel.path) errors.push("Kernel Local Path");
+              if (!currentConfig.kernel?.defconfig) errors.push("Kernel Defconfig"); break;
+      case 4: if (!currentConfig.bootloader?.type) errors.push("Bootloader Type");
+              if (currentConfig.bootloader?.type && currentConfig.bootloader.type !== 'none' && currentConfig.bootloader.type !== 'other') {
+                if (!currentConfig.bootloader.source) errors.push("Bootloader Source");
+                if (currentConfig.bootloader.source === 'git' && (!currentConfig.bootloader.gitUrl || !currentConfig.bootloader.gitRef)) errors.push("Bootloader Git URL/Ref");
+                if (currentConfig.bootloader.source === 'tarball' && !currentConfig.bootloader.tarballUrl) errors.push("Bootloader Tarball URL");
+                if (currentConfig.bootloader.source === 'local' && !currentConfig.bootloader.path) errors.push("Bootloader Local Path");
+                if (!currentConfig.bootloader.defconfig) errors.push("Bootloader Defconfig");
+              } break;
+      case 5: if (!currentConfig.filesystem?.type) errors.push("Filesystem Type"); break;
+      case 6: break;
+      case 7: if (!currentConfig.network?.hostname) errors.push("Network Hostname");
+              (currentConfig.network?.interfaces || []).forEach((iface, index) => {
+                if (!iface.name) errors.push(`Interface ${index+1} Name`);
+                if (!iface.type) errors.push(`Interface ${index+1} Type`);
+                if (iface.type === 'static') {
+                  if (!iface.ipAddress) errors.push(`Interface ${index+1} IP Address`);
+                  if (!iface.netmask) errors.push(`Interface ${index+1} Netmask`);
+                }
+              }); break;
+      default: break;
+    }
+
+    if (errors.length > 0) {
+      alert(`Please fix the following issues before proceeding:\n- ${errors.join('\n- ')}`);
+      return false;
+    }
+    return true;
+  };
+
+  const handleNext = () => {
+    if (validateStep(currentStep)) {
+      if (currentStep < steps.length - 1) {
+        setCurrentStep(currentStep + 1);
+        window.scrollTo(0, 0);
       }
-      // Add more complex logic here later for deeper nesting or arrays
-      console.warn(`Unhandled input change for section: ${section}, field: ${field}`);
-      return prevConfig; // Return previous state if path is not handled
-    });
+    }
   };
 
-  // Handler for generating and downloading the configuration file
-  const handleGenerateConfig = () => {
-    console.log("Current Config State:", config);
-    // Add timestamps or tool versions before generating
-    const finalConfig = {
-        ...config,
-        metadata: {
-            ...config.metadata,
-            createdAt: new Date().toISOString(),
-            // toolVersion: 'x.y.z' // Add your tool version here if available
-        }
-    };
-
-    const configString = JSON.stringify(finalConfig, null, 2); // Basic JSON generation
-
-    const blob = new Blob([configString], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    // Suggest a filename based on project name or target
-    const filename = finalConfig.metadata.projectName
-        ? `${finalConfig.metadata.projectName.replace(/\s+/g, '_')}_elhclf_config.json`
-        : 'elhclf_config.json';
-    a.download = filename;
-
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-
-    console.log("Configuration file download initiated.");
+  const handlePrevious = () => {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+      window.scrollTo(0, 0);
+    }
   };
 
+  const handleGenerateClick = () => {
+    console.log("Attempting to generate config. Current State:", config);
+    let allValid = true;
+    for (let i = 0; i < steps.length - 1; i++) {
+      if (!validateStep(i)) {
+        allValid = false;
+        setCurrentStep(i);
+        window.scrollTo(0, 0);
+        break;
+      }
+    }
 
-  // --- Render Logic ---
+    if (allValid) {
+      generateConfig(config);
+    } else {
+      console.error("Final validation failed.");
+    }
+  };
+
+  const ActiveStepComponent = steps[currentStep].component;
+  const activeStepConfigKey = steps[currentStep].configKey;
+  const activeStepHandlerKey = steps[currentStep].handlerKey;
+
+  const componentProps = {};
+  if (activeStepConfigKey === 'config') {
+    componentProps.config = config;
+  } else if (activeStepConfigKey === 'packages') {
+    componentProps.packagesList = config[activeStepConfigKey];
+  } else {
+    componentProps[`${activeStepConfigKey}Config`] = config[activeStepConfigKey];
+  }
+  if (activeStepHandlerKey) {
+    componentProps.onChange = handlers[activeStepHandlerKey];
+  }
+
   return (
-      <div className="container mx-auto px-4 py-8"> {/* Basic Tailwind container */}
-        <h1 className="text-3xl font-bold mb-6">Embedded Linux Configuration</h1>
-        <p className="mb-8 text-gray-600 dark:text-gray-300">
-          Use this tool to specify the requirements for your embedded Linux system.
-          A generalized configuration file will be generated.
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 text-gray-900 font-sans">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h1 className="text-5xl font-extrabold text-center bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 mb-8">
+          Embedded Linux Configurator
+        </h1>
+        <p className="text-center text-gray-600 mb-12 max-w-3xl mx-auto text-lg">
+          Create your custom embedded Linux configuration with an ultra-modern interface.
         </p>
 
-        <div className="space-y-6 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold border-b pb-2 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100">Configuration Options</h2>
+        {/* Step Indicator */}
+        <div className="mb-12 overflow-x-auto pb-4">
+          <nav aria-label="Progress">
+            <ol className="flex items-center justify-center space-x-6">
+              {steps.map((step, index) => (
+                <li key={step.id} className={`relative flex-1 ${index < steps.length - 1 ? 'pr-8' : ''}`}>
+                  {index <= currentStep ? (
+                    <div className="flex items-center space-x-3">
+                      <span className={`flex items-center justify-center w-12 h-12 rounded-full ${index === currentStep ? 'bg-indigo-600 ring-4 ring-indigo-200' : 'bg-indigo-500'} transition-all duration-300`}>
+                        {index < currentStep ? <CheckIcon /> : <span className="text-white font-bold">{step.id}</span>}
+                      </span>
+                      <span className={`text-sm font-medium ${index === currentStep ? 'text-indigo-700' : 'text-gray-500'} hidden md:inline`}>
+                        {step.title}
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="flex items-center space-x-3">
+                      <span className="flex items-center justify-center w-12 h-12 rounded-full bg-gray-200 text-gray-500 font-medium">
+                        {step.id}
+                      </span>
+                      <span className="text-sm font-medium text-gray-500 hidden md:inline">
+                        {step.title}
+                      </span>
+                    </div>
+                  )}
+                  {index < steps.length - 1 && (
+                    <div className="absolute top-6 left-12 right-0 h-1 bg-gray-200" />
+                  )}
+                </li>
+              ))}
+            </ol>
+          </nav>
+        </div>
 
-          {/* Example Section: Target Architecture (Uses correct path from schema) */}
-          <div className="p-4 border rounded-md border-gray-200 dark:border-gray-700">
-             <label htmlFor="targetArch" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Target Architecture</label>
-             <select
-               id="targetArch"
-               name="targetArchitecture" // HTML name attribute
-               value={config.target.architecture} // Correct state path from schema
-               // Specific handler for nested state update
-               onChange={(e) => setConfig(prev => ({
-                   ...prev,
-                   target: { ...prev.target, architecture: e.target.value }
-               }))}
-               className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-200 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-             >
-               <option value="">Select Architecture...</option>
-               <option value="armv7">ARMv7</option>
-               <option value="aarch64">AArch64 (ARM64)</option>
-               <option value="x86_64">x86_64</option>
-               <option value="riscv64">RISC-V 64</option>
-               <option value="mips">MIPS</option>
-               {/* Add more architectures as needed */}
-             </select>
-          </div>
+        {/* Active Step Content */}
+        <div className="bg-white bg-opacity-90 backdrop-blur-md shadow-2xl rounded-2xl p-8 mb-8 border border-gray-100 transition-all duration-300">
+          <ActiveStepComponent {...componentProps} />
+        </div>
 
-          {/* --- Add other configuration sections/components here --- */}
-          {/* <TargetSelector config={config.target} onChange={handleTargetChange} /> */}
-          {/* <KernelOptions config={config.kernel} onChange={handleKernelChange} /> */}
-          {/* ... etc ... */}
-
-          <div className="p-4 border rounded-md bg-gray-50 dark:bg-gray-700 text-gray-500 dark:text-gray-400 italic border-gray-200 dark:border-gray-600">
-            (Target Details, Toolchain, Kernel, Bootloader, Filesystem, Packages, Network sections will go here...)
-          </div>
-
-          {/* --- Summary View (Optional) --- */}
-          <div className="p-4 border rounded-md mt-4 bg-gray-100 dark:bg-gray-900 border-gray-200 dark:border-gray-700">
-            <h3 className="font-semibold mb-2 text-gray-800 dark:text-gray-200">Current Configuration (Preview)</h3>
-            <pre className="text-xs overflow-auto max-h-96 bg-gray-800 dark:bg-gray-950 text-white p-3 rounded">
-                {JSON.stringify(config, null, 2)}
-            </pre>
-          </div>
-
-
-          {/* --- Action Button --- */}
-          <div className="mt-8 text-right">
+        {/* Navigation Buttons */}
+        <div className="flex justify-between items-center space-x-4">
+          <button
+            onClick={handlePrevious}
+            disabled={currentStep === 0}
+            className="flex items-center px-6 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <ChevronLeftIcon />
+            Previous
+          </button>
+          {currentStep < steps.length - 1 ? (
             <button
-              onClick={handleGenerateConfig}
-              className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
-              // Optional: Disable button if essential fields are missing
-              // disabled={!config.target.architecture}
+              onClick={handleNext}
+              className="flex items-center px-6 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-all duration-300"
             >
-              Generate & Download Config
+              Next
+              <ChevronRightIcon />
             </button>
-          </div>
+          ) : (
+            <button
+              onClick={handleGenerateClick}
+              className="flex items-center px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-all duration-300"
+            >
+              <DownloadIcon />
+              Generate & Download
+            </button>
+          )}
         </div>
       </div>
+    </div>
   );
 };
 

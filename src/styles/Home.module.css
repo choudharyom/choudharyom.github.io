@@ -21,7 +21,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
+  width: 70%;
   margin-bottom: 4rem;
   background: linear-gradient(120deg, #0070f3 0%, #7928ca 100%);
   border-radius: 2rem;
@@ -103,7 +103,7 @@
 
 .heroVisual {
   z-index: 1;
-  margin-left: 2rem;
+  margin-left: 0rem;
   min-width: 320px;
   max-width: 420px;
   width: 100%;
@@ -144,15 +144,11 @@
 
 /* Topics Section */
 .topics {
-  margin-bottom: 4rem;
   width: 100%;
-}
-
-.topicGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 2rem;
-  margin-top: 1.5rem;
+  max-width: 1200px;
+  margin: 4rem auto;
+  padding: 0 2rem;
+  margin-bottom: 4rem;
 }
 
 .topicCard {
@@ -192,6 +188,13 @@
   color: #4b5563;
 }
 
+/* Add responsive adjustments */
+@media (max-width: 1200px) {
+  .topicGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 /* Responsive adjustments */
 @media (max-width: 1100px) {
   .hero {
@@ -207,6 +210,17 @@
   }
 }
 
+/* Responsive adjustment for mobile */
+@media (max-width: 768px) {
+  .cardStack {
+    grid-template-columns: 1fr;
+  }
+  .topicGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile adjustments */
 @media (max-width: 700px) {
   .main {
     padding: 2rem 0;
@@ -237,4 +251,86 @@
     border-radius: 0.75rem;
     min-height: 120px;
   }
+}
+
+@media (max-width: 480px) {
+  .topicGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cardStack {
+  position: relative;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  justify-content: center;
+}
+
+.cardWrapper:nth-child(n+3) {
+  margin-top: 2rem;
+  padding-top: 2rem;
+}
+
+.cardWrapper {
+  position: relative;
+  width: 100%;
+  min-width: 300px;
+  transition: all 0.3s ease-out;
+  transform: translateY(0);
+  display: flex;
+  height: 100%;
+}
+
+.cardWrapper > * {
+  width: 100%;
+  height: 100%;
+}
+
+.cardWrapper:hover {
+  transform: translateY(-8px);
+  z-index: 2;
+}
+
+.loadMoreButton {
+  display: block;
+  margin: 2rem auto 0;
+  padding: 0.85rem 2rem;
+  background: linear-gradient(90deg, #0070f3 0%, #00c6ff 100%);
+  color: #fff;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.loadMoreButton:hover {
+  background: linear-gradient(90deg, #00c6ff 0%, #0070f3 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 24px rgba(0,112,243,0.18);
+}
+
+.topicGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Always show 3 columns */
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.topicCard {
+  background: #6590681f;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid #eaeaea;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  min-height: 100px;
 }

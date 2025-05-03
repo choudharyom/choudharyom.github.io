@@ -103,3 +103,50 @@ export function getPostBySlug(slug) {
     // Consider making slug comparison case-insensitive too if needed
     return samplePosts.find(post => post.slug.toLowerCase() === slug.toLowerCase());
 }
+
+export function getPopularTags(limit = 6) {
+  // Create a map to store tag counts
+  const tagCounts = new Map();
+  
+  // Count occurrences of each tag
+  samplePosts.forEach(post => {
+    post.tags.forEach(tag => {
+      const normalizedTag = tag.toLowerCase();
+      tagCounts.set(normalizedTag, (tagCounts.get(normalizedTag) || 0) + 1);
+    });
+  });
+
+  const descriptions = {
+    'neural-networks': 'Deep dive into artificial neural networks',
+    'machine-learning': 'Fundamentals of ML algorithms',
+    'deep-learning': 'Advanced neural architectures',
+    'mathematics': 'Mathematical foundations of AI',
+    'linear-algebra': 'Essential math for neural networks',
+    'calculus': 'Mathematical optimization in ML'
+  };
+
+  return Array.from(tagCounts.entries())
+    .map(([tag, count]) => ({
+      slug: tag,
+      name: tag.split('-').map(word => 
+        word.charAt(0).toUpperCase() + word.slice(1)
+      ).join(' '),
+      count,
+      description: descriptions[tag] || `Articles about ${tag.split('-').join(' ')}`
+    }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, limit);
+}
+
+function getTagDescription(tag) {
+  const descriptions = {
+    'neural-networks': 'Fundamentals to advanced concepts',
+    'linear-algebra': 'Vectors, matrices, and their role in AI',
+    'machine-learning': 'Algorithms, models, and applications',
+    'deep-learning': 'Advanced neural network architectures',
+    'mathematics': 'Mathematical foundations of AI',
+    'python': 'Programming for data science and AI',
+    'tensorflow': 'Deep learning with TensorFlow'
+  };
+  return descriptions[tag] || `Articles about ${tag.split('-').join(' ')}`;
+}

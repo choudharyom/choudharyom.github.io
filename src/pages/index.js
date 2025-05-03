@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -5,9 +6,17 @@ import styles from '@/styles/Home.module.css';
 import PostCard from '@/components/blog/PostCard';
 import SimpleNNVisualization from '@/components/neural-network/SimpleNNVisualization';
 import MathNNVisualization from '@/components/neural-network/MathNNVisualization';
-import { getAllPosts } from '@/lib/posts'; // Import the helper function
+import { getAllPosts, getPopularTags } from '@/lib/posts';
 
-export default function Home({ featuredPosts }) {
+export default function Home({ featuredPosts, popularTags  }) {
+  const [visiblePosts, setVisiblePosts] = useState(2);
+  
+  const showMorePosts = () => {
+    setVisiblePosts(prev => Math.min(prev + 2, featuredPosts?.length || 0));
+  };
+
+  const hasMorePosts = featuredPosts?.length > visiblePosts;
+
   return (
     <div className={styles.container}>
       <Head>
@@ -47,64 +56,62 @@ export default function Home({ featuredPosts }) {
 
         {/* Featured Articles Section */}
         <section className={styles.featuredSection}>
-          <h2 className={styles.sectionTitle}>Featured Articles</h2>
-          <div className={styles.grid}>
-            {featuredPosts?.map((post) => (
-              <PostCard key={post.id} post={post} />
-            ))}
-          </div>
-        </section>
+            <h2 className={styles.sectionTitle}>Featured Articles</h2>
+            <div className={styles.cardStack}>
+              {featuredPosts?.slice(0, visiblePosts).map((post, index) => (
+                <div 
+                  key={post.id} 
+                  className={styles.cardWrapper}
+                  style={{ 
+                    '--index': index,
+                    zIndex: visiblePosts - index 
+                  }}
+                >
+                  <PostCard post={post} />
+                </div>
+              ))}
+            </div>
+            {hasMorePosts && (
+              <button 
+                onClick={showMorePosts} 
+                className={styles.loadMoreButton}
+              >
+                Show More Articles
+              </button>
+            )}
+          </section>
 
-        {/* Topics Section */}
-        <section className={styles.topics}>
-          <h2 className={styles.sectionTitle}>Explore Topics</h2>
-          <div className={styles.topicGrid}>
-            <Link href="/tag/neural-networks" className={styles.topicCard}>
-              <div>
-                <h3>Neural Networks</h3>
-                <p>Fundamentals to advanced concepts</p>
-              </div>
-            </Link>
-            <Link href="/tag/linear-algebra" className={styles.topicCard}>
-              <div>
-                <h3>Linear Algebra</h3>
-                <p>Vectors, matrices, and their role in AI</p>
-              </div>
-            </Link>
-            <Link href="/tag/tensorflow" className={styles.topicCard}>
-              <div>
-                <h3>TensorFlow</h3>
-                <p>Deep learning with TensorFlow</p>
-              </div>
-            </Link>
-            <Link href="/tag/machine-learning" className={styles.topicCard}>
-              <div>
-                <h3>Machine Learning</h3>
-                <p>Algorithms, models, and applications</p>
-              </div>
-            </Link>
-            <Link href="/tag/python" className={styles.topicCard}>
-              <div>
-                <h3>Python</h3>
-                <p>Programming for data science and AI</p>
-              </div>
-            </Link>
-          </div>
-        </section>
+          {/* Topics Section */}
+          <section className={styles.topics}>
+            <h2 className={styles.sectionTitle}>Explore Topics</h2>
+            <div className={styles.topicGrid}>
+              {popularTags?.slice(0, 6).map((tag) => (
+                <Link 
+                  key={tag.slug} 
+                  href={`/tag/${tag.slug}`} 
+                  className={styles.topicCard}
+                >
+                  <div>
+                    <h3>{tag.name}</h3>
+                    <p>{tag.description}</p>
+                  </div>
+                </Link>
+              )) || <p>Loading topics...</p>}
+            </div>
+          </section>
       </main>
     </div>
   );
 }
 
 export function getStaticProps() {
-  // Fetch all posts using the helper function
-  // For now, we'll treat all posts as "featured"
-  // In a real app, you might filter or select specific posts here
-  const featuredPosts = getAllPosts();
+  const allPosts = getAllPosts();
+  const popularTags = getPopularTags(6) || []; // Ensure we always return an array
 
   return {
     props: {
-      featuredPosts
+      featuredPosts: allPosts,
+      popularTags
     }
   };
 }

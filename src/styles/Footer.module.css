@@ -207,7 +207,7 @@
 /* Large Screen (lg) Styles */
 @media (min-width: 1024px) {
   .footerContainer {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 9rem;
+    padding-right: 7rem;
   }
 }

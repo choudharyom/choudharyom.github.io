@@ -56,6 +56,24 @@ const samplePosts = [
       </ul>
       <p>Read the full article for a mathematical deep dive and real-world case studies.</p>
     `
+  },
+  {
+    id: 'elhclf-intro',
+    slug: 'elhclf-configurator',
+    title: 'Introducing the ELHLCF Configurator: Build Your Embedded Linux System Visually',
+    description: 'Learn about the Embedded Linux High-Level Configuration Framework (ELHLCF) Configurator, a web-based tool designed to simplify the creation of custom embedded Linux systems.',
+    coverImage: '/images/placeholder-embedded.jpg', // Suggest using a relevant cover image
+    canonicalUrl: "https://choudharyom.com/elhclf-configurator", // Adjust domain if needed
+    date: "2025-05-03", // Set current date or desired publish date
+    readingTime: "6 min read",
+    tags: ['embedded-linux', 'configurator', 'web-development', 'react', 'build-systems', 'ui-ux'],
+    content: `
+        <p>Building custom embedded Linux systems often involves navigating complex configuration files and build systems. The ELHLCF Configurator aims to streamline this process with a modern, web-based interface.</p>
+        <h2>The Challenge of Embedded Linux Configuration</h2>
+        <p>Manually setting up toolchains, kernels, bootloaders, filesystems, and packages can be error-prone and time-consuming. The ELHLCF Configurator provides a guided, visual approach.</p>
+        <h2>Key Features</h2>
+        <p>Explore the features that make embedded Linux configuration easier: step-by-step guidance, validation, and direct configuration file generation.</p>
+      ` // Basic content summary for layout
   }
   // Add more posts here
 ];

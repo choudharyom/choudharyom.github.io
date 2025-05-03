@@ -7,7 +7,7 @@ import Link from 'next/link'; // Import Link for internal navigation
 // --- Define Meta and Author Data ---
 const pageMeta = {
   id: 'elhclf-intro',
-  slug: 'elhclf-configurator-intro',
+  slug: 'elhclf-configurator',
   title: 'Introducing the ELHLCF Configurator: Build Your Embedded Linux System Visually',
   description: 'Learn about the Embedded Linux High-Level Configuration Framework (ELHLCF) Configurator, a web-based tool designed to simplify the creation of custom embedded Linux systems.',
   coverImage: '/images/placeholder-embedded.jpg', // Suggest using a relevant cover image

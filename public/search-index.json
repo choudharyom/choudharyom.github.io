@@ -1,5 +1,21 @@
 [
   {
+    "slug": "elhclf-translator",
+    "title": "From JSON to Image: Automating Embedded Linux Builds with Configuration Translation",
+    "excerpt": "",
+    "tags": [
+      "embedded-linux",
+      "build-systems",
+      "automation",
+      "nodejs",
+      "json",
+      "buildroot",
+      "yocto",
+      "ptxdist",
+      "scripting"
+    ]
+  },
+  {
     "slug": "elhclf-configurator",
     "title": "Introducing the ELHLCF Configurator: Build Your Embedded Linux System Visually",
     "excerpt": "",

@@ -1,0 +1,312 @@
+
+.container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  min-height: 100vh; /* Ensure container takes full viewport height */
+  padding: 20px; /* Optional: Add some padding around the content */
+}
+
+.chatContainer {
+    display: flex;
+    flex-direction: column;
+    height: 800px;
+    width: 700px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    background-color: #f8f9fa;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    position: relative;
+  }
+  
+  /* Header styles */
+  .chatHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    background: linear-gradient(135deg, #2563eb, #4f46e5);
+    color: white;
+  }
+  
+  .agentInfo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .agentAvatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    font-weight: 600;
+  }
+  
+  .agentName {
+    font-weight: 600;
+    font-size: 16px;
+  }
+  
+  .headerControls button {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 4px;
+    border-radius: 4px;
+  }
+  
+  .headerControls button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Message container */
+  .messageContainer {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #f8f9fa;
+  }
+  
+  /* Message styles */
+  .message {
+    max-width: 80%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    position: relative;
+  }
+  
+  .userMessage {
+    align-self: flex-end;
+    background-color: #2563eb;
+    color: white;
+    border-bottom-right-radius: 4px;
+  }
+  
+  .aiMessage {
+    align-self: flex-start;
+    background-color: #e5e7eb;
+    color: #1f2937;
+    border-bottom-left-radius: 4px;
+  }
+  
+  .messageTime {
+    font-size: 10px;
+    margin-top: 5px;
+    opacity: 0.8;
+    text-align: right;
+  }
+  
+  /* Typing indicator */
+  .typingIndicator {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    height: 24px;
+  }
+  
+  .typingIndicator span {
+    font-size: 20px;
+    animation: pulse 1.5s infinite;
+    opacity: 0.8;
+  }
+  
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+  
+  /* Input area */
+  .inputContainer {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    background-color: white;
+    border-top: 1px solid #e5e7eb;
+  }
+  
+  .inputField {
+    flex: 1;
+    border: none;
+    border-radius: 20px;
+    background-color: #f1f5f9;
+    padding: 12px 16px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s ease;
+  }
+  
+  .inputField:focus {
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.3);
+    background-color: white;
+  }
+  
+  .micButton, .sendButton {
+    border: none;
+    background: none;
+    margin-left: 8px;
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4b5563;
+    transition: all 0.2s ease;
+  }
+  
+  .sendButton {
+    background-color: #2563eb;
+    color: white;
+  }
+  
+  .micButton:hover, .sendButton:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Settings panel */
+  .settingsPanel {
+    position: absolute;
+    top: 70px;
+    right: 16px;
+    width: 320px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+  }
+  
+  .settingsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .settingsHeader h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  .settingsHeader button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #6b7280;
+  }
+  
+  .settingsContent {
+    padding: 16px;
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  
+  /* Tool selector */
+  .toolSelector h4 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #4b5563;
+  }
+  
+  .toolGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  
+  .toolItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .toolInfo {
+    flex: 1;
+  }
+  
+  .toolName {
+    font-weight: 500;
+    color: #1f2937;
+  }
+  
+  .toolDescription {
+    font-size: 12px;
+    color: #6b7280;
+  }
+  
+  /* Toggle switch */
+  .toolSwitch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 22px;
+  }
+  
+  .toolSwitch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #e5e7eb;
+    transition: .3s;
+    border-radius: 22px;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .3s;
+    border-radius: 50%;
+  }
+  
+  input:checked + .slider {
+    background-color: #2563eb;
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(22px);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 480px) {
+    .chatContainer {
+      width: 100%;
+      height: 100vh;
+      border-radius: 0;
+    }
+    
+    .settingsPanel {
+      width: 85%;
+    }
+  }
+
+  

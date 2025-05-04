@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import styles from './SuperAgent.module.css';
+import ReactMarkdown from 'react-markdown'; // Import react-markdown
+import styles from '@/styles/SuperAgent.module.css';
+import axios from 'axios'; // Import axios
 import { FaPaperPlane, FaMicrophone, FaCog, FaTimes } from 'react-icons/fa';
 import { BsThreeDots } from 'react-icons/bs';
 import ToolSelector from './ToolSelector';
-
+ 
 const SuperAgent = () => {
   const [messages, setMessages] = useState([
     {
@@ -33,50 +35,83 @@ const SuperAgent = () => {
   };
 
   // Handle message submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (input.trim() === '') return;
+    const trimmedInput = input.trim();
+    if (trimmedInput === '') return;
 
     // Add user message
     const newUserMessage = {
       id: messages.length + 1,
       type: 'user',
-      content: input,
+      content: trimmedInput,
       timestamp: new Date(),
     };
-    
+
     setMessages((prev) => [...prev, newUserMessage]);
     setInput('');
-    
+
     // Simulate AI thinking
     setIsTyping(true);
-    
-    // Simulate AI response (replace with actual API call)
-    setTimeout(() => {
-      const aiResponse = {
+
+    // --- Call Gemini API ---
+    // Ensure you have set up the environment variable (e.g., VITE_GEMINI_API_KEY or REACT_APP_GEMINI_API_KEY)
+    // --- Debugging Line ---
+    console.log('Available Next.js Env Vars:', process.env); // Changed for Next.js
+    // --- End Debugging Line ---
+    const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY; // Changed for Next.js
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+    if (!apiKey) {
+      console.error("Gemini API key is missing. Please set it up in your environment variables.");
+      const errorResponse = {
         id: messages.length + 2,
         type: 'ai',
-        content: getAIResponse(input),
+        content: "Configuration error: API key not found.",
         timestamp: new Date(),
       };
-      
-      setMessages((prev) => [...prev, aiResponse]);
+      setMessages((prev) => [...prev, errorResponse]);
       setIsTyping(false);
-    }, 1500);
-  };
+      return;
+    }
 
-  // Mock AI response function (replace with actual API)
-  const getAIResponse = (userInput) => {
-    const responses = [
-      "I'm analyzing your request...",
-      "That's an interesting question. Here's what I found...",
-      "Based on my knowledge, I can tell you that...",
-      "I've processed your request and here's the information you need...",
-      "Let me help you with that request...",
-    ];
-    
-    return responses[Math.floor(Math.random() * responses.length)] + 
-      " This is a simulated response to: " + userInput;
+    try {
+      // Using axios.post
+      const response = await axios.post(apiUrl, {
+        contents: [{ parts: [{ text: trimmedInput }] }],
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      // Extract the text from the response - check Gemini API docs for the exact structure
+      // Axios puts the response data directly in `response.data`
+      const aiText = response.data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't get a valid response.";
+
+      const aiResponse = {
+        id: messages.length + 2, // Note: ID generation might need adjustment with async calls
+        type: 'ai',
+        content: aiText,
+        timestamp: new Date(),
+      };
+
+      setMessages((prev) => [...prev, aiResponse]);
+      // --- End API Call ---
+
+    } catch (error) {
+      // Axios errors often have more structure
+      console.error("Error fetching Gemini response:", error.response ? error.response.data : error.message);
+      const errorResponse = {
+        id: messages.length + 2,
+        type: 'ai',
+        content: `Sorry, something went wrong: ${error.response?.data?.error?.message || error.message}`,
+        timestamp: new Date(),
+      };
+      setMessages((prev) => [...prev, errorResponse]);
+    } finally {
+      setIsTyping(false); // Stop typing indicator regardless of success or failure
+    }
   };
 
   const formatTime = (date) => {
@@ -87,7 +122,7 @@ const SuperAgent = () => {
     <div className={styles.chatContainer}>
       <div className={styles.chatHeader}>
         <div className={styles.agentInfo}>
-          <div className={styles.agentAvatar}>GS</div>
+          <div className={styles.agentAvatar}>OM</div>
           <div className={styles.agentName}>Super Agent</div>
         </div>
         <div className={styles.headerControls}>
@@ -119,7 +154,11 @@ const SuperAgent = () => {
             className={`${styles.message} ${message.type === 'user' ? styles.userMessage : styles.aiMessage}`}
           >
             <div className={styles.messageContent}>
-              {message.content}
+              {message.type === 'ai' ? (
+                <ReactMarkdown>{message.content}</ReactMarkdown>
+              ) : (
+                message.content // Keep user messages as plain text
+              )}
             </div>
             <div className={styles.messageTime}>{formatTime(message.timestamp)}</div>
           </div>
@@ -132,7 +171,7 @@ const SuperAgent = () => {
             </div>
           </div>
         )}
-        
+
         <div ref={messagesEndRef} />
       </div>
 

@@ -4,7 +4,7 @@ import styles from '@/styles/SuperAgent.module.css';
 import axios from 'axios'; // Import axios
 import { FaPaperPlane, FaMicrophone, FaCog, FaTimes } from 'react-icons/fa';
 import { BsThreeDots } from 'react-icons/bs';
-import ToolSelector from './ToolSelector';
+import ToolSelector, { availableTools } from './ToolSelector'; // Import availableTools
  
 const SuperAgent = () => {
   const [messages, setMessages] = useState([
@@ -18,6 +18,12 @@ const SuperAgent = () => {
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  // State for enabled tools, initialized here
+  const [enabledTools, setEnabledTools] = useState(
+    availableTools.reduce((acc, tool) => ({ ...acc, [tool.id]: true }), {})
+  );
+
+
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -34,46 +40,66 @@ const SuperAgent = () => {
     setInput(e.target.value);
   };
 
+  // Handler to toggle a specific tool's state
+  const handleToggleTool = (id, forceState = null) => {
+    setEnabledTools((prev) => {
+      const current = prev[id];
+      const newState = forceState !== null ? forceState : !current; // Allow forcing state for toggleAll
+      return {
+        ...prev,
+        [id]: newState,
+      };
+    });
+  };
+
   // Handle message submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     const trimmedInput = input.trim();
     if (trimmedInput === '') return;
 
-    // Add user message
+    // Prepare user message (using a temporary ID, real ID assigned during state update)
     const newUserMessage = {
-      id: messages.length + 1,
+      // id will be assigned based on previous state length
       type: 'user',
       content: trimmedInput,
       timestamp: new Date(),
     };
 
-    setMessages((prev) => [...prev, newUserMessage]);
+    // Update state with user message first
+    setMessages((prev) => [...prev, { ...newUserMessage, id: prev.length + 1 }]);
     setInput('');
-
-    // Simulate AI thinking
+    // Start AI thinking indicator
     setIsTyping(true);
 
     // --- Call Gemini API ---
-    // Ensure you have set up the environment variable (e.g., VITE_GEMINI_API_KEY or REACT_APP_GEMINI_API_KEY)
-    // --- Debugging Line ---
-    console.log('Available Next.js Env Vars:', process.env); // Changed for Next.js
-    // --- End Debugging Line ---
     const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY; // Changed for Next.js
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
     if (!apiKey) {
       console.error("Gemini API key is missing. Please set it up in your environment variables.");
-      const errorResponse = {
-        id: messages.length + 2,
+      const errorMsg = {
+        // id will be assigned based on previous state length
         type: 'ai',
         content: "Configuration error: API key not found.",
         timestamp: new Date(),
       };
-      setMessages((prev) => [...prev, errorResponse]);
+      setMessages((prev) => [...prev, { ...errorMsg, id: prev.length + 1 }]);
       setIsTyping(false);
       return;
     }
+
+    // --- Get Enabled Tool Names ---
+    const activeToolIds = Object.entries(enabledTools)
+      .filter(([id, isEnabled]) => isEnabled)
+      .map(([id]) => id);
+    
+    // --- Prepare Prompt with Tool Context ---
+    const toolContext = activeToolIds.length > 0 
+      ? `[Enabled Tools: ${activeToolIds.join(', ')}] ` 
+      : '';
+    const promptWithContext = `${toolContext}${trimmedInput}`;
+    console.log("Active tools for this request:", activeToolIds); // Log which tools are active
 
     try {
       // Using axios.post
@@ -83,32 +109,37 @@ const SuperAgent = () => {
         headers: {
           'Content-Type': 'application/json',
         }
+        // NOTE: Standard Gemini generateContent doesn't directly accept a 'tools' array like this.
+        // True tool integration requires using the 'tools' and 'functionDeclarations' fields
+        // in the request and handling 'functionCall' responses.
+        // For now, we've logged the active tools above.
+        // If you have a backend proxy, you would send `activeToolIds` to it.
       });
 
       // Extract the text from the response - check Gemini API docs for the exact structure
       // Axios puts the response data directly in `response.data`
       const aiText = response.data.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't get a valid response.";
 
-      const aiResponse = {
-        id: messages.length + 2, // Note: ID generation might need adjustment with async calls
+      const aiMsg = {
+        // id will be assigned based on previous state length
         type: 'ai',
         content: aiText,
         timestamp: new Date(),
       };
-
-      setMessages((prev) => [...prev, aiResponse]);
+      // Update state with AI response
+      setMessages((prev) => [...prev, { ...aiMsg, id: prev.length + 1 }]);
       // --- End API Call ---
 
     } catch (error) {
       // Axios errors often have more structure
-      console.error("Error fetching Gemini response:", error.response ? error.response.data : error.message);
-      const errorResponse = {
-        id: messages.length + 2,
+      console.error("Error fetching AI response:", error.response ? error.response.data : error.message);
+      const errorMsg = {
+        // id will be assigned based on previous state length
         type: 'ai',
         content: `Sorry, something went wrong: ${error.response?.data?.error?.message || error.message}`,
         timestamp: new Date(),
       };
-      setMessages((prev) => [...prev, errorResponse]);
+      setMessages((prev) => [...prev, { ...errorMsg, id: prev.length + 1 }]);
     } finally {
       setIsTyping(false); // Stop typing indicator regardless of success or failure
     }
@@ -142,7 +173,11 @@ const SuperAgent = () => {
             <button onClick={() => setShowSettings(false)}><FaTimes /></button>
           </div>
           <div className={styles.settingsContent}>
-            <ToolSelector />
+            {/* Pass state and handler down to ToolSelector */}
+            <ToolSelector
+              enabledTools={enabledTools}
+              onToggleTool={handleToggleTool}
+            />
           </div>
         </div>
       )}

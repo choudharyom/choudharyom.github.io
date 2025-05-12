@@ -81,7 +81,11 @@ Please analyze this plant image and provide details in the following JSON format
     const plantData = {
       plantName: jsonResponse.commonName,
       scientificName: jsonResponse.scientificName,
-      confidence: 0.92, // This would normally come from the API
+      confidence: 0.92,
+      imageData: {
+        base64: imagePart.inlineData.data,
+        mimeType: imageFile.mimetype,
+      },
       careInfo: [
         { icon: '💧', title: 'Water', description: jsonResponse.care?.watering || 'Info not available' },
         { icon: '☀️', title: 'Light', description: jsonResponse.care?.sunlight || 'Info not available' },
@@ -118,10 +122,11 @@ Please analyze this plant image and provide details in the following JSON format
 // Helper function to convert file path to GoogleGenerativeAI.Part
 async function fileToGenerativePart(filePath, mimeType) {
   const imageBuffer = await fs.promises.readFile(filePath);
+  const base64Data = imageBuffer.toString('base64');
   return {
     inlineData: {
-      data: imageBuffer.toString('base64'),
+      data: base64Data,
       mimeType,
-    },
+    }
   };
 }

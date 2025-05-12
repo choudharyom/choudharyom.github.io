@@ -2,6 +2,28 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styles from '@/styles/PlantIdentifier.module.css';
 
+const PlantIdentificationResult = ({ result }) => {
+  return (
+    <div className="results-container">
+      {/* Display the identified plant image */}
+      {result.imageData && (
+        <div className="identified-image">
+          <img 
+            src={`data:${result.imageData.mimeType};base64,${result.imageData.base64}`}
+            alt="Identified plant"
+            className="rounded-lg shadow-md max-w-full h-auto mb-4"
+          />
+        </div>
+      )}
+      
+      {/* Rest of your result display code */}
+      <h2 className="text-2xl font-bold mb-2">{result.plantName}</h2>
+      <p className="text-gray-600 italic mb-4">{result.scientificName}</p>
+      {/* ...rest of your existing result display code... */}
+    </div>
+  );
+};
+
 const PlantIdentifier = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);

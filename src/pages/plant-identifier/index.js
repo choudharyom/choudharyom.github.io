@@ -166,17 +166,31 @@ const PlantIdentifier = () => {
       // Add your Google Gemini API integration here
       // This is a placeholder for the actual API call
       try {
-        const response = await fetch('/api/identify-plant', {
+        const response = await fetch('/api/identify-plant', { // Removed trailing slash
           method: 'POST',
           body: formData,
         });
-        
+
         if (!response.ok) {
-          throw new Error(`HTTP error ${response.status}`);
+          let errorMessage = `HTTP error ${response.status}`;
+          try {
+            // Check content-type before trying to parse JSON
+            const contentType = response.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+              const errorData = await response.json();
+              if (errorData && errorData.error) {
+                errorMessage = errorData.error;
+              }
+            }
+          } catch (e) {
+            // Ignore if response body is not JSON or empty
+            console.error("Could not parse error response:", e);
+          }
+          throw new Error(errorMessage);
         }
-        
+
         const data = await response.json();
-        
+
         // Set the result from the API
         setResult({
           name: data.plantName,
@@ -187,57 +201,12 @@ const PlantIdentifier = () => {
           resources: data.resources || []
         });
       } catch (apiError) {
-        // If the API fails, use mock data for demonstration purposes
-        console.warn('Using mock data due to API error:', apiError);
-        
-        // Mock data for demonstration
-        setResult({
-          name: "Monstera Deliciosa",
-          scientificName: "Monstera deliciosa",
-          confidence: 0.92,
-          careInfo: [
-            {
-              icon: '💧',
-              title: 'Water',
-              description: 'Water when the top 1-2 inches of soil are dry, usually every 1-2 weeks. Reduce watering in winter.'
-            },
-            {
-              icon: '☀️',
-              title: 'Light',
-              description: 'Bright, indirect light is ideal. Can tolerate some shade but may grow more slowly.'
-            },
-            {
-              icon: '🌡️',
-              title: 'Temperature',
-              description: 'Thrives in temperatures between 65-85°F (18-29°C). Keep away from cold drafts.'
-            },
-            {
-              icon: '🌱',
-              title: 'Soil',
-              description: 'Well-draining, rich potting mix with peat moss and perlite.'
-            }
-          ],
-          additionalInfo: 'The Monstera Deliciosa, also known as the Swiss Cheese Plant, is famous for its large, perforated leaves. It\'s a popular tropical houseplant native to the rainforests of Central America. As it matures, the leaves develop distinctive holes (fenestrations) and deep splits that give it a unique appearance.',
-          resources: [
-            {
-              title: 'Complete Care Guide',
-              description: 'Learn everything about caring for your Monstera Deliciosa.',
-              url: 'https://example.com/plants/monstera-deliciosa'
-            },
-            {
-              title: 'Common Issues & Solutions',
-              description: 'Troubleshoot common problems with this plant species.',
-              url: 'https://example.com/troubleshooting/monstera-deliciosa'
-            },
-            {
-              title: 'Community Discussion',
-              description: 'Join conversations with other growers of this plant.',
-              url: 'https://example.com/forum/plants'
-            }
-          ]
-        });
+        // If the API fails, set the specific error message.
+        console.error('API call failed:', apiError);
+        setError(`Failed to identify plant: ${apiError.message}`); // Display the specific error from API or HTTP status
+        setResult(null); // Ensure no previous result is shown
       }
-      
+
     } catch (err) {
       setError('Error identifying plant: ' + err.message);
       console.error('Error identifying plant:', err);

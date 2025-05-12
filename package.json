@@ -17,6 +17,7 @@
     "@tensorflow/tfjs": "^4.22.0",
     "axios": "^1.9.0",
     "chart.js": "^4.4.3",
+    "formidable": "^3.5.4",
     "katex": "^0.16.11",
     "next": "^15.3.0",
     "next-themes": "^0.3.0",

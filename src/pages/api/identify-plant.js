@@ -24,20 +24,32 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'No image file uploaded.' });
     }
 
-    // Set up Google Gemini API
+    // Set up Google Gemini API with the new model
     if (!process.env.GEMINI_API_KEY) {
       console.error('GEMINI_API_KEY is not set.');
       return res.status(500).json({ error: 'API key not configured' });
     }
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" }); // Updated model name
     
     // Convert the uploaded image file to the format Gemini API expects
     const imagePart = await fileToGenerativePart(imageFile.filepath, imageFile.mimetype);
     
     // Create prompt for the Gemini model
-    const prompt = "Please identify this plant. Provide the common name, scientific name, care information (watering, sunlight, soil, temperature), and a brief description. Format the result as JSON.";
-    
+    const prompt = `
+Please analyze this plant image and provide details in the following JSON format:
+{
+  "commonName": "name of the plant",
+  "scientificName": "scientific name",
+  "care": {
+    "watering": "watering instructions",
+    "sunlight": "light requirements",
+    "temperature": "temperature needs",
+    "soil": "soil requirements"
+  },
+  "description": "brief description of the plant"
+}`;
+
     // Get response from Gemini API
     const geminiResult = await model.generateContent([prompt, imagePart]);
     const response = geminiResult.response;

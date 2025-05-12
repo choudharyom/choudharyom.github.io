@@ -1,4 +1,3 @@
-/* PlantIdentifier.css */
 .plant-identifier {
   max-width: 1000px;
   margin: 0 auto;
@@ -48,6 +47,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 6px rgba(44, 122, 69, 0.1);
+  position: relative;
 }
 
 .plant-identifier__button:hover {
@@ -60,8 +60,45 @@
   transform: translateY(0);
 }
 
+.plant-identifier__button:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.plant-identifier__button.uploading {
+  background-color: #3498db;
+}
+
 .button-icon {
   font-size: 1.2rem;
+}
+
+.loading-icon {
+  position: absolute;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Progress Bar Styles */
+.upload-progress-container {
+  width: 100%;
+  max-width: 600px;
+  height: 6px;
+  background-color: #e0e0e0;
+  border-radius: 3px;
+  margin: 0 auto 2rem;
+  overflow: hidden;
+}
+
+.upload-progress-bar {
+  height: 100%;
+  background-color: #2c7a45;
+  border-radius: 3px;
+  transition: width 0.3s ease;
 }
 
 .plant-identifier__camera {
@@ -123,18 +160,16 @@
   background-color: #2980b9;
 }
 
-.analyze-button:disabled {
-  background-color: #95a5a6;
-  cursor: not-allowed;
-  transform: none;
-}
-
 .reset-button {
   background-color: #e74c3c;
 }
 
 .reset-button:hover {
   background-color: #c0392b;
+}
+
+.mt-4 {
+  margin-top: 2rem;
 }
 
 .plant-identifier__error {
@@ -145,6 +180,249 @@
   margin: 1rem auto;
   text-align: center;
   max-width: 600px;
+}
+
+/* Analyzing States Styles */
+.plant-identifier__analyzing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem auto;
+  max-width: 800px;
+  background-color: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.analyzing-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.analyzing-image {
+  width: 100%;
+  max-width: 400px;
+  height: auto;
+  border-radius: 12px;
+  object-fit: contain;
+  opacity: 0.8;
+  filter: contrast(0.9) brightness(0.9);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+.analyzing-spinner {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 1.5rem;
+}
+
+.analysis-stage {
+  font-size: 1.1rem;
+  color: #3498db;
+  font-weight: 600;
+  margin: 0.5rem 0 1rem;
+}
+
+.analysis-progress {
+  margin: 1rem 0;
+}
+
+.analysis-tip {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+  max-width: 450px;
+  margin: 1rem auto;
+  font-style: italic;
+}
+
+/* Spinner Animation */
+.spinner {
+  animation: rotate 2s linear infinite;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+}
+
+.spinner .path {
+  stroke: #3498db;
+  stroke-linecap: round;
+  animation: dash 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
+}
+
+/* Dot Pulse Animation */
+.dot-pulse {
+  position: relative;
+  left: -9999px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #3498db;
+  color: #3498db;
+  box-shadow: 9999px 0 0 -5px;
+  animation: dot-pulse 1.5s infinite linear;
+  animation-delay: 0.25s;
+}
+
+.dot-pulse::before, .dot-pulse::after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #3498db;
+  color: #3498db;
+}
+
+.dot-pulse::before {
+  box-shadow: 9984px 0 0 -5px;
+  animation: dot-pulse-before 1.5s infinite linear;
+  animation-delay: 0s;
+}
+
+.dot-pulse::after {
+  box-shadow: 10014px 0 0 -5px;
+  animation: dot-pulse-after 1.5s infinite linear;
+  animation-delay: 0.5s;
+}
+
+@keyframes dot-pulse-before {
+  0% {
+    box-shadow: 9984px 0 0 -5px;
+  }
+  30% {
+    box-shadow: 9984px 0 0 2px;
+  }
+  60%, 100% {
+    box-shadow: 9984px 0 0 -5px;
+  }
+}
+
+@keyframes dot-pulse {
+  0% {
+    box-shadow: 9999px 0 0 -5px;
+  }
+  30% {
+    box-shadow: 9999px 0 0 2px;
+  }
+  60%, 100% {
+    box-shadow: 9999px 0 0 -5px;
+  }
+}
+
+@keyframes dot-pulse-after {
+  0% {
+    box-shadow: 10014px 0 0 -5px;
+  }
+  30% {
+    box-shadow: 10014px 0 0 2px;
+  }
+  60%, 100% {
+    box-shadow: 10014px 0 0 -5px;
+  }
+}
+
+/* Skeleton Loading Animation */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.6) 50%, rgba(255,255,255,0) 100%);
+  animation: shine 1.5s infinite;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton-text {
+  height: 15px;
+  margin-bottom: 10px;
+  background-color: #e0e0e0;
+  border-radius: 4px;
+}
+
+.skeleton-title {
+  height: 24px;
+  width: 180px;
+}
+
+.skeleton-name {
+  height: 30px;
+  width: 250px;
+  margin-bottom: 8px;
+}
+
+.skeleton-scientific {
+  height: 20px;
+  width: 200px;
+  margin-bottom: 30px;
+}
+
+.skeleton-subtitle {
+  height: 22px;
+  width: 150px;
+  margin: 20px 0 15px;
+}
+
+.skeleton-badge {
+  height: 30px;
+  width: 120px;
+  border-radius: 20px;
+  background-color: #e0e0e0;
+}
+
+.skeleton-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.skeleton-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  margin-bottom: 15px;
 }
 
 .plant-identifier__results {

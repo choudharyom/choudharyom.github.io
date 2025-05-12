@@ -1,0 +1,327 @@
+/* PlantIdentifier.css */
+.plant-identifier {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+}
+
+.plant-identifier__title {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #2c7a45;
+  font-size: 2.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.plant-identifier__title-icon {
+  font-size: 2.2rem;
+}
+
+.plant-identifier__controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.plant-identifier__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background-color: #2c7a45;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(44, 122, 69, 0.1);
+}
+
+.plant-identifier__button:hover {
+  background-color: #205d35;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(44, 122, 69, 0.15);
+}
+
+.plant-identifier__button:active {
+  transform: translateY(0);
+}
+
+.button-icon {
+  font-size: 1.2rem;
+}
+
+.plant-identifier__camera {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.camera-preview {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.capture-button {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  background-color: #e74c3c;
+}
+
+.capture-button:hover {
+  background-color: #c0392b;
+}
+
+.plant-identifier__preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem auto;
+  max-width: 600px;
+}
+
+.preview-image {
+  width: 100%;
+  max-height: 400px;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.preview-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.analyze-button {
+  background-color: #3498db;
+}
+
+.analyze-button:hover {
+  background-color: #2980b9;
+}
+
+.analyze-button:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.reset-button {
+  background-color: #e74c3c;
+}
+
+.reset-button:hover {
+  background-color: #c0392b;
+}
+
+.plant-identifier__error {
+  background-color: rgba(231, 76, 60, 0.1);
+  color: #e74c3c;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem auto;
+  text-align: center;
+  max-width: 600px;
+}
+
+.plant-identifier__results {
+  background-color: white;
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 2rem auto;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  max-width: 800px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.confidence-badge {
+  padding: 0.5rem 1rem;
+  background-color: #2ecc71;
+  color: white;
+  font-weight: 600;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+.plant-name {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #2c7a45;
+}
+
+.scientific-name {
+  font-style: italic;
+  color: #7f8c8d;
+  margin-bottom: 2rem;
+}
+
+.care-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin: 1.5rem 0 2rem;
+}
+
+.care-card {
+  flex: 1;
+  min-width: 200px;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.care-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.care-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.additional-info {
+  margin: 2rem 0;
+  line-height: 1.6;
+}
+
+.resources-button {
+  background-color: #f39c12;
+  margin: 1rem 0;
+}
+
+.resources-button:hover {
+  background-color: #d35400;
+}
+
+.learning-resources {
+  margin-top: 2rem;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.resources-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.resource-card {
+  flex: 1;
+  min-width: 250px;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.resource-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  background-color: #eaf7ef;
+}
+
+.plant-identifier__how-it-works {
+  margin: 4rem 0 2rem;
+  text-align: center;
+}
+
+.plant-identifier__how-it-works h2 {
+  font-size: 2rem;
+  color: #2c7a45;
+  margin-bottom: 2rem;
+}
+
+.how-it-works-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.how-card {
+  flex: 1;
+  min-width: 250px;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.how-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+.how-icon {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .plant-identifier {
+    padding: 1.5rem;
+  }
+  
+  .plant-identifier__title {
+    font-size: 2rem;
+  }
+  
+  .plant-identifier__controls {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .how-it-works-cards {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .care-info {
+    flex-direction: column;
+  }
+}

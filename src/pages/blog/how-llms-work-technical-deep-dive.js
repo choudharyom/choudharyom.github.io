@@ -485,7 +485,98 @@ def plot_positional_encoding(pe_matrix, positions=50, dimensions=64):
 
           {/* SVG Suggestion 3: Positional Encoding Patterns */}
           <div className="figure-container">
-            <p><strong>SVG Suggestion 3:</strong> Animated heatmap showing positional encoding patterns across different positions and dimensions. Include toggles to show sin vs cos components, and sliders to adjust the frequency parameters. Show how the sinusoidal patterns create unique positional signatures.</p>
+            <svg width="700" height="450" xmlns="http://www.w3.org/2000/svg" fontFamily="Arial, sans-serif" aria-labelledby="svgTitlePE" role="img">
+              <title id="svgTitlePE">Positional Encoding Patterns Visualization</title>
+              <desc>Heatmap showing how sinusoidal positional encodings create unique patterns for each token position across different embedding dimensions.</desc>
+              <style>{`
+                .pe-title-svg { font-size: 20px; font-weight: bold; fill: #2c3e50; text-anchor: middle; }
+                .pe-axis-label-svg { font-size: 14px; fill: #333; text-anchor: middle; }
+                .pe-tick-label-svg { font-size: 10px; fill: #555; text-anchor: middle; }
+                .pe-legend-text-svg { font-size: 12px; fill: #333; }
+              `}</style>
+
+              <text x="350" y="35" className="pe-title-svg">Positional Encoding Patterns</text>
+
+              {/* Color Legend */}
+              <defs>
+                <linearGradient id="peGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" style={{stopColor: '#0000FF', stopOpacity: 1}} /> {/* Blue for -1 */}
+                  <stop offset="25%" style={{stopColor: '#ADD8E6', stopOpacity: 1}} /> {/* Light Blue */}
+                  <stop offset="50%" style={{stopColor: '#FFFFE0', stopOpacity: 1}} /> {/* Light Yellow for 0 */}
+                  <stop offset="75%" style={{stopColor: '#FFB6C1', stopOpacity: 1}} /> {/* Light Red */}
+                  <stop offset="100%" style={{stopColor: '#FF0000', stopOpacity: 1}} /> {/* Red for +1 */}
+                </linearGradient>
+              </defs>
+              <rect x="500" y="55" width="150" height="20" fill="url(#peGradient)" stroke="#333" strokeWidth="0.5"/>
+              <text x="485" y="70" className="pe-legend-text-svg" textAnchor="end">-1</text>
+              <text x="575" y="90" className="pe-legend-text-svg" textAnchor="middle">Value</text>
+              <text x="665" y="70" className="pe-legend-text-svg" textAnchor="start">+1</text>
+
+              {/* Heatmap Area */}
+              <g transform="translate(60, 100)">
+                {(() => {
+                  const d_model_vis = 32; // Number of dimensions to visualize
+                  const max_pos_vis = 50;  // Number of positions to visualize
+                  const cell_width = 11;
+                  const cell_height = 8;
+
+                  const elements = [];
+
+                  // Function to calculate PE value (simplified for visualization)
+                  const getPEValue = (pos, i, d_model) => {
+                    const div_term = Math.exp(i * (-Math.log(10000.0) / d_model));
+                    if (i % 2 === 0) { // sin for even i
+                      return Math.sin(pos * div_term);
+                    } else { // cos for odd i
+                      return Math.cos(pos * div_term);
+                    }
+                  };
+
+                  // Function to map value (-1 to 1) to color
+                  const getColor = (value) => {
+                    // Map value from [-1, 1] to [0, 1]
+                    const normalizedValue = (value + 1) / 2;
+                    // Simple blue-yellow-red gradient
+                    const r = Math.max(0, Math.min(255, Math.round(255 * normalizedValue)));
+                    const b = Math.max(0, Math.min(255, Math.round(255 * (1 - normalizedValue))));
+                    const g = Math.max(0, Math.min(255, 255 - Math.abs(normalizedValue - 0.5) * 2 * 200)); // more yellow in middle
+                    return `rgb(${r},${g},${b})`;
+                  };
+
+                  for (let pos = 0; pos < max_pos_vis; pos++) {
+                    for (let dim_idx = 0; dim_idx < d_model_vis; dim_idx++) {
+                      const val = getPEValue(pos, dim_idx, d_model_vis); // Use d_model_vis for calculation consistency
+                      elements.push(
+                        <rect
+                          key={`cell-${pos}-${dim_idx}`}
+                          x={pos * cell_width}
+                          y={dim_idx * cell_height}
+                          width={cell_width}
+                          height={cell_height}
+                          fill={getColor(val)}
+                        />
+                      );
+                    }
+                  }
+
+                  // Axis Labels
+                  elements.push(<text key="y-axis-label" x={-35} y={(d_model_vis * cell_height) / 2} className="pe-axis-label-svg" transform={`rotate(-90, -35, ${(d_model_vis * cell_height) / 2})`}>Dimension Index (i)</text>);
+                  elements.push(<text key="x-axis-label" x={(max_pos_vis * cell_width) / 2} y={d_model_vis * cell_height + 35} className="pe-axis-label-svg">Token Position (pos)</text>);
+
+                  // Ticks for X-axis (Position)
+                  for (let i = 0; i <= max_pos_vis; i += 10) {
+                    elements.push(<text key={`x-tick-${i}`} x={i * cell_width} y={d_model_vis * cell_height + 15} className="pe-tick-label-svg">{i}</text>);
+                  }
+                   // Ticks for Y-axis (Dimension)
+                  for (let i = 0; i < d_model_vis; i += 8) {
+                     elements.push(<text key={`y-tick-${i}`} x={-15} y={i * cell_height + cell_height/2} className="pe-tick-label-svg" dominantBaseline="middle">{i}</text>);
+                  }
+                  elements.push(<text key="y-tick-last" x={-15} y={(d_model_vis-1) * cell_height + cell_height/2} className="pe-tick-label-svg" dominantBaseline="middle">{d_model_vis-1}</text>);
+
+                  return elements;
+                })()}
+              </g>
+            </svg>
             <p className="figure-caption">Figure 3: Sinusoidal positional encoding patterns create unique signatures for each position</p>
           </div>
 
@@ -594,7 +685,107 @@ def visualize_attention(attention_weights, layer=0, head=0):
 
           {/* SVG Suggestion 4: Attention Mechanism Visualization */}
           <div className="figure-container">
-            <p><strong>SVG Suggestion 4:</strong> Interactive attention matrix visualization showing how different words attend to each other. Include a sentence input field, dropdown to select different attention heads, and color-coded connections between words. Show attention weights as line thickness or color intensity.</p>
+            <svg width="700" height="600" xmlns="http://www.w3.org/2000/svg" fontFamily="Arial, sans-serif" aria-labelledby="svgTitleAttention" role="img">
+              <title id="svgTitleAttention">Attention Mechanism Visualization</title>
+              <desc>Illustration of a self-attention matrix showing how tokens in a sentence attend to each other. Includes conceptual input field and head selector.</desc>
+              <style>{`
+                .attention-title-svg { font-size: 20px; font-weight: bold; fill: #2c3e50; text-anchor: middle; }
+                .label-text-svg { font-size: 14px; fill: #444; }
+                .input-box-svg { fill: #f9f9f9; stroke: #d1d1d1; rx: 5; }
+                .input-text-svg { font-size: 16px; fill: #333; }
+                .dropdown-box-svg { fill: #eef; stroke: #aac; rx: 3; }
+                .dropdown-text-svg { font-size: 13px; fill: #335; text-anchor: middle; dominant-baseline: central;}
+                .matrix-cell-svg { stroke: #ccc; stroke-width: 0.5; }
+                .matrix-label-svg { font-size: 12px; fill: #333; text-anchor: middle; dominant-baseline: central; }
+                .legend-text-svg { font-size: 12px; fill: #333; }
+              `}</style>
+
+              <text x="350" y="35" className="attention-title-svg">Self-Attention Matrix Visualization</text>
+
+              {/* Conceptual Input Sentence */}
+              <text x="30" y="75" className="label-text-svg">Input Sentence:</text>
+              <rect x="30" y="85" width="400" height="35" className="input-box-svg"/>
+              <text x="40" y="107" className="input-text-svg">The quick brown fox</text>
+
+              {/* Conceptual Attention Head Selector */}
+              <text x="450" y="75" className="label-text-svg">Attention Head:</text>
+              <rect x="450" y="85" width="150" height="35" className="dropdown-box-svg"/>
+              <text x="525" y="103" className="dropdown-text-svg">Head 1 of 8 ▼</text>
+              <title>Conceptual: Select Attention Head</title>
+
+              {/* Attention Matrix */}
+              <g transform="translate(80, 160)">
+                {(() => {
+                  const tokens = ["The", "quick", "brown", "fox"];
+                  // Example attention weights (Query attends to Key)
+                  // Rows: Query, Columns: Key
+                  const attentionWeights = [
+                    [0.70, 0.20, 0.05, 0.05], // "The" attends to...
+                    [0.10, 0.60, 0.20, 0.10], // "quick" attends to...
+                    [0.05, 0.30, 0.50, 0.15], // "brown" attends to...
+                    [0.05, 0.15, 0.45, 0.35]  // "fox" attends to...
+                  ];
+                  const cellSize = 80;
+                  const labelOffset = 20;
+                  const elements = [];
+
+                  // Color scale: 0 (light blue) to 1 (dark blue)
+                  const getColor = (weight) => {
+                    const intensity = Math.floor(255 * (1 - weight)); // Lighter for lower weight
+                    return `rgb(${intensity}, ${intensity}, 255)`; // Shades of blue
+                  };
+
+                  // Key labels (Top)
+                  elements.push(<text key="key-label" x={(tokens.length * cellSize) / 2} y={-labelOffset - 5} className="matrix-label-svg" fontWeight="bold">Key (attended to)</text>);
+                  tokens.forEach((token, j) => {
+                    elements.push(
+                      <text key={`col-label-${j}`} x={j * cellSize + cellSize / 2} y={-labelOffset + 15} className="matrix-label-svg">{token}</text>
+                    );
+                  });
+
+                  // Query labels (Left)
+                  elements.push(<text key="query-label" x={-labelOffset - 5} y={(tokens.length * cellSize) / 2} className="matrix-label-svg" fontWeight="bold" transform={`rotate(-90, ${-labelOffset - 5}, ${(tokens.length * cellSize) / 2})`}>Query (attending from)</text>);
+                  tokens.forEach((token, i) => {
+                    elements.push(
+                      <text key={`row-label-${i}`} x={-labelOffset} y={i * cellSize + cellSize / 2} className="matrix-label-svg" textAnchor="end">{token}</text>
+                    );
+                  });
+
+                  // Matrix cells
+                  attentionWeights.forEach((row, i) => {
+                    row.forEach((weight, j) => {
+                      elements.push(
+                        <g key={`cell-${i}-${j}-g`}>
+                          <rect
+                            x={j * cellSize}
+                            y={i * cellSize}
+                            width={cellSize}
+                            height={cellSize}
+                            fill={getColor(weight)}
+                            className="matrix-cell-svg"
+                          />
+                          <text x={j * cellSize + cellSize/2} y={i * cellSize + cellSize/2} className="matrix-label-svg" fill={weight > 0.5 ? 'white' : 'black'}>{weight.toFixed(2)}</text>
+                          <title>{`"${tokens[i]}" attends to "${tokens[j]}" with weight ${weight.toFixed(2)}`}</title>
+                        </g>
+                      );
+                    });
+                  });
+                  return elements;
+                })()}
+              </g>
+
+              {/* Color Legend for Attention Weights */}
+              <defs>
+                <linearGradient id="attentionGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" style={{stopColor: 'rgb(255,255,255)', stopOpacity: 1}} /> {/* Lightest blue for 0 */}
+                  <stop offset="100%" style={{stopColor: 'rgb(0,0,255)', stopOpacity: 1}} /> {/* Darkest blue for 1 */}
+                </linearGradient>
+              </defs>
+              <text x="350" y="530" className="label-text-svg" textAnchor="middle">Attention Weight</text>
+              <rect x="275" y="545" width="150" height="20" fill="url(#attentionGradient)" stroke="#333" strokeWidth="0.5"/>
+              <text x="265" y="555" className="legend-text-svg" textAnchor="end">0.0</text>
+              <text x="435" y="555" className="legend-text-svg" textAnchor="start">1.0</text>
+            </svg>
             <p className="figure-caption">Figure 4: Multi-head attention patterns showing how tokens attend to different parts of the sequence</p>
           </div>
 
@@ -848,7 +1039,158 @@ def compare_sampling_strategies():
 
           {/* SVG Suggestion 5: Sampling Strategy Comparison */}
           <div className="figure-container">
-            <p><strong>SVG Suggestion 5:</strong> Interactive comparison of sampling strategies showing probability distributions and their effects. Include sliders for temperature, top-k, and top-p values, with real-time visualization of how they affect the probability distribution over vocabulary tokens. Show sample outputs updating as parameters change.</p>
+            <svg width="700" height="750" xmlns="http://www.w3.org/2000/svg" fontFamily="Arial, sans-serif" aria-labelledby="svgTitleSampling" role="img">
+              <title id="svgTitleSampling">Sampling Strategy Comparison Visualization</title>
+              <desc>Illustration comparing Temperature, Top-K, and Top-P sampling strategies by showing their effect on a base probability distribution and example outputs.</desc>
+              <style>{`
+                .sampling-title-svg { font-size: 20px; font-weight: bold; fill: #2c3e50; text-anchor: middle; }
+                .strategy-title-svg { font-size: 16px; font-weight: bold; fill: #1a237e; }
+                .label-text-svg { font-size: 14px; fill: #444; }
+                .bar-chart-label-svg { font-size: 10px; text-anchor: middle; fill: #333; }
+                .bar-base-svg { fill: #90caf9; } /* Light Blue */
+                .bar-temp-low-svg { fill: #42a5f5; } /* Blue */
+                .bar-temp-high-svg { fill: #1e88e5; } /* Darker Blue */
+                .bar-topk-selected-svg { fill: #ffb74d; } /* Orange */
+                .bar-topp-selected-svg { fill: #81c784; } /* Green */
+                .bar-excluded-svg { fill: #e0e0e0; opacity: 0.7; } /* Grey for excluded */
+                .slider-track-svg { fill: #bdbdbd; rx:3; ry:3; }
+                .slider-thumb-svg { fill: #00796b; stroke: #004d40; stroke-width:1; }
+                .slider-label-svg { font-size: 12px; fill: #333; text-anchor: middle; }
+                .output-text-svg { font-size: 13px; fill: #555; font-style: italic; }
+                .axis-line-svg { stroke: #888; stroke-width: 1; }
+              `}</style>
+
+              <text x="350" y="35" className="sampling-title-svg">Comparison of Text Generation Sampling Strategies</text>
+
+              {/* Base Probability Distribution (Conceptual) */}
+              <g id="base-distribution" transform="translate(50, 80)">
+                <text x="0" y="0" className="label-text-svg" fontWeight="bold">Base Logits/Probabilities (Example):</text>
+                <line x1="0" y1="100" x2="300" y2="100" className="axis-line-svg" /> {/* X-axis */}
+                <line x1="0" y1="20" x2="0" y2="100" className="axis-line-svg" />   {/* Y-axis */}
+                <text x="-10" y="20" className="bar-chart-label-svg" dominantBaseline="middle" textAnchor="end">High</text>
+                <text x="-10" y="95" className="bar-chart-label-svg" dominantBaseline="middle" textAnchor="end">Low</text>
+                
+                {(() => {
+                  const tokens = ["the", "cat", "sat", "on", "mat"];
+                  const baseProbs = [0.4, 0.25, 0.15, 0.1, 0.05]; // Example probabilities (sum to 0.95, not 1 for simplicity)
+                  const barWidth = 40;
+                  const spacing = 15;
+                  const maxHeight = 70;
+                  let elements = [];
+                  tokens.forEach((token, i) => {
+                    const barHeight = baseProbs[i] * maxHeight / 0.4; // Scale to max prob
+                    elements.push(
+                      <g key={`base-bar-${i}`}>
+                        <rect x={i * (barWidth + spacing) + 10} y={100 - barHeight} width={barWidth} height={barHeight} className="bar-base-svg" />
+                        <text x={i * (barWidth + spacing) + 10 + barWidth/2} y="115" className="bar-chart-label-svg">{token}</text>
+                      </g>
+                    );
+                  });
+                  return elements;
+                })()}
+              </g>
+
+              {/* --- Temperature Sampling --- */}
+              <g id="temp-sampling" transform="translate(50, 230)">
+                <text x="0" y="0" className="strategy-title-svg">1. Temperature Sampling</text>
+                <text x="0" y="25" className="label-text-svg">Effect: Adjusts randomness. Low T = sharper, High T = flatter distribution.</text>
+                
+                {/* Slider for Temperature */}
+                <text x="0" y="55" className="slider-label-svg" textAnchor="start">Temperature (T):</text>
+                <rect x="120" y="45" width="150" height="8" className="slider-track-svg"/>
+                <circle cx="120 + 150 * 0.7" cy="49" r="6" className="slider-thumb-svg"><title>T = 0.7</title></circle>
+                <text x="120" y="65" className="slider-label-svg">0.1</text>
+                <text x="120 + 150 * 0.7" y="65" className="slider-label-svg">0.7</text>
+                <text x="120 + 150" y="65" className="slider-label-svg">1.5</text>
+
+                {/* Visual: Low T (sharper) vs High T (flatter) - conceptual */}
+                <rect x="300" y="40" width="30" height="20" className="bar-temp-low-svg" />
+                <text x="340" y="55" className="slider-label-svg">Low T (e.g., 0.2)</text>
+                <rect x="300" y="70" width="30" height="10" className="bar-temp-high-svg" />
+                <text x="340" y="80" className="slider-label-svg">High T (e.g., 1.2)</text>
+
+                <text x="0" y="100" className="label-text-svg">Example Output (T=0.7): "The cat probably..." (more likely, but some variance)</text>
+                <text x="0" y="120" className="label-text-svg">Example Output (T=0.2): "The cat sat..." (very deterministic)</text>
+                <text x="0" y="140" className="label-text-svg">Example Output (T=1.2): "The mat perhaps..." (more random, creative)</text>
+              </g>
+
+              {/* --- Top-K Sampling --- */}
+              <g id="topk-sampling" transform="translate(50, 400)">
+                <text x="0" y="0" className="strategy-title-svg">2. Top-K Sampling</text>
+                <text x="0" y="25" className="label-text-svg">Effect: Considers only the K most probable tokens.</text>
+
+                {/* Slider for K */}
+                <text x="0" y="55" className="slider-label-svg" textAnchor="start">K:</text>
+                <rect x="30" y="45" width="150" height="8" className="slider-track-svg"/>
+                <circle cx="30 + 150 * (2/4)" cy="49" r="6" className="slider-thumb-svg"><title>K = 3</title></circle>
+                <text x="30" y="65" className="slider-label-svg">1</text>
+                <text x="30 + 150 * (2/4)" y="65" className="slider-label-svg">3</text>
+                <text x="30 + 150" y="65" className="slider-label-svg">5</text>
+
+                {/* Visual: Highlight top K tokens from base */}
+                <g transform="translate(250, 20)">
+                  <text x="0" y="0" className="bar-chart-label-svg" textAnchor="start">Distribution (K=3):</text>
+                  {(() => {
+                    const tokens = ["the", "cat", "sat", "on", "mat"];
+                    const baseProbs = [0.4, 0.25, 0.15, 0.1, 0.05];
+                    const k = 3;
+                    const barWidth = 25; const spacing = 8; const maxHeight = 50;
+                    let elements = [];
+                    tokens.forEach((token, i) => {
+                      const barHeight = baseProbs[i] * maxHeight / 0.4;
+                      elements.push(
+                        <rect key={`topk-bar-${i}`} x={i * (barWidth + spacing)} y={50 - barHeight} width={barWidth} height={barHeight} className={i < k ? "bar-topk-selected-svg" : "bar-excluded-svg"} />
+                      );
+                    });
+                    return elements;
+                  })()}
+                </g>
+                <text x="0" y="100" className="label-text-svg">Example Output (K=3): "The cat sat..." (selects from 'the', 'cat', 'sat')</text>
+              </g>
+
+              {/* --- Top-P (Nucleus) Sampling --- */}
+              <g id="topp-sampling" transform="translate(50, 550)">
+                <text x="0" y="0" className="strategy-title-svg">3. Top-P (Nucleus) Sampling</text>
+                <text x="0" y="25" className="label-text-svg">Effect: Considers smallest set of tokens whose cumulative probability ≥ P.</text>
+
+                {/* Slider for P */}
+                <text x="0" y="55" className="slider-label-svg" textAnchor="start">P:</text>
+                <rect x="30" y="45" width="150" height="8" className="slider-track-svg"/>
+                <circle cx="30 + 150 * 0.9" cy="49" r="6" className="slider-thumb-svg"><title>P = 0.9</title></circle>
+                <text x="30" y="65" className="slider-label-svg">0.1</text>
+                <text x="30 + 150 * 0.9" y="65" className="slider-label-svg">0.9</text>
+                <text x="30 + 150" y="65" className="slider-label-svg">1.0</text>
+
+                {/* Visual: Highlight tokens for P=0.9 */}
+                {/* Base probs: the=0.4, cat=0.25 (cum=0.65), sat=0.15 (cum=0.80), on=0.1 (cum=0.90) */}
+                <g transform="translate(250, 20)">
+                  <text x="0" y="0" className="bar-chart-label-svg" textAnchor="start">Distribution (P=0.9):</text>
+                  {(() => {
+                    const tokens = ["the", "cat", "sat", "on", "mat"];
+                    const baseProbs = [0.4, 0.25, 0.15, 0.1, 0.05];
+                    const p_threshold = 0.9;
+                    let cumulativeProb = 0;
+                    const barWidth = 25; const spacing = 8; const maxHeight = 50;
+                    let elements = [];
+                    tokens.forEach((token, i) => {
+                      const barHeight = baseProbs[i] * maxHeight / 0.4;
+                      let isSelected = false;
+                      if (cumulativeProb < p_threshold) {
+                        isSelected = true;
+                        cumulativeProb += baseProbs[i];
+                      }
+                      elements.push(
+                        <rect key={`topp-bar-${i}`} x={i * (barWidth + spacing)} y={50 - barHeight} width={barWidth} height={barHeight} className={isSelected ? "bar-topp-selected-svg" : "bar-excluded-svg"} />
+                      );
+                    });
+                    return elements;
+                  })()}
+                </g>
+                <text x="0" y="100" className="label-text-svg">Example Output (P=0.9): "The cat sat on..." (selects from 'the', 'cat', 'sat', 'on')</text>
+              </g>
+
+              <text x="350" y="720" className="label-text-svg" textAnchor="middle">Note: Base distribution and outputs are illustrative examples.</text>
+            </svg>
             <p className="figure-caption">Figure 5: Different sampling strategies and their effects on output diversity</p>
           </div>
 
@@ -1231,7 +1573,133 @@ def benchmark_inference():
           </pre>
           {/* SVG Suggestion 6: Training vs Inference Visualization */}
           <div className="figure-container">
-            <p><strong>SVG Suggestion 6:</strong> Side-by-side animated comparison showing training phase (with backpropagation arrows, loss calculation, gradient flow) vs inference phase (forward pass only, token-by-token generation). Include toggles to show/hide different components like attention weights, gradients, and KV cache.</p>
+            <svg width="700" height="650" xmlns="http://www.w3.org/2000/svg" fontFamily="Arial, sans-serif" aria-labelledby="svgTitleTrainInfer" role="img">
+              <title id="svgTitleTrainInfer">Training vs. Inference Phase Visualization</title>
+              <desc>Side-by-side comparison of the LLM training phase (with backpropagation and weight updates) and inference phase (token-by-token generation).</desc>
+              <style>{`
+                .main-title-svg { font-size: 20px; font-weight: bold; fill: #2c3e50; text-anchor: middle; }
+                .phase-title-svg { font-size: 18px; font-weight: bold; text-anchor: middle; }
+                .label-text-svg { font-size: 13px; fill: #444; }
+                .sub-label-svg { font-size: 11px; fill: #666; text-anchor: middle; }
+                .box-svg { stroke-width: 1.5; rx: 5; ry: 5; }
+                .data-box-svg { fill: #e3f2fd; stroke: #90caf9; } /* Light Blue */
+                .model-box-svg { fill: #fff9c4; stroke: #fff176; } /* Light Yellow */
+                .process-box-svg { fill: #c8e6c9; stroke: #a5d6a7; } /* Light Green */
+                .output-box-svg { fill: #ffccbc; stroke: #ffab91; } /* Light Orange */
+                .arrow-svg { stroke: #555; stroke-width: 2; marker-end: url(#arrowhead-phases); }
+                .dashed-arrow-svg { stroke: #777; stroke-width: 1.5; marker-end: url(#arrowhead-phases); stroke-dasharray: 4,2; }
+                .panel-rect-svg { fill: #f5f5f5; stroke: #e0e0e0; rx:10; ry:10; }
+              `}</style>
+              <defs>
+                <marker id="arrowhead-phases" viewBox="0 0 10 10" refX="8" refY="5"
+                    markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#555" />
+                </marker>
+              </defs>
+
+              <text x="350" y="35" className="main-title-svg">LLM: Training Phase vs. Inference Phase</text>
+
+              {/* --- Training Phase Panel --- */}
+              <g id="training-phase" transform="translate(30, 70)">
+                <rect x="0" y="0" width="310" height="550" className="panel-rect-svg"/>
+                <text x="155" y="30" className="phase-title-svg" fill="#00796b">Training Phase</text>
+
+                {/* Input Data */}
+                <rect x="80" y="60" width="150" height="40" className="data-box-svg box-svg"/>
+                <text x="155" y="85" className="label-text-svg" textAnchor="middle">Input Batch (Text)</text>
+                <line x1="155" y1="100" x2="155" y2="120" className="arrow-svg"/>
+
+                {/* Tokenizer + Embeddings + Positional Encoding */}
+                <rect x="55" y="120" width="200" height="40" className="process-box-svg box-svg"/>
+                <text x="155" y="145" className="label-text-svg" textAnchor="middle">Tokenize & Encode</text>
+                <line x1="155" y1="160" x2="155" y2="180" className="arrow-svg"/>
+
+                {/* Transformer Model (Forward Pass) */}
+                <rect x="80" y="180" width="150" height="60" className="model-box-svg box-svg"/>
+                <text x="155" y="205" className="label-text-svg" textAnchor="middle">Transformer Model</text>
+                <text x="155" y="225" className="sub-label-svg">(Forward Pass)</text>
+                <line x1="155" y1="240" x2="155" y2="260" className="arrow-svg"/>
+
+                {/* Logits */}
+                <rect x="105" y="260" width="100" height="30" className="output-box-svg box-svg"/>
+                <text x="155" y="280" className="label-text-svg" textAnchor="middle">Logits</text>
+                <line x1="155" y1="290" x2="155" y2="310" className="arrow-svg"/>
+
+                {/* Loss Calculation */}
+                <rect x="55" y="310" width="200" height="40" className="process-box-svg box-svg"/>
+                <text x="155" y="335" className="label-text-svg" textAnchor="middle">Loss Calculation</text>
+                <text x="265" y="335" className="label-text-svg" dominantBaseline="middle" fill="#d32f2f"> (vs Targets)</text>
+                <line x1="155" y1="350" x2="155" y2="370" className="arrow-svg" stroke="#d32f2f"/>
+
+                {/* Gradients (Backpropagation) */}
+                <rect x="80" y="370" width="150" height="40" className="process-box-svg box-svg" fill="#ffe0b2" stroke="#ffb74d"/>
+                <text x="155" y="395" className="label-text-svg" textAnchor="middle">Gradients (Backprop)</text>
+                <line x1="155" y1="410" x2="155" y2="430" className="arrow-svg" stroke="#d32f2f"/>
+
+                {/* Optimizer */}
+                <rect x="55" y="430" width="200" height="40" className="process-box-svg box-svg"/>
+                <text x="155" y="455" className="label-text-svg" textAnchor="middle">Optimizer (e.g., AdamW)</text>
+                <line x1="155" y1="470" x2="155" y2="490" className="arrow-svg" stroke="#d32f2f"/>
+
+                {/* Update Model Weights */}
+                <rect x="80" y="490" width="150" height="40" className="model-box-svg box-svg" fill="#fffde7" stroke="#fbc02d"/>
+                <text x="155" y="515" className="label-text-svg" textAnchor="middle">Update Model Weights</text>
+                
+                {/* Loop back to model (conceptual) */}
+                <path d="M 70 510 Q 30 350 80 210" stroke="#d32f2f" strokeWidth="1.5" fill="none" strokeDasharray="5,3" markerEnd="url(#arrowhead-phases)"/>
+                <text x="35" y="360" className="sub-label-svg" transform="rotate(-70, 35, 360)" fill="#d32f2f">Repeat for Epochs</text>
+              </g>
+
+              {/* --- Inference Phase Panel --- */}
+              <g id="inference-phase" transform="translate(360, 70)">
+                <rect x="0" y="0" width="310" height="550" className="panel-rect-svg"/>
+                <text x="155" y="30" className="phase-title-svg" fill="#1976d2">Inference Phase</text>
+
+                {/* Input Prompt */}
+                <rect x="80" y="60" width="150" height="40" className="data-box-svg box-svg"/>
+                <text x="155" y="85" className="label-text-svg" textAnchor="middle">Input Prompt</text>
+                <line x1="155" y1="100" x2="155" y2="120" className="arrow-svg"/>
+
+                {/* Tokenizer + Embeddings + Positional Encoding */}
+                <rect x="55" y="120" width="200" height="40" className="process-box-svg box-svg"/>
+                <text x="155" y="145" className="label-text-svg" textAnchor="middle">Tokenize & Encode</text>
+                <line x1="155" y1="160" x2="155" y2="180" className="arrow-svg"/>
+
+                {/* Transformer Model (Forward Pass Only) */}
+                <rect x="80" y="180" width="150" height="60" className="model-box-svg box-svg"/>
+                <text x="155" y="205" className="label-text-svg" textAnchor="middle">Transformer Model</text>
+                <text x="155" y="225" className="sub-label-svg">(Forward Pass Only)</text>
+                <line x1="155" y1="240" x2="155" y2="260" className="arrow-svg"/>
+
+                {/* Logits */}
+                <rect x="105" y="260" width="100" height="30" className="output-box-svg box-svg"/>
+                <text x="155" y="280" className="label-text-svg" textAnchor="middle">Logits</text>
+                <line x1="155" y1="290" x2="155" y2="310" className="arrow-svg"/>
+
+                {/* Sampling Strategy */}
+                <rect x="55" y="310" width="200" height="40" className="process-box-svg box-svg"/>
+                <text x="155" y="335" className="label-text-svg" textAnchor="middle">Sampling (Temp, Top-K/P)</text>
+                <line x1="155" y1="350" x2="155" y2="370" className="arrow-svg"/>
+
+                {/* Generated Token */}
+                <rect x="80" y="370" width="150" height="40" className="output-box-svg box-svg" fill="#ffecb3" stroke="#ffe082"/>
+                <text x="155" y="395" className="label-text-svg" textAnchor="middle">Generated Token</text>
+                
+                {/* Autoregressive Loop */}
+                <path d="M 240 390 Q 280 300 230 210" stroke="#1976d2" strokeWidth="1.5" fill="none" className="dashed-arrow-svg"/>
+                <text x="265" y="300" className="sub-label-svg" fill="#1976d2">Append & Repeat</text>
+
+                {/* Final Output */}
+                <rect x="55" y="450" width="200" height="40" className="data-box-svg box-svg" fill="#e1f5fe" stroke="#81d4fa"/>
+                <text x="155" y="475" className="label-text-svg" textAnchor="middle">Generated Text Sequence</text>
+
+                {/* KV Cache (Conceptual) */}
+                <rect x="20" y="250" width="50" height="80" className="model-box-svg box-svg" fillOpacity="0.7"/>
+                <text x="45" y="295" className="sub-label-svg" transform="rotate(-90, 45, 295)">KV Cache</text>
+                <line x1="70" y1="230" x2="80" y2="230" className="dashed-arrow-svg" stroke="#1976d2"/>
+
+              </g>
+            </svg>
             <p className="figure-caption">Figure 6: Training phase vs inference phase showing the key differences in computation</p>
           </div>
 

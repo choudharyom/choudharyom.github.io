@@ -12,7 +12,7 @@ const pageMeta = {
   title: 'Linear Algebra Basics for Machine Learning',
   description: 'A comprehensive overview of essential linear algebra concepts that form the mathematical foundation of modern machine learning algorithms.',
   coverImage: '/images/placeholder-la.jpg', // Added cover image path
-  canonicalUrl: "https://choudharyom.com/linear-algebra-basics",
+  canonicalUrl: "https://choudharyom.com/blog/linear-algebra-basics",
   date: "2025-04-23",
   readingTime: "10 min read",
   tags: ['linear-algebra', 'machine-learning', 'mathematics', 'vectors', 'matrices'],

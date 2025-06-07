@@ -10,7 +10,7 @@ const pageMeta = {
   title: 'Unpacking the Magic: A Technical Deep Dive into How LLMs Work',
   description: 'A comprehensive technical exploration of Large Language Models, from tokenization and embeddings to the Transformer architecture and attention mechanisms.',
   coverImage: '/images/llm-architecture.jpg',
-  canonicalUrl: "https://choudharyom.com/how-llms-work-technical-deep-dive",
+  canonicalUrl: "https://choudharyom.com/blog/how-llms-work-technical-deep-dive",
   date: "2025-06-06",
   readingTime: "18 min read",
   tags: ['llm', 'transformers', 'attention-mechanism', 'neural-networks', 'nlp'],
@@ -799,16 +799,9 @@ def calculate_perplexity(model, tokenizer, text):
         # Perplexity is exp(loss)
         perplexity = torch.exp(loss)
         
-    return perplexity.item()
+        return perplexity.item()
 
-          <h3>Inference Phase</h3>
-          <p>
-            During inference, the trained model generates text by repeatedly predicting the next most likely token and appending it to the sequence.
-          </p>
-
-          <pre>
-            <code className="language-python">
-{`class LLMInference:
+class LLMInference:
     def __init__(self, model, tokenizer):
         self.model = model
         self.tokenizer = tokenizer
@@ -1013,8 +1006,9 @@ def benchmark_inference():
     print(f"Optimized inference: {optimized_time:.2f}s")
     print(f"Speedup: {standard_time/optimized_time:.2f}x")
     
-    return result1, result2
-
+    return result1, result2`}
+            </code>
+          </pre>
           {/* SVG Suggestion 6: Training vs Inference Visualization */}
           <div className="figure-container">
             <p><strong>SVG Suggestion 6:</strong> Side-by-side animated comparison showing training phase (with backpropagation arrows, loss calculation, gradient flow) vs inference phase (forward pass only, token-by-token generation). Include toggles to show/hide different components like attention weights, gradients, and KV cache.</p>
@@ -1031,15 +1025,14 @@ def benchmark_inference():
           <p>
             Research has shown that model performance follows predictable scaling laws with respect to model size (N), dataset size (D), and compute (C):
           </p>
-
-          <div className="highlight">
-            <p>
-              {'$L(N, D, C) = \\left(\\frac{N_c}{N}\\right)^{\\alpha_N} + \\left(\\frac{D_c}{D}\\right)^{\\alpha_D} + \\left(\\frac{C_c}{C}\\right)^{\\alpha_C}$'}
-            </p>
-            <p style={{textAlign: 'center', fontSize: '0.9em', color: '#666'}}>
-              Scaling law relating loss to model parameters, data, and compute
-            </p>
-          </div>
+            <div className="highlight">
+              <p>
+                {"$$L(N, D, C) = \\left(\\frac{N_c}{N}\\right)^{\\alpha_N} + \\left(\\frac{D_c}{D}\\right)^{\\alpha_D} + \\left(\\frac{C_c}{C}\\right)^{\\alpha_C}$$"}
+              </p>
+              <p style={{textAlign: 'center', fontSize: '0.9em', color: '#666'}}>
+                Scaling law relating loss to model parameters, data, and compute
+              </p>
+            </div>
 
           <pre>
             <code className="language-python">
@@ -1124,8 +1117,12 @@ def analyze_emergent_abilities():
     for ability, threshold in emergent_thresholds.items():
         print(f"{ability:30} emerges at ~{threshold:5.1f}B parameters")
     
-    return emergent_thresholds
-
+    return emergent_thresholds`}
+            </code>
+          </pre>
+          <p>
+            The scaling analysis shows how model size, compute, and data interact to determine performance. The Chinchilla optimal frontier provides a guideline for balancing these factors.
+          </p>
           {/* SVG Suggestion 7: Scaling Laws Visualization */}
           <div className="figure-container">
             <p><strong>SVG Suggestion 7:</strong> Interactive logarithmic plots showing scaling laws - loss vs parameters, compute requirements vs model size, and emergence thresholds. Include sliders to explore different scaling scenarios and highlight regions where emergent abilities appear. Show the Chinchilla optimal frontier.</p>
@@ -1143,17 +1140,17 @@ def analyze_emergent_abilities():
             The cross-entropy loss used in training LLMs is deeply connected to information theory. It measures the "surprise" or information content of predictions:
           </p>
 
-          <div className="highlight">
-            <p>
-              {'$H(p, q) = -\\sum_{i} p_i \\log q_i$'}
-            </p>
-            <p>
-              {'$\\text{where } I(x) = -\\log p(x) \\text{ is the information content}$'}
-            </p>
-            <p style={{textAlign: 'center', fontSize: '0.9em', color: '#666'}}>
-              Cross-entropy between true distribution p and predicted distribution q
-            </p>
-          </div>
+            <div className="highlight">
+              <p>
+                {"\\[H(p, q) = -\\sum_{i} p_i \\log q_i\\]"}
+              </p>
+              <p>
+                {"\\[\\text{where } I(x) = -\\log p(x) \\text{ is the information content}\\]"}
+              </p>
+              <p style={{textAlign: 'center', fontSize: '0.9em', color: '#666'}}>
+                Cross-entropy between true distribution p and predicted distribution q
+              </p>
+            </div>
 
           <pre>
             <code className="language-python">
@@ -1332,4 +1329,37 @@ def run_information_analysis():
               f"Log P = {result['log_probability']:.3f}")
 
 # Uncomment to run analysis:
-# run_information_analysis()
+# run_information_analysis()`}
+            </code>
+          </pre>
+          <h2>Conclusion</h2>
+          <p>
+            We've covered the core components that make LLMs work - from tokenization and embeddings to attention mechanisms and generation strategies. Key takeaways:
+          </p>
+          <ul>
+            <li>LLMs are built on the Transformer architecture which uses attention to process text in parallel</li>
+            <li>Training involves minimizing cross-entropy loss over massive datasets</li>
+            <li>Generation uses sampling strategies to balance coherence and creativity</li>
+            <li>Model performance follows predictable scaling laws</li>
+          </ul>
+
+          <h2>References</h2>
+          <ol>
+            <li>Vaswani et al. "Attention Is All You Need" (2017)</li>
+            <li>Brown et al. "Language Models are Few-Shot Learners" (2020)</li>
+            <li>Hoffmann et al. "Training Compute-Optimal Large Language Models" (2022)</li>
+          </ol>
+
+          <h2>Further Reading</h2>
+          <ul>
+            <li>The Illustrated Transformer by Jay Alammar</li>
+            <li>LLM Visualization Tools and Techniques</li>
+            <li>Advanced Topics in Language Model Training</li>
+          </ul>
+      </section>
+    </div>
+    </BlogPostLayout>
+  );
+};
+
+export default LLMTechnicalDeepDive;

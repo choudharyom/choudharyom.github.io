@@ -1813,7 +1813,134 @@ def analyze_emergent_abilities():
           </p>
           {/* SVG Suggestion 7: Scaling Laws Visualization */}
           <div className="figure-container">
-            <p><strong>SVG Suggestion 7:</strong> Interactive logarithmic plots showing scaling laws - loss vs parameters, compute requirements vs model size, and emergence thresholds. Include sliders to explore different scaling scenarios and highlight regions where emergent abilities appear. Show the Chinchilla optimal frontier.</p>
+            <svg width="700" height="700" xmlns="http://www.w3.org/2000/svg" fontFamily="Arial, sans-serif" aria-labelledby="svgTitleScaling" role="img">
+              <title id="svgTitleScaling">LLM Scaling Laws and Emergent Abilities Visualization</title>
+              <desc>Conceptual illustration of LLM scaling laws, showing Loss vs. Model Size and Compute vs. Model Size, with emergent abilities and the Chinchilla optimal frontier indicated.</desc>
+              <style>{`
+                .scaling-main-title-svg { font-size: 20px; font-weight: bold; fill: #2c3e50; text-anchor: middle; }
+                .scaling-chart-title-svg { font-size: 16px; font-weight: bold; fill: #1a237e; text-anchor: middle; }
+                .scaling-axis-label-svg { font-size: 12px; fill: #333; text-anchor: middle; }
+                .scaling-tick-label-svg { font-size: 10px; fill: #555; text-anchor: middle; }
+                .scaling-line-svg { stroke-width: 2.5; fill: none; }
+                .loss-line-svg { stroke: #d32f2f; } /* Red for loss */
+                .compute-line-svg { stroke: #1976d2; } /* Blue for compute */
+                .chinchilla-line-svg { stroke: #388e3c; stroke-dasharray: 5,3; } /* Green dashed for Chinchilla */
+                .emergence-marker-svg { stroke: #7b1fa2; stroke-width: 1; stroke-dasharray: 2,2; }
+                .emergence-text-svg { font-size: 9px; fill: #7b1fa2; text-anchor: middle; }
+                .legend-text-svg { font-size: 11px; fill: #333; }
+                .slider-track-svg { fill: #e0e0e0; rx:3; ry:3; }
+                .slider-thumb-svg { fill: #00796b; }
+                .control-label-svg { font-size: 12px; fill: #444; }
+              `}</style>
+              <defs>
+                <marker id="arrowhead-scaling" viewBox="0 0 10 10" refX="8" refY="5"
+                    markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#555" />
+                </marker>
+              </defs>
+
+              <text x="350" y="35" className="scaling-main-title-svg">LLM Scaling Laws & Emergent Abilities</text>
+
+              {/* --- Chart 1: Loss vs. Model Size --- */}
+              <g id="loss-chart" transform="translate(0, 70)">
+                <text x="350" y="20" className="scaling-chart-title-svg">Performance (Loss) vs. Model Size</text>
+                
+                {/* Axes */}
+                <line x1="80" y1="230" x2="620" y2="230" stroke="#555" markerEnd="url(#arrowhead-scaling)" /> {/* X-axis */}
+                <text x="350" y="250" className="scaling-axis-label-svg">Model Size (Parameters) - Log Scale</text>
+                <line x1="80" y1="230" x2="80" y2="50" stroke="#555" markerEnd="url(#arrowhead-scaling)" /> {/* Y-axis */}
+                <text x="50" y="140" className="scaling-axis-label-svg" transform="rotate(-90, 50, 140)">Loss / Perplexity (Log Scale)</text>
+
+                {/* X-axis Ticks (Conceptual Log) */}
+                {[{val: "1B", x: 120}, {val: "10B", x: 250}, {val: "100B", x: 400}, {val: "500B+", x: 550}].map(t => (
+                  <text key={`lx-${t.val}`} x={t.x} y="240" className="scaling-tick-label-svg" dominantBaseline="hanging">{t.val}</text>
+                ))}
+                {/* Y-axis Ticks (Conceptual Log) */}
+                {[{val: "High", y: 70}, {val: "Mid", y: 130}, {val: "Low", y: 200}].map(t => (
+                  <text key={`ly-${t.val}`} x="70" y={t.y} className="scaling-tick-label-svg" textAnchor="end" dominantBaseline="middle">{t.val}</text>
+                ))}
+
+                {/* Loss Curve */}
+                <path d="M 120 200 Q 250 100, 400 70 T 550 60" className="scaling-line-svg loss-line-svg" />
+
+                {/* Chinchilla Optimal Path (Conceptual) */}
+                <path d="M 120 180 Q 250 90, 400 60 T 550 50" className="scaling-line-svg chinchilla-line-svg" />
+                <text x="480" y="45" className="legend-text-svg" fill="#388e3c" fontSize="10px">Chinchilla Optimal</text>
+
+                {/* Emergent Abilities Markers */}
+                {[
+                  { name: "Few-shot", size: 1.3, x_approx: 130 }, // Approx position for 1.3B
+                  { name: "CoT", size: 10, x_approx: 250 },      // Approx position for 10B
+                  { name: "Math", size: 60, x_approx: 350 },    // Approx position for 60B
+                  { name: "Instruction", size: 100, x_approx: 400 }, // Approx position for 100B
+                  { name: "ToM", size: 175, x_approx: 450 },    // Approx position for 175B
+                ].map(ability => (
+                  <g key={ability.name}>
+                    <line x1={ability.x_approx} y1="230" x2={ability.x_approx} y2="60" className="emergence-marker-svg" />
+                    <text x={ability.x_approx} y="55" className="emergence-text-svg" transform={`rotate(-60, ${ability.x_approx}, 55)`}>{ability.name} ({ability.size}B)</text>
+                  </g>
+                ))}
+              </g>
+
+              {/* --- Chart 2: Compute vs. Model Size --- */}
+              <g id="compute-chart" transform="translate(0, 330)">
+                <text x="350" y="20" className="scaling-chart-title-svg">Training Compute vs. Model Size</text>
+
+                {/* Axes */}
+                <line x1="80" y1="230" x2="620" y2="230" stroke="#555" markerEnd="url(#arrowhead-scaling)" /> {/* X-axis */}
+                <text x="350" y="250" className="scaling-axis-label-svg">Model Size (Parameters) - Log Scale</text>
+                <line x1="80" y1="230" x2="80" y2="50" stroke="#555" markerEnd="url(#arrowhead-scaling)" /> {/* Y-axis */}
+                <text x="50" y="140" className="scaling-axis-label-svg" transform="rotate(-90, 50, 140)">Compute (FLOPs) - Log Scale</text>
+
+                {/* X-axis Ticks (Conceptual Log) - Same as above for consistency */}
+                {[{val: "1B", x: 120}, {val: "10B", x: 250}, {val: "100B", x: 400}, {val: "500B+", x: 550}].map(t => (
+                  <text key={`cx-${t.val}`} x={t.x} y="240" className="scaling-tick-label-svg" dominantBaseline="hanging">{t.val}</text>
+                ))}
+                {/* Y-axis Ticks (Conceptual Log) */}
+                {[{val: "1E20", y: 200}, {val: "1E22", y: 120}, {val: "1E24", y: 60}].map(t => (
+                  <text key={`cy-${t.val}`} x="70" y={t.y} className="scaling-tick-label-svg" textAnchor="end" dominantBaseline="middle">{t.val}</text>
+                ))}
+
+                {/* Compute Curve (e.g., C ~ N^2 or N*D) */}
+                <path d="M 120 210 Q 250 150, 400 80 T 550 60" className="scaling-line-svg compute-line-svg" />
+                
+                {/* Chinchilla Optimal Path (Conceptual) */}
+                <path d="M 120 220 Q 250 170, 400 100 T 550 80" className="scaling-line-svg chinchilla-line-svg" />
+                 <text x="480" y="75" className="legend-text-svg" fill="#388e3c" fontSize="10px">Chinchilla Optimal</text>
+              </g>
+
+              {/* --- Conceptual Controls --- */}
+              <g id="conceptual-controls" transform="translate(50, 600)">
+                <text x="0" y="15" className="control-label-svg" fontWeight="bold">Conceptual Controls:</text>
+                
+                <text x="0" y="40" className="control-label-svg">Compute Budget:</text>
+                <rect x="100" y="30" width="150" height="10" className="slider-track-svg"/>
+                <circle cx="100 + 150*0.6" cy="35" r="6" className="slider-thumb-svg"/>
+                <text x="260" y="40" className="control-label-svg">1E23 FLOPs</text>
+
+                <text x="0" y="70" className="control-label-svg">Dataset Size:</text>
+                <rect x="100" y="60" width="150" height="10" className="slider-track-svg"/>
+                <circle cx="100 + 150*0.75" cy="65" r="6" className="slider-thumb-svg"/>
+                <text x="260" y="70" className="control-label-svg">10T Tokens</text>
+              </g>
+
+              {/* --- Legend --- */}
+              <g id="scaling-legend" transform="translate(400, 600)">
+                <text x="0" y="15" className="legend-text-svg" fontWeight="bold">Legend:</text>
+                
+                <line x1="0" y1="30" x2="20" y2="30" className="scaling-line-svg loss-line-svg"/>
+                <text x="25" y="34" className="legend-text-svg">Loss Trend</text>
+                
+                <line x1="0" y1="50" x2="20" y2="50" className="scaling-line-svg compute-line-svg"/>
+                <text x="25" y="54" className="legend-text-svg">Compute Cost</text>
+                
+                <line x1="120" y1="30" x2="140" y2="30" className="scaling-line-svg chinchilla-line-svg"/>
+                <text x="145" y="34" className="legend-text-svg">Chinchilla Optimal Path</text>
+                
+                <line x1="120" y1="50" x2="140" y2="50" className="emergence-marker-svg"/>
+                <text x="145" y="54" className="legend-text-svg">Emergent Ability Threshold</text>
+              </g>
+            </svg>
             <p className="figure-caption">Figure 7: Scaling laws showing the relationship between model size, compute, and performance</p>
           </div>
 

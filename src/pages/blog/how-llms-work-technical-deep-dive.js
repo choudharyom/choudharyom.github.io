@@ -129,9 +129,117 @@ print(f"Decoded tokens: {[tokenizer.decode([token]) for token in tokens[0]]}")
             </code>
           </pre>
 
-          {/* SVG Suggestion 1: Tokenization Visualization */}
           <div className="figure-container">
-            <p><strong>SVG Suggestion 1:</strong> Interactive tokenization visualization showing how "The quick brown fox" gets split into tokens, with hover effects showing token IDs and subword boundaries. Include a slider to switch between different tokenization strategies (word-level, BPE, SentencePiece).</p>
+            <svg width="700" height="550" xmlns="http://www.w3.org/2000/svg" fontFamily="Arial, sans-serif" aria-labelledby="svgTitle" role="img">
+              <title id="svgTitle">Tokenization Process Visualization</title>
+              <desc>Illustration of how input text is tokenized, showing original text, a tokenizer engine, the resulting tokens with their IDs, and a conceptual slider for different tokenization strategies.</desc>
+              <style>{`
+                .input-text-svg { font-size: 16px; fill: #333; }
+                .token-box-svg { fill: #e0f7fa; stroke: #00796b; stroke-width: 1; rx: 5; ry: 5; }
+                .token-text-svg { font-size: 14px; fill: #004d40; text-anchor: middle; dominant-baseline: central; }
+                .token-id-text-svg { font-size: 11px; fill: #00796b; text-anchor: middle; dominant-baseline: central; }
+                .label-text-svg { font-size: 14px; fill: #444; }
+                .title-text-svg { font-size: 20px; font-weight: bold; fill: #2c3e50; text-anchor: middle; }
+                .arrow-line-svg { stroke: #555; stroke-width: 2; marker-end: url(#arrowhead-svg); }
+                .engine-box-svg { fill: #fffde7; stroke: #fbc02d; stroke-width: 1.5; rx:8; ry:8; }
+                .engine-text-svg { font-size: 14px; font-weight: bold; fill: #e65100; text-anchor: middle; dominant-baseline: central; }
+                .engine-subtext-svg { font-size: 12px; fill: #f57f17; text-anchor: middle; dominant-baseline: central; }
+                .slider-track-svg { fill: #bdbdbd; rx:3; ry:3; }
+                .slider-thumb-svg { fill: #00796b; stroke: #004d40; stroke-width:1; }
+                .slider-label-svg { font-size: 12px; fill: #333; text-anchor: middle; }
+              `}</style>
+              <defs>
+                <marker id="arrowhead-svg" viewBox="0 0 10 10" refX="8" refY="5"
+                    markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#555" />
+                </marker>
+              </defs>
+
+              <text x="350" y="35" className="title-text-svg">Tokenization Process</text>
+
+              {/* Input Text */}
+              <text x="30" y="75" className="label-text-svg">Input Text:</text>
+              <rect x="30" y="85" width="640" height="40" fill="#f9f9f9" stroke="#d1d1d1" rx="5"/>
+              <text x="40" y="110" className="input-text-svg">The quick brown fox jumps over the lazy dog</text>
+
+              {/* Arrow to Tokenizer */}
+              <line x1="350" y1="135" x2="350" y2="165" className="arrow-line-svg" />
+
+              {/* Tokenizer Engine */}
+              <rect x="275" y="175" width="150" height="60" className="engine-box-svg"/>
+              <text x="350" y="200" className="engine-text-svg">Tokenizer</text>
+              <text x="350" y="220" className="engine-subtext-svg">(e.g., BPE)</text>
+
+              {/* Arrow from Tokenizer */}
+              <line x1="350" y1="245" x2="350" y2="275" className="arrow-line-svg" />
+
+              {/* Output Tokens */}
+              <text x="30" y="300" className="label-text-svg">Output Tokens (with IDs):</text>
+              
+              {(() => {
+                const tokensData = [
+                  { text: "The", id: 464, width: 60 },
+                  { text: " quick", id: 2068, width: 75 },
+                  { text: " brown", id: 7586, width: 75 },
+                  { text: " fox", id: 21831, width: 60 },
+                  { text: " jumps", id: 18045, width: 75 }
+                ];
+                const tokensData2 = [
+                  { text: " over", id: 625, width: 70 },
+                  { text: " the", id: 262, width: 60 },
+                  { text: " lazy", id: 16931, width: 70 },
+                  { text: " dog", id: 3290, width: 60 }
+                ];
+
+                let elements = [];
+                let currentX = 30;
+                const tokenY1 = 340;
+                const boxHeight = 40;
+                const idOffsetY = 15;
+                const spacing = 10;
+
+                tokensData.forEach(token => {
+                  elements.push(
+                    <g key={`token-${token.id}-g1`}>
+                      <rect x={currentX} y={tokenY1} width={token.width} height={boxHeight} className="token-box-svg"/>
+                      <text x={currentX + token.width / 2} y={tokenY1 + boxHeight / 2} className="token-text-svg">{token.text}</text>
+                      <text x={currentX + token.width / 2} y={tokenY1 + boxHeight + idOffsetY} className="token-id-text-svg">ID: {token.id}</text>
+                    </g>
+                  );
+                  currentX += token.width + spacing;
+                });
+
+                currentX = 30; // Reset for second row, adjust starting X for centering if desired
+                const totalWidthRow2 = tokensData2.reduce((sum, t) => sum + t.width, 0) + (tokensData2.length -1) * spacing;
+                currentX = (700 - totalWidthRow2) / 2; // Center the second row
+
+                const tokenY2 = tokenY1 + boxHeight + idOffsetY + 25;
+                 tokensData2.forEach(token => {
+                  elements.push(
+                    <g key={`token-${token.id}-g2`}>
+                      <rect x={currentX} y={tokenY2} width={token.width} height={boxHeight} className="token-box-svg"/>
+                      <text x={currentX + token.width / 2} y={tokenY2 + boxHeight / 2} className="token-text-svg">{token.text}</text>
+                      <text x={currentX + token.width / 2} y={tokenY2 + boxHeight + idOffsetY} className="token-id-text-svg">ID: {token.id}</text>
+                    </g>
+                  );
+                  currentX += token.width + spacing;
+                });
+                return elements;
+              })()}
+
+              {/* Tokenization Strategy Slider - Visual Representation */}
+              <text x="350" y="485" className="label-text-svg" textAnchor="middle">Tokenization Strategy</text>
+              <rect x="125" y="500" width="450" height="10" className="slider-track-svg"/>
+              {/* Thumb indicating BPE is selected for example */}
+              <circle cx="125 + 450/3" cy="505" r="8" className="slider-thumb-svg">
+                <title>BPE Strategy Selected (Example)</title>
+              </circle>
+              
+              <text x="125" y="530" className="slider-label-svg">Word-Level</text>
+              <text x="125 + 450/3" y="530" className="slider-label-svg">BPE</text>
+              <text x="125 + 2*450/3" y="530" className="slider-label-svg">SentencePiece</text>
+              <text x="125 + 450" y="530" className="slider-label-svg">Unigram</text>
+            </svg>
             <p className="figure-caption">Figure 1: Tokenization process showing how text is broken down into subword units</p>
           </div>
 
@@ -189,7 +297,119 @@ print(f"Cosine similarity between tokens: {sim.item():.4f}")`}
 
           {/* SVG Suggestion 2: Embedding Space Visualization */}
           <div className="figure-container">
-            <p><strong>SVG Suggestion 2:</strong> 3D visualization of embedding space showing how semantically similar words cluster together. Include interactive controls to rotate the space and highlight different semantic clusters (animals, colors, actions). Show how words like "cat", "dog", "kitten" form clusters while being distant from unrelated words.</p>
+            <svg width="700" height="500" xmlns="http://www.w3.org/2000/svg" fontFamily="Arial, sans-serif" aria-labelledby="svgTitleEmbedding" role="img">
+              <title id="svgTitleEmbedding">Embedding Space Visualization</title>
+              <desc>Illustration of a conceptual embedding space where semantically similar words form clusters. Shows clusters for 'Animals', 'Colors', and 'Actions', with unrelated words scattered.</desc>
+              <style>{`
+                .embedding-title-svg { font-size: 20px; font-weight: bold; fill: #2c3e50; text-anchor: middle; }
+                .cluster-label-svg { font-size: 14px; font-weight: bold; text-anchor: middle; }
+                .word-text-svg { font-size: 13px; text-anchor: middle; dominant-baseline: central; }
+                .cluster-ellipse-svg { stroke-width: 1.5; fill-opacity: 0.15; }
+                
+                .animals-cluster-svg .cluster-label-svg { fill: #2962ff; } /* Darker Blue */
+                .animals-cluster-svg .word-text-svg { fill: #1a237e; }    /* Navy Blue */
+                .animals-cluster-svg .cluster-ellipse-svg { fill: #bbdefb; stroke: #64b5f6; } /* Light Blue */
+
+                .colors-cluster-svg .cluster-label-svg { fill: #00897b; } /* Darker Teal */
+                .colors-cluster-svg .word-text-svg { fill: #004d40; }   /* Dark Green/Teal */
+                .colors-cluster-svg .cluster-ellipse-svg { fill: #b2dfdb; stroke: #4db6ac; } /* Light Teal */
+
+                .actions-cluster-svg .cluster-label-svg { fill: #ef6c00; } /* Darker Orange */
+                .actions-cluster-svg .word-text-svg { fill: #e65100; }   /* Deep Orange */
+                .actions-cluster-svg .cluster-ellipse-svg { fill: #ffe0b2; stroke: #ffb74d; } /* Light Orange */
+
+                .unrelated-word-svg { fill: #546e7a; font-size: 12px; text-anchor: middle; dominant-baseline: central; }
+              `}</style>
+
+              <text x="350" y="35" className="embedding-title-svg">Conceptual Embedding Space: Semantic Clusters</text>
+
+              {/* Cluster 1: Animals */}
+              <g className="animals-cluster-svg">
+                <ellipse cx="180" cy="150" rx="100" ry="70" className="cluster-ellipse-svg"/>
+                <text x="180" y="95" className="cluster-label-svg">Animals</text>
+                {[
+                  { text: "cat", x: 170, y: 130, size: 1 },
+                  { text: "dog", x: 200, y: 120, size: 1 },
+                  { text: "kitten", x: 140, y: 150, size: 0.9 },
+                  { text: "puppy", x: 220, y: 145, size: 0.9 },
+                  { text: "lion", x: 180, y: 175, size: 0.85 },
+                  { text: "tiger", x: 120, y: 125, size: 0.95 },
+                  { text: "bear", x: 230, y: 170, size: 0.9 },
+                ].map(w => (
+                  <text key={w.text} x={w.x} y={w.y} className="word-text-svg" 
+                    style={{ fontSize: `${13 * w.size}px`, opacity: 0.7 + 0.3 * w.size }}>
+                    {w.text}
+                  </text>
+                  ))}
+              </g>
+
+              {/* Cluster 2: Colors */}
+              <g className="colors-cluster-svg">
+                <ellipse cx="500" cy="160" rx="90" ry="65" className="cluster-ellipse-svg"/>
+                <text x="500" y="105" className="cluster-label-svg">Colors</text>
+                {[
+                  { text: "red", x: 490, y: 140, size: 1 },
+                  { text: "blue", x: 520, y: 135, size: 1 },
+                  { text: "green", x: 460, y: 160, size: 0.9 },
+                  { text: "yellow", x: 540, y: 155, size: 0.9 },
+                  { text: "purple", x: 500, y: 185, size: 0.85 },
+                  { text: "orange", x: 440, y: 180, size: 0.95 },
+                ].map(w => (
+                  <text key={w.text} x={w.x} y={w.y} className="word-text-svg" 
+                    style={{ fontSize: `${13 * w.size}px`, opacity: 0.7 + 0.3 * w.size }}>
+                    {w.text}
+                  </text>
+                  ))}
+              </g>
+
+              {/* Cluster 3: Actions */}
+              <g className="actions-cluster-svg">
+                <ellipse cx="350" cy="350" rx="110" ry="75" className="cluster-ellipse-svg"/>
+                <text x="350" y="285" className="cluster-label-svg">Actions</text>
+                {[
+                  { text: "run", x: 340, y: 320, size: 1 },
+                  { text: "jump", x: 380, y: 315, size: 1 },
+                  { text: "eat", x: 300, y: 340, size: 0.9 },
+                  { text: "sleep", x: 400, y: 335, size: 0.9 },
+                  { text: "fly", x: 350, y: 365, size: 0.85 },
+                  { text: "swim", x: 320, y: 380, size: 0.95 },
+                  { text: "read", x: 420, y: 370, size: 0.9 },
+                ].map(w => (
+                  <text key={w.text} x={w.x} y={w.y} className="word-text-svg" 
+                  style={{ fontSize: `${13 * w.size}px`, opacity: 0.7 + 0.3 * w.size }}>
+                  {w.text}</text>
+                ))}
+              </g>
+
+              {/* Unrelated Words */}
+              <g>
+                {[
+                  { text: "king", x: 80, y: 300 },
+                  { text: "queen", x: 100, y: 70 },
+                  { text: "car", x: 600, y: 320 },
+                  { text: "house", x: 550, y: 420 },
+                  { text: "tree", x: 400, y: 70 },
+                  { text: "book", x: 150, y: 430 },
+                  { text: "moon", x: 620, y: 75 },
+                ].map(w => (
+                  <text key={w.text} x={w.x} y={w.y} className="unrelated-word-svg">{w.text}</text>
+                ))}
+              </g>
+
+              {/* Legend (Optional, colors are indicative) */}
+              <g transform="translate(580, 440)">
+                <text x="0" y="0" fontSize="12" fill="#333" fontWeight="bold">Legend:</text>
+                <rect x="0" y="10" width="10" height="10" fill="#bbdefb" stroke="#64b5f6"/>
+                <text x="15" y="18" fontSize="11" fill="#2962ff">Animals</text>
+                <rect x="0" y="30" width="10" height="10" fill="#b2dfdb" stroke="#4db6ac"/>
+                <text x="15" y="38" fontSize="11" fill="#00897b">Colors</text>
+                <rect x="0" y="50" width="10" height="10" fill="#ffe0b2" stroke="#ffb74d"/>
+                <text x="15" y="58" fontSize="11" fill="#ef6c00">Actions</text>
+                <circle cx="5" cy="75" r="3" fill="#546e7a"/>
+                <text x="15" y="78" fontSize="11" fill="#546e7a">Unrelated</text>
+              </g>
+
+            </svg>
             <p className="figure-caption">Figure 2: High-dimensional embedding space projected to 3D showing semantic clustering</p>
           </div>
 
